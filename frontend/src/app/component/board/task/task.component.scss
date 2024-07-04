@@ -1,0 +1,9 @@
+@import "./../../../../assets/style/colors.scss";
+
+section {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  background-color: $taskGreen;
+  width: calc(100% - 24px);
+}
