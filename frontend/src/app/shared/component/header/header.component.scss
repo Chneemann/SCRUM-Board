@@ -1,5 +1,10 @@
+@import "./../../../../assets/style/colors.scss";
+
 section {
   display: flex;
   justify-content: space-between;
-  padding: 12px;
+  align-items: center;
+  padding: 12px 24px;
+  height: 36px;
+  background-color: $light-gray;
 }
