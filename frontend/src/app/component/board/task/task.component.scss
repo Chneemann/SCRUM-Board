@@ -1,11 +1,36 @@
 @import "./../../../../assets/style/colors.scss";
 
 section {
-  display: flex;
-  justify-content: space-between;
   padding: 12px;
-  background-color: $taskGreen;
-  border: 1px solid darken($taskGreen, 50%);
+  background-color: var(--taskColor);
+  border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   width: calc(100% - 24px);
+  margin-bottom: 12px;
+  .dotted-line {
+    margin: 12px 0;
+    border: 1px dashed rgba(0, 0, 0, 0.2);
+  }
+  .description {
+    height: fit-content;
+    p {
+      padding-bottom: 6px;
+    }
+  }
+}
+
+.page-svg {
+  height: 24px;
+  margin-top: 12px;
+  img {
+    height: 24px;
+    width: auto;
+    cursor: pointer;
+    filter: brightness(0) saturate(100%) invert(63%) sepia(0%) saturate(1%)
+      hue-rotate(153deg) brightness(93%) contrast(85%);
+    &:hover {
+      filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(16%)
+        hue-rotate(338deg) brightness(93%) contrast(107%);
+    }
+  }
 }

@@ -1,12 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { environment } from '../../../environments/environment.development';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-task',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, HttpClientModule],
   templateUrl: './task.component.html',
-  styleUrl: './task.component.scss'
+  styleUrl: './task.component.scss',
 })
-export class TaskComponent {
+export class TaskComponent implements OnInit {
+  tasks: any = [];
+  openDescription: boolean = false;
+  openDescriptionTaskId: string = '';
 
+  constructor(private http: HttpClient) {}
+
+  async ngOnInit() {
+    this.tasks = await this.loadTasks();
+  }
+
+  loadTasks() {
+    const url = environment.baseUrl + '/tasks/';
+    return lastValueFrom(this.http.get(url));
+  }
+
+  toggleDescription(taskIndex: string) {
+    this.openDescription = !this.openDescription;
+    this.openDescriptionTaskId = taskIndex;
+  }
 }
