@@ -1,0 +1,30 @@
+<div class="overlay" (click)="taskOverviewClose('')">
+  <div class="overlay-content" (click)="stopPropagation($event)">
+    <div class="content">
+      <div class="btn-close">
+        <img
+          src="./../../../../assets/img/close.svg"
+          alt=""
+          (click)="taskOverviewClose('')"
+        />
+      </div>
+      <form
+        (ngSubmit)="onSubmit(taskForm)"
+        #taskForm="ngForm"
+        onsubmit="return false"
+      >
+        <input
+          type="text"
+          id="title"
+          name="title"
+          #title="ngModel"
+          placeholder="Task name..."
+          [(ngModel)]="taskData.title"
+          autocomplete="off"
+          required
+        />
+        <button>Save & close</button>
+      </form>
+    </div>
+  </div>
+</div>

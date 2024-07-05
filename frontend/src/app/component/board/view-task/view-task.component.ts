@@ -9,10 +9,10 @@ import { CommonModule } from '@angular/common';
   selector: 'app-task',
   standalone: true,
   imports: [CommonModule, HttpClientModule],
-  templateUrl: './task.component.html',
-  styleUrl: './task.component.scss',
+  templateUrl: './view-task.component.html',
+  styleUrl: './view-task.component.scss',
 })
-export class TaskComponent implements OnInit {
+export class ViewTaskComponent implements OnInit {
   tasks: any = [];
   users: any = [];
   openDescription: boolean = false;

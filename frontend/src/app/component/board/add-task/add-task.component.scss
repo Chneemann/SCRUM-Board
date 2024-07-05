@@ -1,0 +1,75 @@
+@import "./../../../../assets/style/colors.scss";
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(2px);
+  background-color: rgba($color: #000000, $alpha: 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.overlay-mobile {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+}
+
+.content {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  border-radius: 6px;
+  border: 1px solid $gray;
+  background-color: $taskYellow;
+}
+
+button {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 12px;
+  padding: 3px 12px;
+  width: fit-content;
+  box-shadow: 1px 1px 3px $gray;
+  border: 1px solid $gray;
+  border-radius: 3px;
+  background-color: $light-gray;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover {
+    border: 1px solid $light-gray;
+    background-color: $white;
+  }
+}
+
+.btn-close {
+  text-align: end;
+  width: 100%;
+  img {
+    width: 24px;
+    height: auto;
+    margin: 6px;
+    cursor: pointer;
+    filter: brightness(0) saturate(100%) invert(63%) sepia(0%) saturate(1%)
+      hue-rotate(153deg) brightness(93%) contrast(85%);
+    &:hover {
+      filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(16%)
+        hue-rotate(338deg) brightness(93%) contrast(107%);
+    }
+  }
+}

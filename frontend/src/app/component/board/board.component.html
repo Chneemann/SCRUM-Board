@@ -3,7 +3,11 @@
     <div class="header">
       <p>To-do</p>
       <div class="img">
-        <img src="./../../../assets/img/add.svg" alt="+" />
+        <img
+          src="./../../../assets/img/add.svg"
+          alt="+"
+          (click)="addTask('todo')"
+        />
       </div>
     </div>
     <div class="content">
@@ -14,7 +18,11 @@
     <div class="header">
       <p>Do today</p>
       <div class="img">
-        <img src="./../../../assets/img/add.svg" alt="+" />
+        <img
+          src="./../../../assets/img/add.svg"
+          alt="+"
+          (click)="addTask('dotoday')"
+        />
       </div>
     </div>
     <div class="content"></div>
@@ -23,7 +31,11 @@
     <div class="header">
       <p>In progress</p>
       <div class="img">
-        <img src="./../../../assets/img/add.svg" alt="+" />
+        <img
+          src="./../../../assets/img/add.svg"
+          alt="+"
+          (click)="addTask('inprogress')"
+        />
       </div>
     </div>
     <div class="content"></div>
@@ -32,9 +44,17 @@
     <div class="header">
       <p>Done</p>
       <div class="img">
-        <img src="./../../../assets/img/add.svg" alt="+" />
+        <img
+          src="./../../../assets/img/add.svg"
+          alt="+"
+          (click)="addTask('done')"
+        />
       </div>
     </div>
     <div class="content"></div>
   </div>
 </section>
+
+@if(openNewTaskOverview) {
+<app-add-task (closeTaskOverview)="closeTaskOverview($event)"></app-add-task>
+}
