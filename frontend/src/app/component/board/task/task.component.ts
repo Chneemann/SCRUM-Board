@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class TaskComponent implements OnInit {
   tasks: any = [];
+  users: any = [];
   openDescription: boolean = false;
   openDescriptionTaskId: string = '';
 
@@ -21,6 +22,7 @@ export class TaskComponent implements OnInit {
 
   async ngOnInit() {
     this.tasks = await this.loadTasks();
+    this.users = await this.loadUsers();
   }
 
   loadTasks() {
@@ -28,8 +30,17 @@ export class TaskComponent implements OnInit {
     return lastValueFrom(this.http.get(url));
   }
 
+  loadUsers() {
+    const url = environment.baseUrl + '/users/';
+    return lastValueFrom(this.http.get(url));
+  }
+
   toggleDescription(taskIndex: string) {
     this.openDescription = !this.openDescription;
     this.openDescriptionTaskId = taskIndex;
+  }
+
+  firstLetter(word: string) {
+    return word.charAt(0).toUpperCase();
   }
 }

@@ -2,8 +2,16 @@
 <section [ngStyle]="{ '--taskColor': task.color }">
   <p>{{ task.title }}</p>
   @if (task.description) {
-  <div class="page-svg" (click)="toggleDescription(task.id)">
-    <img src="./../../../../assets/img/page.svg" alt="" />
+  <div class="footer">
+    <div class="page-svg" (click)="toggleDescription(task.id)">
+      <img src="./../../../../assets/img/page.svg" alt="" />
+    </div>
+    @for(user of users; track user) {
+    <div class="members">
+      @if (task.author === user.id) {
+      {{ firstLetter(user.first_name) }}{{ firstLetter(user.last_name) }} }
+    </div>
+    }
   </div>
   @if (openDescription && openDescriptionTaskId === task.id) {
   <div class="dotted-line"></div>
