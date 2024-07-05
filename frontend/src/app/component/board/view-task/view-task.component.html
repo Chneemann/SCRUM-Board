@@ -1,17 +1,20 @@
-@for(task of tasks; track task) {
+@for (task of allTasks; track task) {
+<!-- -->
+@if (task.status === content) {
 <section
   [ngStyle]="{
     '--taskColor': findColor(task.color).color,
     '--taskBorderColor': findColor(task.color).borderColor
   }"
+  (click)="openTask(task.id)"
 >
   <p>{{ task.title }}</p>
   @if (task.description) {
   <div class="footer">
-    <div class="page-svg" (click)="toggleDescription(task.id)">
+    <div class="page-svg" (click)="toggleDescription(task.id, $event)">
       <img src="./../../../../assets/img/page.svg" alt="" />
     </div>
-    @for(user of users; track user) {
+    @for (user of allUsers; track user) {
     <div class="members">
       @if (task.author === user.id) {
       {{ firstLetter(user.first_name) }}{{ firstLetter(user.last_name) }} }
@@ -25,4 +28,4 @@
   </div>
   } }
 </section>
-}
+} }

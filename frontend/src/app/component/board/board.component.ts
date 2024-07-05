@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ViewTaskComponent } from './view-task/view-task.component';
 import { AddTaskComponent } from './add-task/add-task.component';
+import { DatabaseService } from '../../services/database.service';
 
 @Component({
   selector: 'app-board',
@@ -9,14 +10,23 @@ import { AddTaskComponent } from './add-task/add-task.component';
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })
-export class BoardComponent {
-  openNewTaskOverview: string = 'todo';
+export class BoardComponent implements OnInit {
+  openCurrentTaskOverview: string = '';
+  allTasks: any[] = [];
+  allUsers: any[] = [];
 
-  addTask(status: string) {
-    this.openNewTaskOverview = status;
+  constructor(public dbService: DatabaseService) {}
+
+  async ngOnInit() {
+    this.allTasks = await this.dbService.loadTasks();
+    this.allUsers = await this.dbService.loadUsers();
   }
 
-  closeTaskOverview(value: any) {
-    this.openNewTaskOverview = value;
+  addTask(status: string) {
+    this.openCurrentTaskOverview = status;
+  }
+
+  toggleTaskOverview(value: any) {
+    this.openCurrentTaskOverview = value;
   }
 }

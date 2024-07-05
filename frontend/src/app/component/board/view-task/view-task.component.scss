@@ -7,6 +7,7 @@ section {
   border-radius: 3px;
   width: calc(100% - 24px);
   margin-bottom: 12px;
+  cursor: pointer;
   .dotted-line {
     margin: 12px 0;
     border: 1px dashed var(--taskBorderColor);

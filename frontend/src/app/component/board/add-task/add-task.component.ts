@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { TaskColorsService } from '../../../services/task-colors.service';
 
@@ -11,6 +11,7 @@ import { TaskColorsService } from '../../../services/task-colors.service';
   styleUrl: './add-task.component.scss',
 })
 export class AddTaskComponent {
+  @Input() taskId: string = '';
   @Output() closeTaskOverview = new EventEmitter<string>();
 
   constructor(private taskColorService: TaskColorsService) {}

@@ -1,45 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { environment } from '../../../environments/environment.development';
 import { CommonModule } from '@angular/common';
 import { TaskColorsService } from '../../../services/task-colors.service';
 
 @Component({
-  selector: 'app-task',
+  selector: 'app-view-task',
   standalone: true,
   imports: [CommonModule, HttpClientModule],
   templateUrl: './view-task.component.html',
   styleUrl: './view-task.component.scss',
 })
-export class ViewTaskComponent implements OnInit {
-  tasks: any = [];
-  users: any = [];
+export class ViewTaskComponent {
+  @Input() content: string = '';
+  @Input() allTasks: any[] = [];
+  @Input() allUsers: any[] = [];
+  @Output() openTaskOverview = new EventEmitter<string>();
+
   openDescription: boolean = false;
   openDescriptionTaskId: string = '';
 
-  constructor(
-    private http: HttpClient,
-    private taskColorService: TaskColorsService
-  ) {}
+  constructor(private taskColorService: TaskColorsService) {}
 
-  async ngOnInit() {
-    this.tasks = await this.loadTasks();
-    this.users = await this.loadUsers();
+  openTask(taskId: string) {
+    console.log(taskId);
+    this.openTaskOverview.emit(taskId);
   }
 
-  loadTasks() {
-    const url = environment.baseUrl + '/tasks/';
-    return lastValueFrom(this.http.get(url));
-  }
-
-  loadUsers() {
-    const url = environment.baseUrl + '/users/';
-    return lastValueFrom(this.http.get(url));
-  }
-
-  toggleDescription(taskIndex: string) {
+  toggleDescription(taskIndex: string, event: MouseEvent) {
+    event.stopPropagation();
     this.openDescription = !this.openDescription;
     this.openDescriptionTaskId = taskIndex;
   }

@@ -11,7 +11,11 @@
       </div>
     </div>
     <div class="content">
-      <app-task></app-task>
+      <app-view-task
+        [content]="'todo'"
+        [allTasks]="allTasks"
+        [allUsers]="allUsers"
+      ></app-view-task>
     </div>
   </div>
   <div class="status">
@@ -25,7 +29,13 @@
         />
       </div>
     </div>
-    <div class="content"></div>
+    <div class="content">
+      <app-view-task
+        [content]="'dotoday'"
+        [allTasks]="allTasks"
+        [allUsers]="allUsers"
+      ></app-view-task>
+    </div>
   </div>
   <div class="status">
     <div class="header">
@@ -38,7 +48,13 @@
         />
       </div>
     </div>
-    <div class="content"></div>
+    <div class="content">
+      <app-view-task
+        [content]="'inprogress'"
+        [allTasks]="allTasks"
+        [allUsers]="allUsers"
+      ></app-view-task>
+    </div>
   </div>
   <div class="status">
     <div class="header">
@@ -51,10 +67,20 @@
         />
       </div>
     </div>
-    <div class="content"></div>
+    <div class="content">
+      <app-view-task
+        [content]="'done'"
+        [allTasks]="allTasks"
+        [allUsers]="allUsers"
+        (openTaskOverview)="toggleTaskOverview($event)"
+      ></app-view-task>
+    </div>
   </div>
 </section>
 
-@if(openNewTaskOverview) {
-<app-add-task (closeTaskOverview)="closeTaskOverview($event)"></app-add-task>
+@if(openCurrentTaskOverview) {
+<app-add-task
+  [taskId]="openCurrentTaskOverview"
+  (closeTaskOverview)="toggleTaskOverview($event)"
+></app-add-task>
 }

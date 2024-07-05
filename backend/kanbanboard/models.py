@@ -1,3 +1,4 @@
+from urllib import request
 from django.db import models
 from django.conf import settings
 
@@ -7,7 +8,8 @@ class TaskItem(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     status = models.CharField(max_length=15)
-    color = models.CharField(max_length=15, default='$taskGreen')
+    color = models.CharField(max_length=15, default='yellow')
     
     def __str__(self):
         return f'({self.id}) {self.title} - {self.description}'
+
