@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
 import { CommonModule } from '@angular/common';
+import { TaskColorsService } from '../../../services/task-colors.service';
 
 @Component({
   selector: 'app-task',
@@ -18,7 +19,10 @@ export class ViewTaskComponent implements OnInit {
   openDescription: boolean = false;
   openDescriptionTaskId: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private taskColorService: TaskColorsService
+  ) {}
 
   async ngOnInit() {
     this.tasks = await this.loadTasks();
@@ -42,5 +46,9 @@ export class ViewTaskComponent implements OnInit {
 
   firstLetter(word: string) {
     return word.charAt(0).toUpperCase();
+  }
+
+  findColor(color: string) {
+    return this.taskColorService.findColor(color);
   }
 }

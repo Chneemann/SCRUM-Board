@@ -1,6 +1,12 @@
 <div class="overlay" (click)="taskOverviewClose('')">
   <div class="overlay-content" (click)="stopPropagation($event)">
-    <div class="content">
+    <div
+      class="content"
+      [ngStyle]="{
+        '--taskColor': findColor(taskData.color).color,
+        '--taskBorderColor': findColor(taskData.color).borderColor
+      }"
+    >
       <div class="btn-close">
         <img
           src="./../../../../assets/img/close.svg"
@@ -17,12 +23,43 @@
           type="text"
           id="title"
           name="title"
+          class="title-form-field"
           #title="ngModel"
           placeholder="Task name..."
           [(ngModel)]="taskData.title"
           autocomplete="off"
           required
         />
+        <textarea
+          id="description"
+          name="description"
+          class="description-form-field"
+          #description="ngModel"
+          minlength="10"
+          placeholder="Description..."
+          [(ngModel)]="taskData.description"
+          autocomplete="off"
+          required
+        ></textarea>
+        <div class="color">
+          <div class="color-circle"></div>
+          <select
+            id="color"
+            name="color"
+            class="color-form-field"
+            #color="ngModel"
+            [(ngModel)]="taskData.color"
+          >
+            <option value="yellow" selected>Yellow</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+            <option value="red">Red</option>
+            <option value="orange">Orange</option>
+            <option value="purple">Purple</option>
+            <option value="magenta">Magenta</option>
+            <option value="cyan">Cyan</option>
+          </select>
+        </div>
         <button>Save & close</button>
       </form>
     </div>

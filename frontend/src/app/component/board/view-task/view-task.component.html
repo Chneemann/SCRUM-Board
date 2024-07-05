@@ -1,5 +1,10 @@
 @for(task of tasks; track task) {
-<section [ngStyle]="{ '--taskColor': task.color }">
+<section
+  [ngStyle]="{
+    '--taskColor': findColor(task.color).color,
+    '--taskBorderColor': findColor(task.color).borderColor
+  }"
+>
   <p>{{ task.title }}</p>
   @if (task.description) {
   <div class="footer">

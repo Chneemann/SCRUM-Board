@@ -33,7 +33,7 @@
   height: 400px;
   border-radius: 6px;
   border: 1px solid $gray;
-  background-color: $taskYellow;
+  background-color: var(--taskColor);
 }
 
 button {
@@ -41,19 +41,88 @@ button {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  margin: 12px;
+  margin: 12px 12px 24px 12px;
   padding: 3px 12px;
   width: fit-content;
   box-shadow: 1px 1px 3px $gray;
-  border: 1px solid $gray;
+  border: 1px solid $light-gray;
   border-radius: 3px;
-  background-color: $light-gray;
+  background-color: $white;
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
   &:hover {
-    border: 1px solid $light-gray;
-    background-color: $white;
+    border: 1px solid $gray;
+    background-color: $light-gray;
+  }
+}
+
+form {
+  text-align: center;
+  padding: 0 24px;
+}
+
+.title-form-field {
+  border: none;
+  border-bottom: 2px solid $medium-gray;
+  padding: 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+  width: 100%;
+  background-color: var(--taskColor);
+  outline: none;
+  margin-bottom: 12px;
+  &:focus {
+    background-color: $very-light-gray;
+    border-bottom-color: var(--taskBorderColor);
+  }
+}
+
+.color {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.color-circle {
+  height: 48px;
+  width: 48px;
+  margin-right: 24px;
+  border-radius: 100%;
+  background-color: var(--taskBorderColor);
+  border: 2px solid $light-gray;
+}
+
+.color-form-field {
+  border: none;
+  border-bottom: 2px solid $medium-gray;
+  padding: 8px 0;
+  font-size: 18px;
+  font-weight: 400;
+  width: 90%;
+  background-color: var(--taskColor);
+  outline: none;
+  margin-bottom: 6px;
+  &:focus {
+    border-bottom-color: var(--taskBorderColor);
+  }
+}
+
+.description-form-field {
+  border: none;
+  border-bottom: 2px solid $medium-gray;
+  padding: 8px 0;
+  height: 64px;
+  font-size: 18px;
+  font-weight: 400;
+  width: 100%;
+  background-color: var(--taskColor);
+  outline: none;
+  resize: none;
+  margin-bottom: 12px;
+  &:focus {
+    background-color: $very-light-gray;
+    border-bottom-color: var(--taskBorderColor);
   }
 }
 
