@@ -25,6 +25,7 @@ export class AddTaskComponent implements OnInit {
   @Input() allTasks: Task[] = [];
   @Input() allUsers: any[] = [];
   @Output() closeTaskOverview = new EventEmitter<string>();
+  @Output() taskUpdated = new EventEmitter<any>();
 
   constructor(
     private taskColorService: TaskColorsService,
@@ -72,8 +73,11 @@ export class AddTaskComponent implements OnInit {
       const body = {
         title: this.taskData.title,
       };
-      this.dbService.updateTask(body, this.taskId).then(() => {
-        this.taskOverviewClose('');
+      this.dbService.updateTask(body, this.taskId).then((updatedTask) => {
+        this.taskUpdated.emit(updatedTask);
+        if (this.dbService.dataUploaded) {
+          this.taskOverviewClose('');
+        }
       });
     }
   }

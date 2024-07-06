@@ -34,10 +34,20 @@ export class BoardComponent implements OnInit {
     this.openCurrentTaskOverview = status;
   }
 
+  replaceTask(updatedTask: any) {
+    const index = this.allTasks.findIndex((task) => task.id === updatedTask.id);
+    if (index !== -1) {
+      this.allTasks[index] = updatedTask;
+    }
+  }
+
+  handleTaskUpdate(updatedTask: any) {
+    this.replaceTask(updatedTask);
+  }
+
   toggleTaskOverview(value: any) {
     this.openCurrentTaskOverview = value;
     if (this.dbService.dataUploaded) {
-      this.loadDatabaseTasks();
       this.dbService.dataUploaded = false;
     }
   }
