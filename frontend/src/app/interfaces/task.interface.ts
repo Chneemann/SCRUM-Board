@@ -5,4 +5,5 @@ export interface Task {
   status: string;
   author: string;
   created_at: string;
+  color: string;
 }

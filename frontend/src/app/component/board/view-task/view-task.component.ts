@@ -22,7 +22,6 @@ export class ViewTaskComponent {
   constructor(private taskColorService: TaskColorsService) {}
 
   openTask(taskId: string) {
-    console.log(taskId);
     this.openTaskOverview.emit(taskId);
   }
 

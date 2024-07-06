@@ -21,5 +21,6 @@ from kanbanboard.views import TaskItemView, UserList
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('tasks/', TaskItemView.as_view()),
+    path('tasks/<int:pk>/', TaskItemView.as_view()),
     path('users/', UserList.as_view()), 
 ]

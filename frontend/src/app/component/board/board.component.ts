@@ -18,7 +18,15 @@ export class BoardComponent implements OnInit {
   constructor(public dbService: DatabaseService) {}
 
   async ngOnInit() {
+    this.loadDatabaseTasks();
+    this.loadDatabaseUsers();
+  }
+
+  async loadDatabaseTasks() {
     this.allTasks = await this.dbService.loadTasks();
+  }
+
+  async loadDatabaseUsers() {
     this.allUsers = await this.dbService.loadUsers();
   }
 
@@ -28,5 +36,9 @@ export class BoardComponent implements OnInit {
 
   toggleTaskOverview(value: any) {
     this.openCurrentTaskOverview = value;
+    if (this.dbService.dataUploaded) {
+      this.loadDatabaseTasks();
+      this.dbService.dataUploaded = false;
+    }
   }
 }

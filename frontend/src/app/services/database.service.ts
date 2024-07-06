@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
@@ -9,6 +9,8 @@ import { lastValueFrom } from 'rxjs';
 export class DatabaseService {
   constructor(private http: HttpClient) {}
 
+  dataUploaded: boolean = false;
+
   loadTasks(): Promise<any> {
     const url = environment.baseUrl + '/tasks/';
     return lastValueFrom(this.http.get(url));
@@ -17,5 +19,21 @@ export class DatabaseService {
   loadUsers(): Promise<any> {
     const url = environment.baseUrl + '/users/';
     return lastValueFrom(this.http.get(url));
+  }
+
+  updateTask(body: any, postId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http
+        .put<any>(environment.baseUrl + '/tasks/' + postId + '/', body)
+        .subscribe(
+          (data) => {
+            this.dataUploaded = true;
+            resolve(data);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+    });
   }
 }

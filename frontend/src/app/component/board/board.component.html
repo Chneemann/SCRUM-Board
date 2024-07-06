@@ -15,6 +15,7 @@
         [content]="'todo'"
         [allTasks]="allTasks"
         [allUsers]="allUsers"
+        (openTaskOverview)="toggleTaskOverview($event)"
       ></app-view-task>
     </div>
   </div>
@@ -34,6 +35,7 @@
         [content]="'dotoday'"
         [allTasks]="allTasks"
         [allUsers]="allUsers"
+        (openTaskOverview)="toggleTaskOverview($event)"
       ></app-view-task>
     </div>
   </div>
@@ -53,6 +55,7 @@
         [content]="'inprogress'"
         [allTasks]="allTasks"
         [allUsers]="allUsers"
+        (openTaskOverview)="toggleTaskOverview($event)"
       ></app-view-task>
     </div>
   </div>
@@ -81,6 +84,8 @@
 @if(openCurrentTaskOverview) {
 <app-add-task
   [taskId]="openCurrentTaskOverview"
+  [allTasks]="allTasks"
+  [allUsers]="allUsers"
   (closeTaskOverview)="toggleTaskOverview($event)"
 ></app-add-task>
 }
