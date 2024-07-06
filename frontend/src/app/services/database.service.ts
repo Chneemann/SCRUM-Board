@@ -21,9 +21,18 @@ export class DatabaseService {
     return lastValueFrom(this.http.get(url));
   }
 
-  updateTask2(body: any, postId: string): Promise<any> {
-    const url = `${environment.baseUrl}/tasks/${postId}/`;
-    return lastValueFrom(this.http.put(url, body));
+  createTask(body: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.post<any>(environment.baseUrl + '/tasks/', body).subscribe(
+        (data) => {
+          this.dataUploaded = true;
+          resolve(data);
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
   }
 
   updateTask(body: any, postId: string): Promise<any> {

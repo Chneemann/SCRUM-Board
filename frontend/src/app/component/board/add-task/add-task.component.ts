@@ -21,11 +21,14 @@ import { DatabaseService } from '../../../services/database.service';
   styleUrl: './add-task.component.scss',
 })
 export class AddTaskComponent implements OnInit {
-  @Input() taskId: string = '';
+  @Input() currentTaskId: string = '';
   @Input() allTasks: Task[] = [];
   @Input() allUsers: any[] = [];
   @Output() closeTaskOverview = new EventEmitter<string>();
   @Output() taskUpdated = new EventEmitter<any>();
+  @Output() taskCreated = new EventEmitter<any>();
+
+  isThisANewTask: boolean = false;
 
   constructor(
     private taskColorService: TaskColorsService,
@@ -36,7 +39,7 @@ export class AddTaskComponent implements OnInit {
     title: '',
     description: '',
     status: '',
-    author: '',
+    author: '1',
     created_at: '',
     color: 'yellow',
   };
@@ -46,14 +49,24 @@ export class AddTaskComponent implements OnInit {
   }
 
   initializeTaskData() {
-    const taskIndex = +this.taskId - 1;
-    if (this.allTasks && this.allTasks[taskIndex]) {
-      this.taskData.title = this.allTasks[taskIndex].title;
-      this.taskData.description = this.allTasks[taskIndex].description;
-      this.taskData.status = this.allTasks[taskIndex].status;
-      this.taskData.color = this.allTasks[taskIndex].color;
-      this.taskData.author = this.allTasks[taskIndex].author;
+    const currentTaskIndex = this.allTasks.findIndex(
+      (task) => +task.id! === +this.currentTaskId
+    );
+    if (this.allTasks && this.allTasks[currentTaskIndex]) {
+      this.loadCurrentTaskData(currentTaskIndex);
+      this.isThisANewTask = false;
+    } else {
+      this.taskData.status = this.currentTaskId;
+      this.isThisANewTask = true;
     }
+  }
+
+  loadCurrentTaskData(taskIndex: number) {
+    this.taskData.title = this.allTasks[taskIndex].title;
+    this.taskData.description = this.allTasks[taskIndex].description;
+    this.taskData.status = this.allTasks[taskIndex].status;
+    this.taskData.color = this.allTasks[taskIndex].color;
+    this.taskData.author = this.allTasks[taskIndex].author;
   }
 
   findColor(color: string) {
@@ -70,15 +83,41 @@ export class AddTaskComponent implements OnInit {
 
   onSubmit(ngForm: NgForm) {
     if (ngForm.submitted && ngForm.form.valid) {
-      const body = {
-        title: this.taskData.title,
-      };
-      this.dbService.updateTask(body, this.taskId).then((updatedTask) => {
-        this.taskUpdated.emit(updatedTask);
-        if (this.dbService.dataUploaded) {
-          this.taskOverviewClose('');
-        }
-      });
+      if (this.isThisANewTask) {
+        this.createTask();
+      } else {
+        this.updateTask();
+      }
     }
+  }
+
+  createTask() {
+    const body = {
+      title: this.taskData.title,
+      description: this.taskData.description,
+      color: this.taskData.color,
+      status: this.taskData.status,
+      author: this.taskData.author,
+    };
+    this.dbService.createTask(body).then((updatedTask) => {
+      this.taskCreated.emit(updatedTask);
+      if (this.dbService.dataUploaded) {
+        this.taskOverviewClose('');
+      }
+    });
+  }
+
+  updateTask() {
+    const body = {
+      title: this.taskData.title,
+      description: this.taskData.description,
+      color: this.taskData.color,
+    };
+    this.dbService.updateTask(body, this.currentTaskId).then((updatedTask) => {
+      this.taskUpdated.emit(updatedTask);
+      if (this.dbService.dataUploaded) {
+        this.taskOverviewClose('');
+      }
+    });
   }
 }

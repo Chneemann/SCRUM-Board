@@ -103,10 +103,11 @@
 
 @if(openCurrentTaskOverview) {
 <app-add-task
-  [taskId]="openCurrentTaskOverview"
+  [currentTaskId]="openCurrentTaskOverview"
   [allTasks]="allTasks"
   [allUsers]="allUsers"
   (closeTaskOverview)="toggleTaskOverview($event)"
   (taskUpdated)="handleTaskUpdate($event)"
+  (taskCreated)="handleTaskCreated($event)"
 ></app-add-task>
 }

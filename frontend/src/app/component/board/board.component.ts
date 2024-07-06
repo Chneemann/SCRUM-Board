@@ -75,6 +75,10 @@ export class BoardComponent implements OnInit {
     this.replaceTask(updatedTask);
   }
 
+  handleTaskCreated(updatedTask: any) {
+    this.allTasks.push(updatedTask);
+  }
+
   toggleTaskOverview(value: any) {
     this.openCurrentTaskOverview = value;
     if (this.dbService.dataUploaded) {
