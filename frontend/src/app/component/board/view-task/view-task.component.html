@@ -9,7 +9,8 @@
   (click)="openTask(task.id)"
   draggable="true"
   (dragstart)="
-    dragDropService.startDragging($event, task.id, task.status); startDragging()
+    dragDropService.startDragging($event, task.id, task.status);
+    startDragging(task.status)
   "
 >
   <p>{{ task.title }}</p>

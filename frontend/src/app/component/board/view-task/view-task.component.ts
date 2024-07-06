@@ -16,6 +16,7 @@ export class ViewTaskComponent {
   @Input() allTasks: any[] = [];
   @Input() allUsers: any[] = [];
   @Output() openTaskOverview = new EventEmitter<string>();
+  @Output() startDraggingStatus = new EventEmitter<string>();
 
   openDescription: boolean = false;
   openDescriptionTaskId: string = '';
@@ -29,7 +30,8 @@ export class ViewTaskComponent {
     this.openTaskOverview.emit(taskId);
   }
 
-  startDragging() {
+  startDragging(status: string) {
+    this.startDraggingStatus.emit(status);
     this.openDescription = !this.openDescription;
   }
 

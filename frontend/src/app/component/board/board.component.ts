@@ -13,6 +13,7 @@ import { DragDropService } from '../../services/drag-drop.service';
 })
 export class BoardComponent implements OnInit {
   openCurrentTaskOverview: string = '';
+  startDraggingStatus: string = '';
   allTasks: any[] = [];
   allUsers: any[] = [];
 
@@ -20,7 +21,7 @@ export class BoardComponent implements OnInit {
     public dbService: DatabaseService,
     public dragDropService: DragDropService
   ) {
-    this.dragAndDrop();
+    this.handleDragAndDrop();
   }
 
   async ngOnInit() {
@@ -40,9 +41,11 @@ export class BoardComponent implements OnInit {
 
   //  Drag & Drop
 
-  dragAndDrop() {
+  handleDragAndDrop() {
     this.dragDropService.itemDropped.subscribe(({ id, status }) => {
-      this.handleItemDropped(id, status);
+      if (this.startDraggingStatus !== status) {
+        this.handleItemDropped(id, status);
+      }
     });
   }
 
