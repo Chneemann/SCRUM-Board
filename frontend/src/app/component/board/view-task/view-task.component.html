@@ -7,6 +7,8 @@
     '--taskBorderColor': findColor(task.color).borderColor
   }"
   (click)="openTask(task.id)"
+  draggable="true"
+  (dragstart)="dragDropService.startDragging($event, task.id, task.status)"
 >
   <p>{{ task.title }}</p>
   @if (task.description) {

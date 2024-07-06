@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { TaskColorsService } from '../../../services/task-colors.service';
+import { DragDropService } from '../../../services/drag-drop.service';
 
 @Component({
   selector: 'app-view-task',
@@ -19,7 +20,10 @@ export class ViewTaskComponent {
   openDescription: boolean = false;
   openDescriptionTaskId: string = '';
 
-  constructor(private taskColorService: TaskColorsService) {}
+  constructor(
+    private taskColorService: TaskColorsService,
+    public dragDropService: DragDropService
+  ) {}
 
   openTask(taskId: string) {
     this.openTaskOverview.emit(taskId);

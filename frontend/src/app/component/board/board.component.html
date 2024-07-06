@@ -10,7 +10,11 @@
         />
       </div>
     </div>
-    <div class="content">
+    <div
+      class="content"
+      (dragover)="dragDropService.allowDrop($event, 'todo')"
+      (drop)="dragDropService.drop($event, 'todo')"
+    >
       <app-view-task
         [content]="'todo'"
         [allTasks]="allTasks"
@@ -30,7 +34,11 @@
         />
       </div>
     </div>
-    <div class="content">
+    <div
+      class="content"
+      (dragover)="dragDropService.allowDrop($event, 'dotoday')"
+      (drop)="dragDropService.drop($event, 'dotoday')"
+    >
       <app-view-task
         [content]="'dotoday'"
         [allTasks]="allTasks"
@@ -50,7 +58,11 @@
         />
       </div>
     </div>
-    <div class="content">
+    <div
+      class="content"
+      (dragover)="dragDropService.allowDrop($event, 'inprogress')"
+      (drop)="dragDropService.drop($event, 'inprogress')"
+    >
       <app-view-task
         [content]="'inprogress'"
         [allTasks]="allTasks"
@@ -70,7 +82,11 @@
         />
       </div>
     </div>
-    <div class="content">
+    <div
+      class="content"
+      (dragover)="dragDropService.allowDrop($event, 'done')"
+      (drop)="dragDropService.drop($event, 'done')"
+    >
       <app-view-task
         [content]="'done'"
         [allTasks]="allTasks"

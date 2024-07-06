@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ViewTaskComponent } from './view-task/view-task.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { DatabaseService } from '../../services/database.service';
+import { DragDropService } from '../../services/drag-drop.service';
 
 @Component({
   selector: 'app-board',
@@ -15,11 +16,31 @@ export class BoardComponent implements OnInit {
   allTasks: any[] = [];
   allUsers: any[] = [];
 
-  constructor(public dbService: DatabaseService) {}
+  constructor(
+    public dbService: DatabaseService,
+    public dragDropService: DragDropService
+  ) {
+    this.dragAndDrop();
+  }
 
   async ngOnInit() {
     this.loadDatabaseTasks();
     this.loadDatabaseUsers();
+  }
+
+  dragAndDrop() {
+    this.dragDropService.itemDropped.subscribe(({ id, status }) => {
+      this.handleItemDropped(id, status);
+    });
+  }
+
+  handleItemDropped(id: string, status: string): void {
+    const body = {
+      status: status,
+    };
+    this.dbService.updateTask(body, id).then((updatedTask) => {
+      this.replaceTask(updatedTask);
+    });
   }
 
   async loadDatabaseTasks() {
