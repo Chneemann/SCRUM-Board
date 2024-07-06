@@ -1,13 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { TaskColorsService } from '../../../services/task-colors.service';
 import { Task } from '../../../interfaces/task.interface';
@@ -27,8 +19,10 @@ export class AddTaskComponent implements OnInit {
   @Output() closeTaskOverview = new EventEmitter<string>();
   @Output() taskUpdated = new EventEmitter<any>();
   @Output() taskCreated = new EventEmitter<any>();
+  @Output() taskDeleted = new EventEmitter<any>();
 
   isThisANewTask: boolean = false;
+  isCurrentTaskIdNumber: boolean = false;
 
   constructor(
     private taskColorService: TaskColorsService,
@@ -46,6 +40,7 @@ export class AddTaskComponent implements OnInit {
 
   ngOnInit() {
     this.initializeTaskData();
+    this.isCurrentTaskIdNumber = isNaN(+this.currentTaskId);
   }
 
   initializeTaskData() {
@@ -89,6 +84,17 @@ export class AddTaskComponent implements OnInit {
         this.updateTask();
       }
     }
+  }
+
+  deleteTask() {
+    this.dbService.deleteTask(this.currentTaskId).then((success) => {
+      if (success) {
+        this.taskDeleted.emit(this.currentTaskId);
+        if (this.dbService.dataUploaded) {
+          this.taskOverviewClose('');
+        }
+      }
+    });
   }
 
   createTask() {

@@ -60,7 +60,12 @@
             <option value="cyan">Cyan</option>
           </select>
         </div>
-        <button>Save & close</button>
+        <div class="buttons">
+          @if(!isCurrentTaskIdNumber) {
+          <div class="button" (click)="deleteTask()">Delete Task</div>
+          }
+          <button class="button" type="submit">Save Task</button>
+        </div>
       </form>
     </div>
   </div>

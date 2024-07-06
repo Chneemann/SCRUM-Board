@@ -21,6 +21,22 @@ export class DatabaseService {
     return lastValueFrom(this.http.get(url));
   }
 
+  deleteTask(postId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http
+        .delete<any>(environment.baseUrl + '/tasks/' + postId + '/')
+        .subscribe(
+          (data) => {
+            this.dataUploaded = true;
+            resolve(true);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+    });
+  }
+
   createTask(body: any): Promise<any> {
     return new Promise((resolve, reject) => {
       this.http.post<any>(environment.baseUrl + '/tasks/', body).subscribe(

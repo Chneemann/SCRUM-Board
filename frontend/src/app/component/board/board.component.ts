@@ -64,19 +64,28 @@ export class BoardComponent implements OnInit {
     this.openCurrentTaskOverview = status;
   }
 
-  replaceTask(updatedTask: any) {
-    const index = this.allTasks.findIndex((task) => task.id === updatedTask.id);
+  replaceTask(taskId: any) {
+    const index = this.allTasks.findIndex((task) => task.id === taskId.id);
     if (index !== -1) {
-      this.allTasks[index] = updatedTask;
+      this.allTasks[index] = taskId;
     }
   }
 
-  handleTaskUpdate(updatedTask: any) {
-    this.replaceTask(updatedTask);
+  handleTaskUpdate(taskId: any) {
+    this.replaceTask(taskId);
   }
 
-  handleTaskCreated(updatedTask: any) {
-    this.allTasks.push(updatedTask);
+  handleTaskCreated(taskId: any) {
+    this.allTasks.push(taskId);
+  }
+
+  handleTaskDeletion(taskId: string) {
+    const currentTaskIndex = this.allTasks.findIndex(
+      (task) => task.id === taskId
+    );
+    if (currentTaskIndex !== -1) {
+      this.allTasks.splice(currentTaskIndex, 1);
+    }
   }
 
   toggleTaskOverview(value: any) {
