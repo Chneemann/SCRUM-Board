@@ -28,6 +28,18 @@ export class BoardComponent implements OnInit {
     this.loadDatabaseUsers();
   }
 
+  //  Database
+
+  async loadDatabaseTasks() {
+    this.allTasks = await this.dbService.loadTasks();
+  }
+
+  async loadDatabaseUsers() {
+    this.allUsers = await this.dbService.loadUsers();
+  }
+
+  //  Drag & Drop
+
   dragAndDrop() {
     this.dragDropService.itemDropped.subscribe(({ id, status }) => {
       this.handleItemDropped(id, status);
@@ -43,13 +55,7 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  async loadDatabaseTasks() {
-    this.allTasks = await this.dbService.loadTasks();
-  }
-
-  async loadDatabaseUsers() {
-    this.allUsers = await this.dbService.loadUsers();
-  }
+  //  Tasks
 
   addTask(status: string) {
     this.openCurrentTaskOverview = status;

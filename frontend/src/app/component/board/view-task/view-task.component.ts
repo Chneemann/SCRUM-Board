@@ -29,6 +29,10 @@ export class ViewTaskComponent {
     this.openTaskOverview.emit(taskId);
   }
 
+  startDragging() {
+    this.openDescription = !this.openDescription;
+  }
+
   toggleDescription(taskIndex: string, event: MouseEvent) {
     event.stopPropagation();
     this.openDescription = !this.openDescription;
