@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
+  isUserLogin: boolean = false;
   passwordFieldType: string = 'password';
   passwordIcon: string = './../../../assets/img/close-eye.svg';
 
@@ -25,10 +26,23 @@ export class AuthService {
         : './../../../assets/img/close-eye.svg';
   }
 
-  private getAuthHeaders(): HttpHeaders {
-    const authToken = localStorage.getItem('authToken');
-    return new HttpHeaders({
-      Authorization: `token ${authToken}`,
+  checkAuthUser() {
+    const headers = this.getAuthHeaders();
+    new Promise((resolve, reject) => {
+      this.http.get<any>(environment.baseUrl + '/auth/', { headers }).subscribe(
+        (response) => {
+          this.isUserLogin = true;
+          resolve(response);
+        },
+        (error) => {
+          if (error.status === 401) {
+            this.isUserLogin = false;
+            this.router.navigate(['/login']);
+          } else {
+            reject(error);
+          }
+        }
+      );
     });
   }
 
@@ -54,6 +68,13 @@ export class AuthService {
           localStorage.setItem('authToken', authToken);
           this.router.navigate(['/board/']);
         });
+    });
+  }
+
+  private getAuthHeaders(): HttpHeaders {
+    const authToken = localStorage.getItem('authToken');
+    return new HttpHeaders({
+      Authorization: `token ${authToken}`,
     });
   }
 }

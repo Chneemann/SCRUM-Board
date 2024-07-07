@@ -33,6 +33,15 @@ class LogoutView(APIView):
     def get(self, request, format=None):
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
+      
+class AuthView(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAdminUser]
+  
+    def get(self, request, format=None):
+        if request.user.is_authenticated:
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 class TaskItemView(APIView):
     authentication_classes = [authentication.TokenAuthentication]

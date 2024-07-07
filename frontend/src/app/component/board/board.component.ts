@@ -4,6 +4,7 @@ import { AddTaskComponent } from './add-task/add-task.component';
 import { DatabaseService } from '../../services/database.service';
 import { DragDropService } from '../../services/drag-drop.service';
 import { HeaderComponent } from '../../shared/component/header/header.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-board',
@@ -20,14 +21,18 @@ export class BoardComponent implements OnInit {
 
   constructor(
     public dbService: DatabaseService,
-    public dragDropService: DragDropService
+    public dragDropService: DragDropService,
+    public authService: AuthService
   ) {
-    this.handleDragAndDrop();
+    this.authService.checkAuthUser();
   }
 
   async ngOnInit() {
-    this.loadDatabaseTasks();
-    this.loadDatabaseUsers();
+    if (this.authService.isUserLogin) {
+      this.loadDatabaseTasks();
+      this.loadDatabaseUsers();
+      this.handleDragAndDrop();
+    }
   }
 
   //  Database

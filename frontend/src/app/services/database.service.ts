@@ -37,7 +37,7 @@ export class DatabaseService {
     url: string,
     body?: any
   ): Promise<any> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       let request;
 
       switch (method) {
@@ -52,10 +52,16 @@ export class DatabaseService {
           break;
       }
 
-      request.subscribe((data) => {
-        this.dataUploaded = true;
-        resolve(method === 'DELETE' ? true : data);
-      });
+      request.subscribe(
+        (data) => {
+          this.dataUploaded = true;
+          resolve(method === 'DELETE' ? true : data);
+        },
+        (error) => {
+          console.error('Error occurred:', error);
+          reject(error);
+        }
+      );
     });
   }
 

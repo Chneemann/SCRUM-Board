@@ -1,3 +1,4 @@
+@if (this.authService.isUserLogin) {
 <app-header></app-header>
 <section>
   <div class="status">
@@ -112,4 +113,4 @@
   (taskCreated)="handleTaskCreated($event)"
   (taskDeleted)="handleTaskDeletion($event)"
 ></app-add-task>
-}
+} }
