@@ -18,10 +18,8 @@ export class ViewTaskComponent {
   @Output() openTaskOverview = new EventEmitter<string>();
   @Output() startDraggingStatus = new EventEmitter<string>();
 
-  openDescription: boolean = false;
-  openDescriptionTaskId: string = '';
-  openDate: boolean = false;
-  openDateTaskId: string = '';
+  openDescriptions: { [taskId: string]: boolean } = {};
+  openDates: { [taskId: string]: boolean } = {};
 
   constructor(
     private taskColorService: TaskColorsService,
@@ -34,22 +32,26 @@ export class ViewTaskComponent {
 
   startDragging(status: string) {
     this.startDraggingStatus.emit(status);
-    this.openDescription = false;
-    this.openDate = false;
+    this.openDescriptions = {};
+    this.openDates = {};
   }
 
-  toggleDescription(taskIndex: string, event: MouseEvent) {
-    console.log(taskIndex, event);
-
+  toggleDescription(taskId: string, event: MouseEvent) {
     event.stopPropagation();
-    this.openDescription = !this.openDescription;
-    this.openDescriptionTaskId = taskIndex;
+    this.openDescriptions[taskId] = !this.openDescriptions[taskId];
   }
 
-  toggleDate(taskIndex: string, event: MouseEvent) {
+  toggleDate(taskId: string, event: MouseEvent) {
     event.stopPropagation();
-    this.openDate = !this.openDate;
-    this.openDateTaskId = taskIndex;
+    this.openDates[taskId] = !this.openDates[taskId];
+  }
+
+  isDescriptionOpen(taskId: string): boolean {
+    return !!this.openDescriptions[taskId];
+  }
+
+  isDateOpen(taskId: string): boolean {
+    return !!this.openDates[taskId];
   }
 
   firstLetter(word: string) {
@@ -73,7 +75,7 @@ export class ViewTaskComponent {
 
     const ampm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12;
-    hours = hours ? hours : 12; // die Stunde '0' sollte '12' sein
+    hours = hours ? hours : 12;
     const strHours = String(hours).padStart(2, '0');
 
     return `${day}.${month}.${year} ${strHours}:${minutes}:${seconds} ${ampm}`;

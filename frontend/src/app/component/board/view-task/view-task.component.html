@@ -31,12 +31,12 @@
     </div>
     }
   </div>
-  @if (openDescription && openDescriptionTaskId === task.id) {
+  @if (isDescriptionOpen(task.id)) {
   <div class="dotted-line"></div>
   <div class="description">
     <p>{{ task.description }}</p>
   </div>
-  } @if (openDate && openDateTaskId === task.id) {
+  } @if (isDateOpen(task.id)) {
   <div class="dotted-line"></div>
   <div class="date">
     <p>{{ formatDate(task.created_at) }}</p>
