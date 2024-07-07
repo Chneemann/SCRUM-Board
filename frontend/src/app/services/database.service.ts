@@ -21,49 +21,47 @@ export class DatabaseService {
     return lastValueFrom(this.http.get(url));
   }
 
-  deleteTask(postId: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.http
-        .delete<any>(environment.baseUrl + '/tasks/' + postId + '/')
-        .subscribe(
-          (data) => {
-            this.dataUploaded = true;
-            resolve(true);
-          },
-          (error) => {
-            reject(error);
-          }
-        );
+  // Database query
+
+  performRequest(
+    method: 'DELETE' | 'POST' | 'PUT',
+    url: string,
+    body?: any
+  ): Promise<any> {
+    return new Promise((resolve) => {
+      let request;
+
+      switch (method) {
+        case 'DELETE':
+          request = this.http.delete<any>(url);
+          break;
+        case 'POST':
+          request = this.http.post<any>(url, body);
+          break;
+        case 'PUT':
+          request = this.http.put<any>(url, body);
+          break;
+      }
+
+      request.subscribe((data) => {
+        this.dataUploaded = true;
+        resolve(method === 'DELETE' ? true : data);
+      });
     });
+  }
+
+  deleteTask(postId: string): Promise<any> {
+    const url = `${environment.baseUrl}/tasks/${postId}/`;
+    return this.performRequest('DELETE', url);
   }
 
   createTask(body: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.http.post<any>(environment.baseUrl + '/tasks/', body).subscribe(
-        (data) => {
-          this.dataUploaded = true;
-          resolve(data);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
+    const url = `${environment.baseUrl}/tasks/`;
+    return this.performRequest('POST', url, body);
   }
 
   updateTask(body: any, postId: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.http
-        .put<any>(environment.baseUrl + '/tasks/' + postId + '/', body)
-        .subscribe(
-          (data) => {
-            this.dataUploaded = true;
-            resolve(data);
-          },
-          (error) => {
-            reject(error);
-          }
-        );
-    });
+    const url = `${environment.baseUrl}/tasks/${postId}/`;
+    return this.performRequest('PUT', url, body);
   }
 }

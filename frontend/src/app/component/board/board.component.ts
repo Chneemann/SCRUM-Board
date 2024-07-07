@@ -91,6 +91,7 @@ export class BoardComponent implements OnInit {
   toggleTaskOverview(value: any) {
     this.openCurrentTaskOverview = value;
     if (this.dbService.dataUploaded) {
+      this.loadDatabaseTasks();
       this.dbService.dataUploaded = false;
     }
   }
