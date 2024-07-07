@@ -16,8 +16,13 @@
   <p>{{ task.title }}</p>
   @if (task.description) {
   <div class="footer">
-    <div class="page-svg" (click)="toggleDescription(task.id, $event)">
-      <img src="./../../../../assets/img/page.svg" alt="" />
+    <div class="images">
+      <div class="description-svg" (click)="toggleDescription(task.id, $event)">
+        <img src="./../../../../assets/img/description.svg" alt="" />
+      </div>
+      <div class="calendar-svg" (click)="toggleDate(task.id, $event)">
+        <img src="./../../../../assets/img/calendar.svg" alt="" />
+      </div>
     </div>
     @for (user of allUsers; track user) {
     <div class="members">
@@ -30,6 +35,11 @@
   <div class="dotted-line"></div>
   <div class="description">
     <p>{{ task.description }}</p>
+  </div>
+  } @if (openDate && openDateTaskId === task.id) {
+  <div class="dotted-line"></div>
+  <div class="date">
+    <p>{{ formatDate(task.created_at) }}</p>
   </div>
   } }
 </section>

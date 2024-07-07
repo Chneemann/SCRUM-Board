@@ -12,7 +12,8 @@ section {
     margin: 12px 0;
     border: 1px dashed var(--taskBorderColor);
   }
-  .description {
+  .description,
+  .date {
     height: fit-content;
     p {
       padding-bottom: 6px;
@@ -40,7 +41,14 @@ section {
   }
 }
 
-.page-svg {
+.images {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.description-svg,
+.calendar-svg {
   height: 24px;
   img {
     height: 24px;
