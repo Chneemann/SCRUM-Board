@@ -23,15 +23,18 @@ export class BoardComponent implements OnInit {
     public dbService: DatabaseService,
     public dragDropService: DragDropService,
     public authService: AuthService
-  ) {
-    this.authService.checkAuthUser();
-  }
+  ) {}
 
   async ngOnInit() {
-    if (this.authService.isUserLogin) {
-      this.loadDatabaseTasks();
-      this.loadDatabaseUsers();
-      this.handleDragAndDrop();
+    try {
+      const loginSuccessful = await this.authService.checkAuthUser();
+      if (loginSuccessful) {
+        this.loadDatabaseTasks();
+        this.loadDatabaseUsers();
+        this.handleDragAndDrop();
+      }
+    } catch (error) {
+      console.error('Error during login check:', error);
     }
   }
 

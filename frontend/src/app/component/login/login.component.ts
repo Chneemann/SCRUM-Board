@@ -23,7 +23,11 @@ export class LoginComponent {
   constructor(public authService: AuthService, private router: Router) {}
 
   guestLogin() {
-    console.log('guest login');
+    const body = {
+      username: 'guest',
+      password: '1Fv^39;b&p',
+    };
+    this.authService.login(body);
   }
 
   onSubmit(ngForm: NgForm) {

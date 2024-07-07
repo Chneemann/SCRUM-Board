@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   isUserLogin: boolean = false;
+  currentUserId: string = '';
   passwordFieldType: string = 'password';
   passwordIcon: string = './../../../assets/img/close-eye.svg';
 
@@ -26,21 +27,30 @@ export class AuthService {
         : './../../../assets/img/close-eye.svg';
   }
 
-  checkAuthUser() {
+  checkUserId(): Promise<boolean> {
     const headers = this.getAuthHeaders();
-    new Promise((resolve, reject) => {
+    return new Promise<boolean>((resolve) => {
+      this.http
+        .get<any>(environment.baseUrl + '/auth/', { headers })
+        .subscribe((response) => {
+          console.log(response);
+        });
+    });
+  }
+
+  checkAuthUser(): Promise<boolean> {
+    const headers = this.getAuthHeaders();
+    return new Promise<boolean>((resolve) => {
       this.http.get<any>(environment.baseUrl + '/auth/', { headers }).subscribe(
         (response) => {
+          this.currentUserId = response;
           this.isUserLogin = true;
-          resolve(response);
+          resolve(true);
         },
         (error) => {
-          if (error.status === 401) {
-            this.isUserLogin = false;
-            this.router.navigate(['/login']);
-          } else {
-            reject(error);
-          }
+          this.isUserLogin = false;
+          this.router.navigate(['/login']);
+          resolve(false);
         }
       );
     });
@@ -60,14 +70,19 @@ export class AuthService {
   }
 
   login(body: any): Promise<any> {
-    return new Promise(() => {
-      this.http
-        .post<any>(environment.baseUrl + '/login/', body)
-        .subscribe((data) => {
+    return new Promise((reject) => {
+      this.http.post<any>(environment.baseUrl + '/login/', body).subscribe(
+        (data) => {
           let authToken = data.toString();
           localStorage.setItem('authToken', authToken);
           this.router.navigate(['/board/']);
-        });
+        },
+        (error) => {
+          console.log(error);
+
+          reject(error);
+        }
+      );
     });
   }
 

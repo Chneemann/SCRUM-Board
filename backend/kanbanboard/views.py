@@ -3,14 +3,11 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import authentication, permissions, generics
-from django.contrib.auth.models import User
+from rest_framework import authentication, generics
 from kanbanboard.models import TaskItem
-from kanbanboard.serializers import TaskItemSerializer, UserSerializer
+from kanbanboard.serializers import  TaskItemSerializer, UserSerializer
 from django.contrib.auth import get_user_model
-from rest_framework.authentication import TokenAuthentication, authenticate
 from rest_framework import status
-from django.contrib.auth import logout
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
@@ -28,7 +25,6 @@ class LoginView(ObtainAuthToken):
         
 class LogoutView(APIView):
     authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAdminUser]
   
     def get(self, request, format=None):
         request.user.auth_token.delete()
@@ -36,16 +32,14 @@ class LogoutView(APIView):
       
 class AuthView(APIView):
     authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAdminUser]
   
     def get(self, request, format=None):
         if request.user.is_authenticated:
-            return Response(status=status.HTTP_200_OK)
+            return Response(request.user.id, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
-
+      
 class TaskItemView(APIView):
     authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAdminUser]
     
     def get_object(self, pk):
         try:

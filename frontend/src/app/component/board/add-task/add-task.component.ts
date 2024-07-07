@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { TaskColorsService } from '../../../services/task-colors.service';
 import { Task } from '../../../interfaces/task.interface';
 import { DatabaseService } from '../../../services/database.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-add-task',
@@ -21,12 +22,14 @@ export class AddTaskComponent implements OnInit {
   @Output() taskCreated = new EventEmitter<any>();
   @Output() taskDeleted = new EventEmitter<any>();
 
+  startAssignedValue: string = '0';
   isThisANewTask: boolean = false;
   isCurrentTaskIdNumber: boolean = false;
 
   constructor(
     private taskColorService: TaskColorsService,
-    public dbService: DatabaseService
+    public dbService: DatabaseService,
+    public authService: AuthService
   ) {}
 
   taskData: Task = {
@@ -36,6 +39,7 @@ export class AddTaskComponent implements OnInit {
     author: '1',
     created_at: '',
     color: 'yellow',
+    assigned: [],
   };
 
   ngOnInit() {
@@ -62,6 +66,7 @@ export class AddTaskComponent implements OnInit {
     this.taskData.status = this.allTasks[taskIndex].status;
     this.taskData.color = this.allTasks[taskIndex].color;
     this.taskData.author = this.allTasks[taskIndex].author;
+    this.taskData.assigned = this.allTasks[taskIndex].assigned;
   }
 
   findColor(color: string) {
@@ -98,12 +103,14 @@ export class AddTaskComponent implements OnInit {
   }
 
   createTask() {
+    this.taskData.assigned.push(this.authService.currentUserId);
     const body = {
       title: this.taskData.title,
       description: this.taskData.description,
       color: this.taskData.color,
       status: this.taskData.status,
       author: this.taskData.author,
+      assigned: this.taskData.assigned,
     };
     this.dbService.createTask(body).then((updatedTask) => {
       this.taskCreated.emit(updatedTask);
@@ -118,6 +125,7 @@ export class AddTaskComponent implements OnInit {
       title: this.taskData.title,
       description: this.taskData.description,
       color: this.taskData.color,
+      assigned: this.taskData.assigned,
     };
     this.dbService.updateTask(body, this.currentTaskId).then((updatedTask) => {
       this.taskUpdated.emit(updatedTask);
@@ -125,5 +133,15 @@ export class AddTaskComponent implements OnInit {
         this.taskOverviewClose('');
       }
     });
+  }
+
+  addAssigned(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedValue = selectElement.value;
+    if (
+      !this.taskData.assigned.some((assigned) => assigned === selectedValue)
+    ) {
+      this.taskData.assigned.push(selectedValue);
+    }
   }
 }

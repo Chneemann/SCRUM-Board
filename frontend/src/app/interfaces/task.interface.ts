@@ -6,4 +6,5 @@ export interface Task {
   author: string;
   created_at: string;
   color: string;
+  assigned: string[];
 }

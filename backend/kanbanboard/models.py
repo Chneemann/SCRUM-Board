@@ -1,13 +1,12 @@
-from urllib import request
 from django.db import models
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser
 
 class TaskItem(models.Model):
     title = models.CharField(max_length=50,blank=True)
     description = models.TextField(max_length=500,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,blank=True)
+    assigned = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='tasks_assigned', blank=True)
     status = models.CharField(max_length=15,blank=True)
     color = models.CharField(max_length=15, default='yellow')
     

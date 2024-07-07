@@ -28,6 +28,10 @@ section {
   margin-top: 12px;
   .members {
     display: flex;
+    gap: 6px;
+  }
+  .circle {
+    display: flex;
     align-items: center;
     justify-content: center;
     background-color: $white;

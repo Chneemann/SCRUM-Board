@@ -24,12 +24,16 @@
         <img src="./../../../../assets/img/calendar.svg" alt="" />
       </div>
     </div>
-    @for (user of allUsers; track user) {
     <div class="members">
-      @if (task.author === user.id) {
-      {{ firstLetter(user.first_name) }}{{ firstLetter(user.last_name) }} }
+      @for (user of allUsers; track user) {
+      <!-- -->
+      @for (assigned of task.assigned; track assigned) { @if (assigned ==
+      user.id) {
+      <div class="circle">
+        {{ firstLetter(user.first_name) }}{{ firstLetter(user.last_name) }}
+      </div>
+      } } }
     </div>
-    }
   </div>
   @if (isDescriptionOpen(task.id)) {
   <div class="dotted-line"></div>
