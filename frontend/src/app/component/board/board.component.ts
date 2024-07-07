@@ -3,11 +3,12 @@ import { ViewTaskComponent } from './view-task/view-task.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { DatabaseService } from '../../services/database.service';
 import { DragDropService } from '../../services/drag-drop.service';
+import { HeaderComponent } from '../../shared/component/header/header.component';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [ViewTaskComponent, AddTaskComponent],
+  imports: [ViewTaskComponent, AddTaskComponent, HeaderComponent],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })

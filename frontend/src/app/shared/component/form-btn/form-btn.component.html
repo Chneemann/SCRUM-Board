@@ -1,0 +1,15 @@
+<div class="input-container">
+  @if (class == "btn-google") {
+  <div class="google-image"></div>
+  }
+  <input
+    class="{{ class }}"
+    type="{{ type }}"
+    value="{{ value }}"
+    [disabled]="disabled"
+    [style.padding-right.px]="
+      img == 'check' && !disabled ? '44' : img !== '' && !disabled ? '36' : ''
+    "
+  />
+  <div class="background-image"></div>
+</div>

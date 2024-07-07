@@ -1,0 +1,80 @@
+<section>
+  <div class="login">
+    <div class="headline">Login</div>
+    <form
+      id="form"
+      #taskForm="ngForm"
+      (ngSubmit)="onSubmit(taskForm)"
+      onsubmit="return false"
+    >
+      <div class="input-fields">
+        <input
+          type="mail"
+          id="mail"
+          name="mail"
+          #mail="ngModel"
+          placeholder="Username"
+          class="custom-input"
+          autocomplete="email"
+          [(ngModel)]="loginData.username"
+          required
+        />
+        @if(!loginData.username) {
+        <img class="custom-img" src="./../../../assets/img/mail.svg" alt="" />
+        } @else {
+        <img class="custom-img" alt="" />
+        }
+        <div class="error-msg">
+          @if (!mail.valid && mail.touched) {
+          <p>Please enter your email</p>
+          }
+        </div>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          #password="ngModel"
+          [type]="authService.passwordFieldType"
+          placeholder="Password"
+          class="custom-input"
+          autocomplete="current-password"
+          pattern="[^<>]*"
+          [(ngModel)]="loginData.password"
+          minlength="6"
+          required
+        />
+        @if(!loginData.password) {
+        <img class="custom-img" src="./../../../assets/img/lock.svg" alt="" />
+        } @else {
+        <img
+          class="passwordEye"
+          *ngIf="isPasswordIconVisible"
+          (click)="authService.togglePasswordVisibility()"
+          [src]="authService.passwordIcon"
+        />
+        }
+        <div class="error-msg">
+          @if (!password.valid && password.touched) {
+          <p>Please enter your password</p>
+          }
+        </div>
+        <div class="forgot-pw">
+          <a routerLink="/forgot-pw">Forgot your password?</a>
+        </div>
+      </div>
+      <div class="buttons">
+        <app-form-btn
+          [class]="'btn-submit'"
+          [type]="'submit'"
+          [value]="'Login'"
+        ></app-form-btn>
+        <app-form-btn
+          [class]="'btn-submit'"
+          [type]="'button'"
+          [value]="'Guest Login'"
+          (click)="guestLogin()"
+        ></app-form-btn>
+      </div>
+    </form>
+  </div>
+</section>

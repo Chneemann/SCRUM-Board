@@ -1,0 +1,44 @@
+@import "./../../../../assets/style/colors.scss";
+
+.btn-submit {
+  margin: 24px;
+  padding: 6px 18px;
+  width: fit-content;
+  box-shadow: 1px 1px 3px $gray;
+  border: 1px solid $light-gray;
+  border-radius: 3px;
+  background-color: $white;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover {
+    border: 1px solid $gray;
+    background-color: $light-gray;
+  }
+}
+
+// .btn-submit {
+//   width: fit-content;
+//   padding: 12px;
+//   margin: 12px;
+//   border-radius: 10px;
+//   border: 1px solid var(--black) !important;
+//   background-color: var(--light-gray);
+//   font-size: 23px;
+//   font-weight: 400;
+//   transition: 125ms ease-in-out;
+//   cursor: pointer;
+//   &:hover:not(:disabled) {
+//     box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.3);
+//     background-color: var(--light-blue) !important;
+//     border: 1px solid var(--light-blue) !important;
+//     cursor: pointer;
+//   }
+//   &:not(:disabled) {
+//     background-color: var(--very-dark-blue) !important;
+//     color: var(--white);
+//   }
+//   &:hover {
+//     cursor: default;
+//   }
+// }

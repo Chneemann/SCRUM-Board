@@ -1,6 +1,7 @@
 from urllib import request
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 
 class TaskItem(models.Model):
     title = models.CharField(max_length=50,blank=True)
@@ -12,4 +13,3 @@ class TaskItem(models.Model):
     
     def __str__(self):
         return f'({self.id}) {self.title} - {self.description}'
-
