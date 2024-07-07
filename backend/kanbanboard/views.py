@@ -10,7 +10,7 @@ from kanbanboard.serializers import TaskItemSerializer, UserSerializer
 from django.contrib.auth import get_user_model
 from rest_framework.authentication import TokenAuthentication, authenticate
 from rest_framework import status
-
+from django.contrib.auth import logout
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
@@ -24,7 +24,15 @@ class LoginView(ObtainAuthToken):
         token, created = Token.objects.get_or_create(user=user)
         return Response({
             token.key,
-        })  
+        }) 
+        
+class LogoutView(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAdminUser]
+  
+    def get(self, request, format=None):
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
 
 class TaskItemView(APIView):
     authentication_classes = [authentication.TokenAuthentication]

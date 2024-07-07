@@ -32,11 +32,7 @@ export class LoginComponent {
         username: this.loginData.username,
         password: this.loginData.password,
       };
-      this.authService.login(body).then((login) => {
-        let authToken = login.toString();
-        localStorage.setItem('authToken', authToken);
-        this.router.navigate(['/board']);
-      });
+      this.authService.login(body);
     }
   }
 }

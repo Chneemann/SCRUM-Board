@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ export class AuthService {
   passwordFieldType: string = 'password';
   passwordIcon: string = './../../../assets/img/close-eye.svg';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   togglePasswordVisibility() {
     this.passwordFieldType =
@@ -24,16 +25,35 @@ export class AuthService {
         : './../../../assets/img/close-eye.svg';
   }
 
-  login(body: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.http.post<any>(environment.baseUrl + '/login/', body).subscribe(
-        (data) => {
+  private getAuthHeaders(): HttpHeaders {
+    const authToken = localStorage.getItem('authToken');
+    return new HttpHeaders({
+      Authorization: `token ${authToken}`,
+    });
+  }
+
+  logout(): Promise<any> {
+    const headers = this.getAuthHeaders();
+    return new Promise((resolve) => {
+      this.http
+        .get<any>(environment.baseUrl + '/logout/', { headers })
+        .subscribe((data) => {
+          localStorage.removeItem('authToken');
+          this.router.navigate(['/login/']);
           resolve(data);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
+        });
+    });
+  }
+
+  login(body: any): Promise<any> {
+    return new Promise(() => {
+      this.http
+        .post<any>(environment.baseUrl + '/login/', body)
+        .subscribe((data) => {
+          let authToken = data.toString();
+          localStorage.setItem('authToken', authToken);
+          this.router.navigate(['/board/']);
+        });
     });
   }
 }
