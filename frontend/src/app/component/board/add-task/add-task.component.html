@@ -71,7 +71,7 @@
               (change)="addAssigned($event)"
               [(ngModel)]="startAssignedValue"
             >
-              <option value="0" selected>assign someone</option>
+              <option value="null" selected>assign someone</option>
               @for (user of allUsers; track user) {
               <!---->
               @if (user.id !== authService.currentUserId &&
@@ -81,6 +81,19 @@
               </option>
               } }
             </select>
+            <div class="assigned-details">
+              @for (user of allUsers; track user) {
+              <!-- -->
+              @for (assigned of clonedTaskDataAssigned; track assigned) { @if
+              (assigned == user.id) {
+              <p>
+                - {{ user.first_name }} {{ user.last_name }}
+                <span (click)="deleteAssigned(user.id)"
+                  ><img src="./../../../../assets/img/close.svg" alt=""
+                /></span>
+              </p>
+              } } }
+            </div>
           </div>
         </div>
         <div class="buttons">

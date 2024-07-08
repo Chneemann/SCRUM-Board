@@ -22,7 +22,7 @@ export class AddTaskComponent implements OnInit {
   @Output() taskCreated = new EventEmitter<any>();
   @Output() taskDeleted = new EventEmitter<any>();
 
-  startAssignedValue: string = '0';
+  startAssignedValue: string = 'null';
   clonedTaskDataAssigned: string[] = [];
   isThisANewTask: boolean = false;
   isCurrentTaskIdNumber: boolean = false;
@@ -140,12 +140,15 @@ export class AddTaskComponent implements OnInit {
   addAssigned(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     const selectedValue = selectElement.value;
+
     if (
+      selectedValue !== 'null' &&
       !this.clonedTaskDataAssigned.some(
         (assigned) => assigned === selectedValue
       )
     ) {
       this.clonedTaskDataAssigned.push(selectedValue);
+      console.log(this.clonedTaskDataAssigned);
     }
   }
 
@@ -153,5 +156,12 @@ export class AddTaskComponent implements OnInit {
     return this.clonedTaskDataAssigned.some(
       (assigned) => assigned === selectedValue
     );
+  }
+
+  deleteAssigned(selectedValue: string) {
+    if (this.checkAssigned(selectedValue)) {
+      let index = this.clonedTaskDataAssigned.indexOf(selectedValue);
+      this.clonedTaskDataAssigned.splice(index, 1);
+    }
   }
 }

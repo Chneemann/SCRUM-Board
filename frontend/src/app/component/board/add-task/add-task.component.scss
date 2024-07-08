@@ -73,6 +73,41 @@ form {
       border-bottom-color: var(--taskBorderColor);
     }
   }
+  .assigned-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin: 6px 0;
+    padding-right: 18px;
+    height: 170px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    p {
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 6px;
+      margin: 3px;
+      width: 100%;
+      border-radius: 6px;
+      &:hover {
+        background-color: $light-gray;
+      }
+      span {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        right: 0;
+        cursor: pointer;
+        filter: brightness(0) saturate(100%) invert(63%) sepia(0%) saturate(1%)
+          hue-rotate(153deg) brightness(93%) contrast(85%);
+        &:hover {
+          filter: brightness(0) saturate(100%) invert(0%) sepia(0%)
+            saturate(16%) hue-rotate(338deg) brightness(93%) contrast(107%);
+        }
+      }
+    }
+  }
 }
 
 // Color
