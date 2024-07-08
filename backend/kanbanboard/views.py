@@ -4,8 +4,8 @@ from django.shortcuts import get_object_or_404, render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, generics
-from kanbanboard.models import TaskItem
-from kanbanboard.serializers import  TaskItemSerializer, UserSerializer
+from kanbanboard.models import TaskItem, SubtaskItem
+from kanbanboard.serializers import  TaskItemSerializer, SubtaskItemSerializer, UserSerializer
 from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -75,7 +75,25 @@ class TaskItemView(APIView):
         snippet = self.get_object(pk)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-      
+
+class SubtaskItemView(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    
+    def get_object(self, pk):
+        try:
+            return SubtaskItem.objects.get(pk=pk)
+        except SubtaskItem.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk=None, format=None):
+        if pk:
+            task = SubtaskItem.objects.get(pk=pk)
+            serializer = SubtaskItemSerializer(task)
+        else:
+            tasks = SubtaskItem.objects.all()
+            serializer = SubtaskItemSerializer(tasks, many=True)
+        return Response(serializer.data)
+
 class UserListView(generics.ListAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer

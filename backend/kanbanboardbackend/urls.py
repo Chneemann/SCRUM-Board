@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from kanbanboard.views import TaskItemView, UserListView, LoginView, LogoutView, AuthView
+from kanbanboard.views import TaskItemView, SubtaskItemView, UserListView, LoginView, LogoutView, AuthView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('tasks/', TaskItemView.as_view()),
+    path('subtasks/', SubtaskItemView.as_view()),
     path('tasks/<int:pk>/', TaskItemView.as_view()),
     path('users/', UserListView.as_view()),
     path('auth/', AuthView.as_view()),

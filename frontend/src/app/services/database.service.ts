@@ -24,6 +24,12 @@ export class DatabaseService {
     return lastValueFrom(this.http.get(url, { headers }));
   }
 
+  loadSubtasks(): Promise<any> {
+    const url = environment.baseUrl + '/subtasks/';
+    const headers = this.getAuthHeaders();
+    return lastValueFrom(this.http.get(url, { headers }));
+  }
+
   loadUsers(): Promise<any> {
     const url = environment.baseUrl + '/users/';
     const headers = this.getAuthHeaders();
