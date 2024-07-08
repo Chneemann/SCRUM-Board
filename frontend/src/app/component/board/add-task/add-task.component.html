@@ -60,23 +60,29 @@
             <option value="cyan">Cyan</option>
           </select>
         </div>
-        <select
-          id="assigned"
-          name="assigned"
-          class="color-form-field"
-          #assigned="ngModel"
-          (change)="addAssigned($event)"
-          [(ngModel)]="startAssignedValue"
-        >
-          <option value="0" selected>assign someone</option>
-          @for (user of allUsers; track user) {
-          <!---->
-          @if (user.id !== authService.currentUserId) {
-          <option value="{{ user.id }}">
-            {{ user.first_name }} {{ user.last_name }}
-          </option>
-          } }
-        </select>
+        <div class="subtasks-and-assigned">
+          <div class="subtask"></div>
+          <div class="assigned">
+            <select
+              id="assigned"
+              name="assigned"
+              class="assigned-form-field"
+              #assigned="ngModel"
+              (change)="addAssigned($event)"
+              [(ngModel)]="startAssignedValue"
+            >
+              <option value="0" selected>assign someone</option>
+              @for (user of allUsers; track user) {
+              <!---->
+              @if (user.id !== authService.currentUserId &&
+              !checkAssigned(user.id)) {
+              <option value="{{ user.id }}">
+                {{ user.first_name }} {{ user.last_name }}
+              </option>
+              } }
+            </select>
+          </div>
+        </div>
         <div class="buttons">
           @if(!isCurrentTaskIdNumber) {
           <div class="button" (click)="deleteTask()">Delete Task</div>

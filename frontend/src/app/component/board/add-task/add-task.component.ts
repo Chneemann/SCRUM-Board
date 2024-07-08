@@ -23,6 +23,7 @@ export class AddTaskComponent implements OnInit {
   @Output() taskDeleted = new EventEmitter<any>();
 
   startAssignedValue: string = '0';
+  clonedTaskDataAssigned: string[] = [];
   isThisANewTask: boolean = false;
   isCurrentTaskIdNumber: boolean = false;
 
@@ -67,6 +68,7 @@ export class AddTaskComponent implements OnInit {
     this.taskData.color = this.allTasks[taskIndex].color;
     this.taskData.author = this.allTasks[taskIndex].author;
     this.taskData.assigned = this.allTasks[taskIndex].assigned;
+    this.clonedTaskDataAssigned = [...this.taskData.assigned];
   }
 
   findColor(color: string) {
@@ -110,7 +112,7 @@ export class AddTaskComponent implements OnInit {
       color: this.taskData.color,
       status: this.taskData.status,
       author: this.taskData.author,
-      assigned: this.taskData.assigned,
+      assigned: this.clonedTaskDataAssigned,
     };
     this.dbService.createTask(body).then((updatedTask) => {
       this.taskCreated.emit(updatedTask);
@@ -125,7 +127,7 @@ export class AddTaskComponent implements OnInit {
       title: this.taskData.title,
       description: this.taskData.description,
       color: this.taskData.color,
-      assigned: this.taskData.assigned,
+      assigned: this.clonedTaskDataAssigned,
     };
     this.dbService.updateTask(body, this.currentTaskId).then((updatedTask) => {
       this.taskUpdated.emit(updatedTask);
@@ -139,9 +141,17 @@ export class AddTaskComponent implements OnInit {
     const selectElement = event.target as HTMLSelectElement;
     const selectedValue = selectElement.value;
     if (
-      !this.taskData.assigned.some((assigned) => assigned === selectedValue)
+      !this.clonedTaskDataAssigned.some(
+        (assigned) => assigned === selectedValue
+      )
     ) {
-      this.taskData.assigned.push(selectedValue);
+      this.clonedTaskDataAssigned.push(selectedValue);
     }
+  }
+
+  checkAssigned(selectedValue: string) {
+    return this.clonedTaskDataAssigned.some(
+      (assigned) => assigned === selectedValue
+    );
   }
 }

@@ -3,7 +3,7 @@
 .content {
   position: relative;
   width: 600px;
-  height: 400px;
+  height: 500px;
   border-radius: 6px;
   border: 1px solid $gray;
   background-color: var(--taskColor);
@@ -45,6 +45,33 @@ form {
   &:focus {
     background-color: $very-light-gray;
     border-bottom-color: var(--taskBorderColor);
+  }
+}
+
+.subtasks-and-assigned {
+  display: flex;
+  width: 100%;
+}
+
+.subtask {
+  width: 50%;
+}
+
+.assigned {
+  width: 50%;
+  .assigned-form-field {
+    border: none;
+    border-bottom: 2px solid $medium-gray;
+    padding: 8px 0;
+    font-size: 18px;
+    font-weight: 400;
+    width: 100%;
+    background-color: var(--taskColor);
+    outline: none;
+    margin-bottom: 6px;
+    &:focus {
+      border-bottom-color: var(--taskBorderColor);
+    }
   }
 }
 
