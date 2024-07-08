@@ -7,4 +7,5 @@ export interface Task {
   created_at: string;
   color: string;
   assigned: string[];
+  subtask: string[];
 }

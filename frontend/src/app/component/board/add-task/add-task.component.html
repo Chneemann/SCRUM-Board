@@ -61,7 +61,18 @@
           </select>
         </div>
         <div class="subtasks-and-assigned">
-          <div class="subtask"></div>
+          <div class="subtask">
+            <input
+              type="text"
+              id="subtask"
+              name="subtask"
+              class="title-form-field"
+              #subtask="ngModel"
+              placeholder="Subtask..."
+              [(ngModel)]="taskData.subtask"
+              autocomplete="off"
+            />
+          </div>
           <div class="assigned">
             <select
               id="assigned"

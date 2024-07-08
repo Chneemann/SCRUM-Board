@@ -20,6 +20,9 @@
       <div class="description-svg" (click)="toggleDescription(task.id, $event)">
         <img src="./../../../../assets/img/description.svg" alt="" />
       </div>
+      <div class="checklist-svg" (click)="toggleChecklist(task.id, $event)">
+        <img src="./../../../../assets/img/checklist.svg" alt="" />
+      </div>
       <div class="calendar-svg" (click)="toggleDate(task.id, $event)">
         <img src="./../../../../assets/img/calendar.svg" alt="" />
       </div>
@@ -39,6 +42,11 @@
   <div class="dotted-line"></div>
   <div class="description">
     <p>{{ task.description }}</p>
+  </div>
+  } @if (isChecklistOpen(task.id)) {
+  <div class="dotted-line"></div>
+  <div class="checklist">
+    <p>{{ task.subtasks }}</p>
   </div>
   } @if (isDateOpen(task.id)) {
   <div class="dotted-line"></div>

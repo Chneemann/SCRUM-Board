@@ -19,6 +19,7 @@ export class ViewTaskComponent {
   @Output() startDraggingStatus = new EventEmitter<string>();
 
   openDescriptions: { [taskId: string]: boolean } = {};
+  openChecklist: { [taskId: string]: boolean } = {};
   openDates: { [taskId: string]: boolean } = {};
 
   constructor(
@@ -33,12 +34,18 @@ export class ViewTaskComponent {
   startDragging(status: string) {
     this.startDraggingStatus.emit(status);
     this.openDescriptions = {};
+    this.openChecklist = {};
     this.openDates = {};
   }
 
   toggleDescription(taskId: string, event: MouseEvent) {
     event.stopPropagation();
     this.openDescriptions[taskId] = !this.openDescriptions[taskId];
+  }
+
+  toggleChecklist(taskId: string, event: MouseEvent) {
+    event.stopPropagation();
+    this.openChecklist[taskId] = !this.openChecklist[taskId];
   }
 
   toggleDate(taskId: string, event: MouseEvent) {
@@ -48,6 +55,10 @@ export class ViewTaskComponent {
 
   isDescriptionOpen(taskId: string): boolean {
     return !!this.openDescriptions[taskId];
+  }
+
+  isChecklistOpen(taskId: string): boolean {
+    return !!this.openChecklist[taskId];
   }
 
   isDateOpen(taskId: string): boolean {

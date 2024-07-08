@@ -47,6 +47,7 @@ export class AddTaskComponent implements OnInit {
     author: '1',
     created_at: '',
     color: 'yellow',
+    subtask: [],
     assigned: [],
   };
 
@@ -101,14 +102,17 @@ export class AddTaskComponent implements OnInit {
   }
 
   deleteTask() {
-    this.dbService.deleteTask(this.currentTaskId).then((success) => {
-      if (success) {
-        this.taskDeleted.emit(this.currentTaskId);
-        if (this.dbService.dataUploaded) {
-          this.taskOverviewClose('');
+    const confirmed = confirm('Do you really want to delete the task?');
+    if (confirmed) {
+      this.dbService.deleteTask(this.currentTaskId).then((success) => {
+        if (success) {
+          this.taskDeleted.emit(this.currentTaskId);
+          if (this.dbService.dataUploaded) {
+            this.taskOverviewClose('');
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   createTask() {
