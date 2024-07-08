@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { TaskColorsService } from '../../../services/task-colors.service';
 import { Task } from '../../../interfaces/task.interface';
@@ -22,7 +29,7 @@ export class AddTaskComponent implements OnInit {
   @Output() taskCreated = new EventEmitter<any>();
   @Output() taskDeleted = new EventEmitter<any>();
 
-  startAssignedValue: string = 'null';
+  startAssignedValue: string | null = 'null';
   clonedTaskDataAssigned: string[] = [];
   isThisANewTask: boolean = false;
   isCurrentTaskIdNumber: boolean = false;
@@ -143,18 +150,16 @@ export class AddTaskComponent implements OnInit {
 
     if (
       selectedValue !== 'null' &&
-      !this.clonedTaskDataAssigned.some(
-        (assigned) => assigned === selectedValue
-      )
+      !this.clonedTaskDataAssigned.some((assigned) => assigned == selectedValue)
     ) {
       this.clonedTaskDataAssigned.push(selectedValue);
-      console.log(this.clonedTaskDataAssigned);
+      this.resetSelectValue();
     }
   }
 
   checkAssigned(selectedValue: string) {
     return this.clonedTaskDataAssigned.some(
-      (assigned) => assigned === selectedValue
+      (assigned) => assigned == selectedValue
     );
   }
 
@@ -162,6 +167,14 @@ export class AddTaskComponent implements OnInit {
     if (this.checkAssigned(selectedValue)) {
       let index = this.clonedTaskDataAssigned.indexOf(selectedValue);
       this.clonedTaskDataAssigned.splice(index, 1);
+      this.resetSelectValue();
     }
+  }
+
+  resetSelectValue(): void {
+    this.startAssignedValue = '';
+    setTimeout(() => {
+      this.startAssignedValue = 'null';
+    }, 0);
   }
 }

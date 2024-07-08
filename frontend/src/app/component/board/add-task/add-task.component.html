@@ -71,11 +71,13 @@
               (change)="addAssigned($event)"
               [(ngModel)]="startAssignedValue"
             >
-              <option value="null" selected>assign someone</option>
+              {{
+                startAssignedValue
+              }}
+              <option value="null">assign someone</option>
               @for (user of allUsers; track user) {
               <!---->
-              @if (user.id !== authService.currentUserId &&
-              !checkAssigned(user.id)) {
+              @if (!checkAssigned(user.id)) {
               <option value="{{ user.id }}">
                 {{ user.first_name }} {{ user.last_name }}
               </option>
