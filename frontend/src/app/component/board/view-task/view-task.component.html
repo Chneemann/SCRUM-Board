@@ -48,7 +48,7 @@
   <div class="subtasks">
     @for (subtask of allSubtasks; track subtask) {
     <!-- -->
-    @if (task.id == subtask.task) {
+    @if (task.id == subtask.task_id) {
     <p>- {{ subtask.title }}</p>
     } }
   </div>

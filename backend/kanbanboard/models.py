@@ -3,11 +3,11 @@ from django.conf import settings
 
 class SubtaskItem(models.Model):
     title = models.CharField(max_length=50,blank=True)
-    task = models.ForeignKey('TaskItem',on_delete=models.CASCADE,blank=True)
+    task_id = models.ForeignKey('TaskItem',on_delete=models.CASCADE,blank=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,blank=True)
     
     def __str__(self):
-        return f'({self.id}) {self.task} - {self.title} - {self.author}'
+        return f'({self.id}) {self.task_id} - {self.title} - {self.author}'
 
 class TaskItem(models.Model):
     title = models.CharField(max_length=50,blank=True)

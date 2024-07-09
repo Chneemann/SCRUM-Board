@@ -75,7 +75,7 @@
               (keydown.enter)="addSubtask(subtaskInputValue)"
             />
             <div class="subtask-details">
-              @for (subtask of taskData.subtasks; track subtask) {
+              @for (subtask of clonedTaskDataSubtasks; track subtask) {
               <!-- -->
               @if (checkSubtask(subtask) ) {
               <p>

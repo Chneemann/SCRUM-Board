@@ -13,6 +13,6 @@ export interface Task {
 export interface Subtask {
   id?: string;
   title: string;
-  task: string;
+  task_id: string;
   author: string;
 }

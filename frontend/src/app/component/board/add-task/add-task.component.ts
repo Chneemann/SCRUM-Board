@@ -26,6 +26,7 @@ export class AddTaskComponent implements OnInit {
   startAssignedValue: string | null = 'null';
   subtaskInputValue: string = '';
   clonedTaskDataAssigned: string[] = [];
+  clonedTaskDataSubtasks: string[] = [];
   isThisANewTask: boolean = false;
   isCurrentTaskIdNumber: boolean = false;
 
@@ -79,6 +80,7 @@ export class AddTaskComponent implements OnInit {
     this.taskData.assigned = this.allTasks[taskIndex].assigned;
     this.taskData.subtasks = this.loadSubtasks();
     this.clonedTaskDataAssigned = [...this.taskData.assigned];
+    this.clonedTaskDataSubtasks = [...this.taskData.subtasks];
   }
 
   findColor(color: string) {
@@ -190,26 +192,28 @@ export class AddTaskComponent implements OnInit {
   // Subtask
 
   loadSubtasks() {
-    return (this.taskData.subtasks = this.allSubtasks
-      .filter((subtask) => subtask.task === this.currentTaskId)
+    return (this.clonedTaskDataSubtasks = this.allSubtasks
+      .filter((subtask) => subtask.task_id === this.currentTaskId)
       .map((subtask) => subtask.title));
   }
 
   addSubtask(value: string) {
     if (value !== '') {
-      this.taskData.subtasks.push(value);
+      this.clonedTaskDataSubtasks.push(value);
       this.subtaskInputValue = '';
     }
   }
 
   checkSubtask(selectedValue: string) {
-    return this.taskData.subtasks.some((subtask) => subtask == selectedValue);
+    return this.clonedTaskDataSubtasks.some(
+      (subtask) => subtask == selectedValue
+    );
   }
 
   deleteSubtask(selectedValue: string) {
     if (this.checkSubtask(selectedValue)) {
-      let index = this.taskData.subtasks.indexOf(selectedValue);
-      this.taskData.subtasks.splice(index, 1);
+      let index = this.clonedTaskDataSubtasks.indexOf(selectedValue);
+      this.clonedTaskDataSubtasks.splice(index, 1);
     }
   }
 }
