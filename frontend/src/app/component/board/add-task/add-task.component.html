@@ -18,6 +18,7 @@
         (ngSubmit)="onSubmit(taskForm)"
         #taskForm="ngForm"
         onsubmit="return false"
+        (keydown)="preventEnterKey($event)"
       >
         <input
           type="text"
@@ -68,10 +69,23 @@
               name="subtask"
               class="title-form-field"
               #subtask="ngModel"
-              placeholder="Subtask..."
-              [(ngModel)]="taskData.subtask"
+              placeholder="Enter a subtask..."
+              [(ngModel)]="subtaskInputValue"
               autocomplete="off"
+              (keydown.enter)="addSubtask(subtaskInputValue)"
             />
+            <div class="subtask-details">
+              @for (subtask of taskData.subtasks; track subtask) {
+              <!-- -->
+              @if (checkSubtask(subtask) ) {
+              <p>
+                {{ subtask }}
+                <span (click)="deleteSubtask(subtask)"
+                  ><img src="./../../../../assets/img/close.svg" alt=""
+                /></span>
+              </p>
+              } }
+            </div>
           </div>
           <div class="assigned">
             <select
@@ -82,9 +96,6 @@
               (change)="addAssigned($event)"
               [(ngModel)]="startAssignedValue"
             >
-              {{
-                startAssignedValue
-              }}
               <option value="null">assign someone</option>
               @for (user of allUsers; track user) {
               <!---->
@@ -100,7 +111,7 @@
               @for (assigned of clonedTaskDataAssigned; track assigned) { @if
               (assigned == user.id) {
               <p>
-                - {{ user.first_name }} {{ user.last_name }}
+                {{ user.first_name }} {{ user.last_name }}
                 <span (click)="deleteAssigned(user.id)"
                   ><img src="./../../../../assets/img/close.svg" alt=""
                 /></span>

@@ -58,7 +58,8 @@ form {
   width: 47.5%;
 }
 
-.assigned {
+.assigned,
+.subtask {
   width: 47.5%;
   .assigned-form-field {
     border: none;
@@ -74,7 +75,8 @@ form {
       border-bottom-color: var(--taskBorderColor);
     }
   }
-  .assigned-details {
+  .assigned-details,
+  .subtask-details {
     display: flex;
     flex-direction: column;
     justify-content: start;

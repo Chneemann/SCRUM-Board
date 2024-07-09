@@ -7,5 +7,12 @@ export interface Task {
   created_at: string;
   color: string;
   assigned: string[];
-  subtask: string[];
+  subtasks: string[];
+}
+
+export interface Subtask {
+  id?: string;
+  title: string;
+  task: string;
+  author: string;
 }

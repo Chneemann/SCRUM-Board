@@ -1,15 +1,8 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { TaskColorsService } from '../../../services/task-colors.service';
-import { Task } from '../../../interfaces/task.interface';
+import { Subtask, Task } from '../../../interfaces/task.interface';
 import { DatabaseService } from '../../../services/database.service';
 import { AuthService } from '../../../services/auth.service';
 
@@ -23,6 +16,7 @@ import { AuthService } from '../../../services/auth.service';
 export class AddTaskComponent implements OnInit {
   @Input() currentTaskId: string = '';
   @Input() allTasks: Task[] = [];
+  @Input() allSubtasks: Subtask[] = [];
   @Input() allUsers: any[] = [];
   @Output() closeTaskOverview = new EventEmitter<string>();
   @Output() taskUpdated = new EventEmitter<any>();
@@ -30,6 +24,7 @@ export class AddTaskComponent implements OnInit {
   @Output() taskDeleted = new EventEmitter<any>();
 
   startAssignedValue: string | null = 'null';
+  subtaskInputValue: string = '';
   clonedTaskDataAssigned: string[] = [];
   isThisANewTask: boolean = false;
   isCurrentTaskIdNumber: boolean = false;
@@ -47,13 +42,19 @@ export class AddTaskComponent implements OnInit {
     author: '1',
     created_at: '',
     color: 'yellow',
-    subtask: [],
+    subtasks: [],
     assigned: [],
   };
 
   ngOnInit() {
     this.initializeTaskData();
     this.isCurrentTaskIdNumber = isNaN(+this.currentTaskId);
+  }
+
+  preventEnterKey(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
   }
 
   initializeTaskData() {
@@ -76,6 +77,7 @@ export class AddTaskComponent implements OnInit {
     this.taskData.color = this.allTasks[taskIndex].color;
     this.taskData.author = this.allTasks[taskIndex].author;
     this.taskData.assigned = this.allTasks[taskIndex].assigned;
+    this.taskData.subtasks = this.loadSubtasks();
     this.clonedTaskDataAssigned = [...this.taskData.assigned];
   }
 
@@ -123,6 +125,7 @@ export class AddTaskComponent implements OnInit {
       color: this.taskData.color,
       status: this.taskData.status,
       author: this.taskData.author,
+      subtask: this.taskData.subtasks,
       assigned: this.clonedTaskDataAssigned,
     };
     this.dbService.createTask(body).then((updatedTask) => {
@@ -147,6 +150,8 @@ export class AddTaskComponent implements OnInit {
       }
     });
   }
+
+  // Assigned
 
   addAssigned(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
@@ -180,5 +185,31 @@ export class AddTaskComponent implements OnInit {
     setTimeout(() => {
       this.startAssignedValue = 'null';
     }, 0);
+  }
+
+  // Subtask
+
+  loadSubtasks() {
+    return (this.taskData.subtasks = this.allSubtasks
+      .filter((subtask) => subtask.task === this.currentTaskId)
+      .map((subtask) => subtask.title));
+  }
+
+  addSubtask(value: string) {
+    if (value !== '') {
+      this.taskData.subtasks.push(value);
+      this.subtaskInputValue = '';
+    }
+  }
+
+  checkSubtask(selectedValue: string) {
+    return this.taskData.subtasks.some((subtask) => subtask == selectedValue);
+  }
+
+  deleteSubtask(selectedValue: string) {
+    if (this.checkSubtask(selectedValue)) {
+      let index = this.taskData.subtasks.indexOf(selectedValue);
+      this.taskData.subtasks.splice(index, 1);
+    }
   }
 }

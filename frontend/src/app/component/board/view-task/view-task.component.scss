@@ -13,6 +13,7 @@ section {
     border: 1px dashed var(--taskBorderColor);
   }
   .description,
+  .subtasks,
   .date {
     height: fit-content;
     p {
@@ -52,7 +53,7 @@ section {
 }
 
 .description-svg,
-.checklist-svg,
+.subtasks-svg,
 .calendar-svg {
   height: 24px;
   img {

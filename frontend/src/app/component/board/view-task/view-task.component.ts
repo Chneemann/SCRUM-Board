@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { TaskColorsService } from '../../../services/task-colors.service';
 import { DragDropService } from '../../../services/drag-drop.service';
+import { Subtask, Task } from '../../../interfaces/task.interface';
 
 @Component({
   selector: 'app-view-task',
@@ -13,13 +14,14 @@ import { DragDropService } from '../../../services/drag-drop.service';
 })
 export class ViewTaskComponent {
   @Input() content: string = '';
-  @Input() allTasks: any[] = [];
+  @Input() allTasks: Task[] = [];
+  @Input() allSubtasks: Subtask[] = [];
   @Input() allUsers: any[] = [];
   @Output() openTaskOverview = new EventEmitter<string>();
   @Output() startDraggingStatus = new EventEmitter<string>();
 
   openDescriptions: { [taskId: string]: boolean } = {};
-  openChecklist: { [taskId: string]: boolean } = {};
+  openSubtasks: { [taskId: string]: boolean } = {};
   openDates: { [taskId: string]: boolean } = {};
 
   constructor(
@@ -34,7 +36,7 @@ export class ViewTaskComponent {
   startDragging(status: string) {
     this.startDraggingStatus.emit(status);
     this.openDescriptions = {};
-    this.openChecklist = {};
+    this.openSubtasks = {};
     this.openDates = {};
   }
 
@@ -43,9 +45,9 @@ export class ViewTaskComponent {
     this.openDescriptions[taskId] = !this.openDescriptions[taskId];
   }
 
-  toggleChecklist(taskId: string, event: MouseEvent) {
+  toggleSubtasks(taskId: string, event: MouseEvent) {
     event.stopPropagation();
-    this.openChecklist[taskId] = !this.openChecklist[taskId];
+    this.openSubtasks[taskId] = !this.openSubtasks[taskId];
   }
 
   toggleDate(taskId: string, event: MouseEvent) {
@@ -57,8 +59,8 @@ export class ViewTaskComponent {
     return !!this.openDescriptions[taskId];
   }
 
-  isChecklistOpen(taskId: string): boolean {
-    return !!this.openChecklist[taskId];
+  isSubtasksOpen(taskId: string): boolean {
+    return !!this.openSubtasks[taskId];
   }
 
   isDateOpen(taskId: string): boolean {
