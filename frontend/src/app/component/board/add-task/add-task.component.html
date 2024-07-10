@@ -77,10 +77,10 @@
             <div class="subtask-details">
               @for (subtask of clonedTaskDataSubtasks; track subtask) {
               <!-- -->
-              @if (checkSubtask(subtask) ) {
+              @if (subtask.id && checkSubtask(subtask.id)) {
               <p>
-                {{ subtask }}
-                <span (click)="deleteSubtask(subtask)"
+                {{ displaySubtaskTitle(subtask.id) }}
+                <span (click)="deleteSubtask(subtask.id)"
                   ><img src="./../../../../assets/img/close.svg" alt=""
                 /></span>
               </p>

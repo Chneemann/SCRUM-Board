@@ -26,7 +26,7 @@ export class AddTaskComponent implements OnInit {
   startAssignedValue: string | null = 'null';
   subtaskInputValue: string = '';
   clonedTaskDataAssigned: string[] = [];
-  clonedTaskDataSubtasks: string[] = [];
+  clonedTaskDataSubtasks: Subtask[] = [];
   isThisANewTask: boolean = false;
   isCurrentTaskIdNumber: boolean = false;
 
@@ -55,6 +55,7 @@ export class AddTaskComponent implements OnInit {
 
   ngOnInit() {
     this.initializeTaskData();
+    this.initializeSubtaskData();
     this.isCurrentTaskIdNumber = isNaN(+this.currentTaskId);
   }
 
@@ -77,6 +78,15 @@ export class AddTaskComponent implements OnInit {
     }
   }
 
+  initializeSubtaskData() {
+    const currentTaskIndex = this.allSubtasks.findIndex(
+      (task) => +task.id! === +this.currentTaskId
+    );
+    if (this.allTasks && this.allSubtasks[currentTaskIndex]) {
+      this.loadCurrentSubtaskData(currentTaskIndex);
+    }
+  }
+
   loadCurrentTaskData(taskIndex: number) {
     this.taskData.title = this.allTasks[taskIndex].title;
     this.taskData.description = this.allTasks[taskIndex].description;
@@ -86,13 +96,13 @@ export class AddTaskComponent implements OnInit {
     this.taskData.assigned = this.allTasks[taskIndex].assigned;
     this.taskData.subtasks = this.loadSubtasks();
     this.clonedTaskDataAssigned = [...this.taskData.assigned];
-    this.clonedTaskDataSubtasks = [...this.taskData.subtasks];
   }
 
   loadCurrentSubtaskData(taskIndex: number) {
     this.subtaskData.title = this.allSubtasks[taskIndex].title;
     this.subtaskData.task_id = this.allSubtasks[taskIndex].task_id;
     this.subtaskData.author = this.allSubtasks[taskIndex].author;
+    this.clonedTaskDataSubtasks = this.allSubtasks;
   }
 
   findColor(color: string) {
@@ -218,28 +228,38 @@ export class AddTaskComponent implements OnInit {
   // Subtask
 
   loadSubtasks() {
-    return (this.clonedTaskDataSubtasks = this.allSubtasks
+    return (this.taskData.subtasks = this.allSubtasks
       .filter((subtask) => subtask.task_id === this.currentTaskId)
       .map((subtask) => subtask.id!));
   }
 
   addSubtask(value: string) {
     if (value !== '') {
-      this.clonedTaskDataSubtasks.push(value);
+      this.taskData.subtasks.push(value);
       this.subtaskInputValue = '';
     }
   }
 
   checkSubtask(selectedValue: string) {
     return this.clonedTaskDataSubtasks.some(
-      (subtask) => subtask == selectedValue
+      (subtask) => subtask.id == selectedValue
     );
+  }
+
+  displaySubtaskTitle(selectedValue: string) {
+    if (this.checkSubtask(selectedValue)) {
+      let index = this.clonedTaskDataSubtasks.findIndex(
+        (obj) => obj.id === selectedValue
+      );
+      return this.clonedTaskDataSubtasks[index].title;
+    }
+    return;
   }
 
   deleteSubtask(selectedValue: string) {
     if (this.checkSubtask(selectedValue)) {
-      let index = this.clonedTaskDataSubtasks.indexOf(selectedValue);
-      this.clonedTaskDataSubtasks.splice(index, 1);
+      let index = this.taskData.subtasks.indexOf(selectedValue);
+      this.taskData.subtasks.splice(index, 1);
     }
   }
 }
