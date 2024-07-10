@@ -36,6 +36,12 @@ export class AddTaskComponent implements OnInit {
     public authService: AuthService
   ) {}
 
+  subtaskData: Subtask = {
+    title: '',
+    task_id: '',
+    author: '1',
+  };
+
   taskData: Task = {
     title: '',
     description: '',
@@ -81,6 +87,12 @@ export class AddTaskComponent implements OnInit {
     this.taskData.subtasks = this.loadSubtasks();
     this.clonedTaskDataAssigned = [...this.taskData.assigned];
     this.clonedTaskDataSubtasks = [...this.taskData.subtasks];
+  }
+
+  loadCurrentSubtaskData(taskIndex: number) {
+    this.subtaskData.title = this.allSubtasks[taskIndex].title;
+    this.subtaskData.task_id = this.allSubtasks[taskIndex].task_id;
+    this.subtaskData.author = this.allSubtasks[taskIndex].author;
   }
 
   findColor(color: string) {
@@ -153,6 +165,20 @@ export class AddTaskComponent implements OnInit {
     });
   }
 
+  // updateSubtask() {
+  //   const body = {
+  //     title: this.taskData.title,
+  //     task_id: this.currentTaskId,
+  //     author: this.taskData.author,
+  //   };
+  //   this.dbService.updateTask(body, this.currentTaskId).then((updatedTask) => {
+  //     this.taskUpdated.emit(updatedTask);
+  //     if (this.dbService.dataUploaded) {
+  //       this.taskOverviewClose('');
+  //     }
+  //   });
+  // }
+
   // Assigned
 
   addAssigned(event: Event): void {
@@ -194,7 +220,7 @@ export class AddTaskComponent implements OnInit {
   loadSubtasks() {
     return (this.clonedTaskDataSubtasks = this.allSubtasks
       .filter((subtask) => subtask.task_id === this.currentTaskId)
-      .map((subtask) => subtask.title));
+      .map((subtask) => subtask.id!));
   }
 
   addSubtask(value: string) {
