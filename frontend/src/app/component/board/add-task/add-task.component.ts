@@ -235,9 +235,16 @@ export class AddTaskComponent implements OnInit {
 
   addSubtask(value: string) {
     if (value !== '') {
-      this.taskData.subtasks.push(value);
-      this.subtaskInputValue = '';
+      const newSubtask = {
+        id: '0',
+        title: value,
+        task_id: this.currentTaskId,
+        author: this.subtaskData.author,
+      };
+      this.clonedTaskDataSubtasks.push(newSubtask);
     }
+    this.subtaskInputValue = '';
+    console.log(this.clonedTaskDataSubtasks);
   }
 
   checkSubtask(selectedValue: string) {
