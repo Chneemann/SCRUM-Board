@@ -19,7 +19,7 @@ class TaskItem(models.Model):
     subtasks = models.ManyToManyField(SubtaskItem, blank=True)
     priority = models.CharField(max_length=10, choices=[('low', 'Low'), ('medium', 'Medium'), ('high', 'High')], default='medium') 
     status = models.CharField(max_length=10, choices=[('todo', 'To-do'), ('dotoday', 'Do today'), ('inprogress', 'In progress'), ('done', 'Done')], default='todo')
-    color = models.CharField(max_length=15, default='yellow')
+    color = models.CharField(max_length=10, choices=[('yellow', 'Yellow'), ('green', 'Green'), ('blue', 'Blue'), ('red', 'Red'), ('orange', 'Orange'), ('purple', 'Purple'), ('magenta', 'Magenta'), ('cyan', 'Cyan')], default='todo')
     
     def __str__(self):
         return f'({self.id}) {self.title} - {self.description}'
