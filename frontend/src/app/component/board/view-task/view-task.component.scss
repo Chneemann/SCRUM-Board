@@ -1,6 +1,7 @@
 @import "./../../../../assets/style/colors.scss";
 
 section {
+  position: relative;
   padding: 12px;
   background-color: var(--taskColor);
   border: 1px solid var(--taskBorderColor);
@@ -8,6 +9,9 @@ section {
   width: calc(100% - 24px);
   margin-bottom: 12px;
   cursor: pointer;
+  p {
+    width: 92.5%;
+  }
   .dotted-line {
     margin: 12px 0;
     border: 1px dashed var(--taskBorderColor);
@@ -23,6 +27,12 @@ section {
       padding-bottom: 6px;
     }
   }
+}
+
+.priority-img {
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
 .footer {

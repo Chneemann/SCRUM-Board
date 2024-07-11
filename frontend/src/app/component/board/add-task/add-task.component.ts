@@ -46,10 +46,10 @@ export class AddTaskComponent implements OnInit {
     title: '',
     description: '',
     status: '',
-    priority: '',
+    priority: 'low',
     author: '1',
     created_at: '',
-    due_date: '',
+    due_date: this.todaysDate(),
     color: 'yellow',
     subtasks: [],
     assigned: [],
@@ -65,6 +65,15 @@ export class AddTaskComponent implements OnInit {
     if (event.key === 'Enter') {
       event.preventDefault();
     }
+  }
+
+  todaysDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
 
   initializeTaskData() {
@@ -154,6 +163,8 @@ export class AddTaskComponent implements OnInit {
       status: this.taskData.status,
       author: this.taskData.author,
       subtask: this.taskData.subtasks,
+      due_date: this.taskData.due_date,
+      priority: this.taskData.priority,
       assigned: this.clonedTaskDataAssigned,
     };
     this.dbService.createTask(body).then((updatedTask) => {
@@ -169,6 +180,8 @@ export class AddTaskComponent implements OnInit {
       title: this.taskData.title,
       description: this.taskData.description,
       color: this.taskData.color,
+      due_date: this.taskData.due_date,
+      priority: this.taskData.priority,
       assigned: this.clonedTaskDataAssigned,
     };
     this.dbService.updateTask(body, this.currentTaskId).then((updatedTask) => {

@@ -14,6 +14,12 @@
   "
 >
   <p>{{ task.title }}</p>
+  <div class="priority-img">
+    <img
+      src="./../../../../assets/img/priority/{{ task.priority }}.svg"
+      alt=""
+    />
+  </div>
   @if (task.description) {
   <div class="footer">
     <div class="images">

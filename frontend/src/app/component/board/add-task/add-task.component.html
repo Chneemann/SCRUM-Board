@@ -72,7 +72,7 @@
             >
               <option value="low" selected>Low</option>
               <option value="medium">Medium</option>
-              <option value="hight">Hight</option>
+              <option value="high">High</option>
             </select>
           </div>
           <div class="date">
@@ -83,6 +83,7 @@
               class="title-form-field"
               #date="ngModel"
               [(ngModel)]="taskData.due_date"
+              [attr.min]="todaysDate()"
             />
           </div>
         </div>
