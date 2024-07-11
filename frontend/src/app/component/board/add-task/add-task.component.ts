@@ -96,6 +96,8 @@ export class AddTaskComponent implements OnInit {
     this.taskData.color = this.allTasks[taskIndex].color;
     this.taskData.author = this.allTasks[taskIndex].author;
     this.taskData.assigned = this.allTasks[taskIndex].assigned;
+    this.taskData.priority = this.allTasks[taskIndex].priority;
+    this.taskData.due_date = this.allTasks[taskIndex].due_date;
     this.taskData.subtasks = this.loadSubtasks();
     this.clonedTaskDataAssigned = [...this.taskData.assigned];
   }

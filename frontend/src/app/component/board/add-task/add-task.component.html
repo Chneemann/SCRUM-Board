@@ -61,6 +61,31 @@
             <option value="cyan">Cyan</option>
           </select>
         </div>
+        <div class="date-and-priority">
+          <div class="priority">
+            <select
+              id="priority"
+              name="priority"
+              class="select-form-field"
+              #color="ngModel"
+              [(ngModel)]="taskData.priority"
+            >
+              <option value="low" selected>Low</option>
+              <option value="medium">Medium</option>
+              <option value="hight">Hight</option>
+            </select>
+          </div>
+          <div class="date">
+            <input
+              type="date"
+              id="date"
+              name="date"
+              class="title-form-field"
+              #date="ngModel"
+              [(ngModel)]="taskData.due_date"
+            />
+          </div>
+        </div>
         <div class="subtasks-and-assigned">
           <div class="subtask">
             <input
@@ -91,7 +116,7 @@
             <select
               id="assigned"
               name="assigned"
-              class="assigned-form-field"
+              class="select-form-field"
               #assigned="ngModel"
               (change)="addAssigned($event)"
               [(ngModel)]="startAssignedValue"

@@ -16,6 +16,9 @@ section {
   .subtasks,
   .date {
     height: fit-content;
+    span {
+      text-decoration: underline;
+    }
     p {
       padding-bottom: 6px;
     }

@@ -3,7 +3,7 @@
 .content {
   position: relative;
   width: 600px;
-  height: 500px;
+  height: 580px;
   border-radius: 6px;
   border: 1px solid $gray;
   background-color: var(--taskColor);
@@ -20,6 +20,22 @@ form {
   padding: 8px 0;
   font-size: 20px;
   font-weight: 600;
+  width: 100%;
+  background-color: var(--taskColor);
+  outline: none;
+  margin-bottom: 12px;
+  &:focus {
+    background-color: $very-light-gray;
+    border-bottom-color: var(--taskBorderColor);
+  }
+}
+
+.select-form-field {
+  border: none;
+  border-bottom: 2px solid $medium-gray;
+  padding: 8px 0;
+  font-size: 20px;
+  font-weight: 400;
   width: 100%;
   background-color: var(--taskColor);
   outline: none;
@@ -47,6 +63,24 @@ form {
     border-bottom-color: var(--taskBorderColor);
   }
 }
+
+// Date & Priority
+
+.date-and-priority {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.date {
+  width: 47.5%;
+}
+
+.priority {
+  width: 47.5%;
+}
+
+// Subtasks & Assigned
 
 .subtasks-and-assigned {
   display: flex;
