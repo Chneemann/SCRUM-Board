@@ -16,7 +16,6 @@ class TaskItem(models.Model):
     due_date = models.DateField(null=True, blank=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,blank=True)
     assigned = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='assigned_tasks', blank=True)
-    subtasks = models.ManyToManyField(SubtaskItem, blank=True)
     priority = models.CharField(max_length=10, choices=[('low', 'Low'), ('medium', 'Medium'), ('high', 'High')], default='medium') 
     status = models.CharField(max_length=10, choices=[('todo', 'To-do'), ('dotoday', 'Do today'), ('inprogress', 'In progress'), ('done', 'Done')], default='todo')
     color = models.CharField(max_length=10, choices=[('yellow', 'Yellow'), ('green', 'Green'), ('blue', 'Blue'), ('red', 'Red'), ('orange', 'Orange'), ('purple', 'Purple'), ('magenta', 'Magenta'), ('cyan', 'Cyan')], default='todo')
