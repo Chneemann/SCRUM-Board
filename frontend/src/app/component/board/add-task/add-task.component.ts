@@ -26,7 +26,6 @@ export class AddTaskComponent implements OnInit {
   startAssignedValue: string | null = 'null';
   subtaskInputValue: string = '';
   clonedTaskDataAssigned: string[] = [];
-  clonedTaskDataSubtasks: Subtask[] = [];
   isThisANewTask: boolean = false;
   isCurrentTaskIdNumber: boolean = false;
 
@@ -39,7 +38,7 @@ export class AddTaskComponent implements OnInit {
   subtaskData: Subtask = {
     title: '',
     task_id: '',
-    author: '',
+    author: this.authService.currentUserId,
   };
 
   taskData: Task = {
@@ -115,7 +114,6 @@ export class AddTaskComponent implements OnInit {
     this.subtaskData.title = this.allSubtasks[taskIndex].title;
     this.subtaskData.task_id = this.allSubtasks[taskIndex].task_id;
     this.subtaskData.author = this.allSubtasks[taskIndex].author;
-    this.clonedTaskDataSubtasks = this.allSubtasks;
   }
 
   findColor(color: string) {
@@ -192,22 +190,6 @@ export class AddTaskComponent implements OnInit {
     });
   }
 
-  updateSubtask() {
-    const body = {
-      title: this.taskData.title,
-      task_id: this.currentTaskId,
-      author: this.taskData.author,
-    };
-    this.dbService
-      .updateSubtask(body, this.currentTaskId)
-      .then((updatedSubtask) => {
-        this.taskUpdated.emit(updatedSubtask);
-        if (this.dbService.dataUploaded) {
-          this.taskOverviewClose('');
-        }
-      });
-  }
-
   // Assigned
 
   addAssigned(event: Event): void {
@@ -260,10 +242,26 @@ export class AddTaskComponent implements OnInit {
         task_id: this.currentTaskId,
         author: this.subtaskData.author,
       };
-      this.clonedTaskDataSubtasks.push(newSubtask);
+      this.allSubtasks.push(newSubtask);
     }
     this.subtaskInputValue = '';
     this.createSubtask(titleValue);
+  }
+
+  updateSubtask() {
+    const body = {
+      title: this.taskData.title,
+      task_id: this.currentTaskId,
+      author: this.taskData.author,
+    };
+    this.dbService
+      .updateSubtask(body, this.currentTaskId)
+      .then((updatedSubtask) => {
+        this.taskUpdated.emit(updatedSubtask);
+        if (this.dbService.dataUploaded) {
+          this.taskOverviewClose('');
+        }
+      });
   }
 
   createSubtask(titleValue: string) {
@@ -283,17 +281,13 @@ export class AddTaskComponent implements OnInit {
   }
 
   checkSubtask(selectedValue: number) {
-    return this.clonedTaskDataSubtasks.some(
-      (subtask) => subtask.id == selectedValue
-    );
+    return this.allSubtasks.some((subtask) => subtask.id == selectedValue);
   }
 
   displaySubtaskTitle(selectedValue: number) {
     if (this.checkSubtask(selectedValue)) {
-      let index = this.clonedTaskDataSubtasks.findIndex(
-        (obj) => obj.id === selectedValue
-      );
-      return this.clonedTaskDataSubtasks[index].title;
+      let index = this.allSubtasks.findIndex((obj) => obj.id === selectedValue);
+      return this.allSubtasks[index].title;
     }
     return;
   }
