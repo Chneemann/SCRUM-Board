@@ -46,7 +46,7 @@ export class AddTaskComponent implements OnInit {
     title: '',
     description: '',
     status: '',
-    priority: 'low',
+    priority: 'medium',
     author: '1',
     created_at: '',
     due_date: this.todaysDate(),

@@ -45,12 +45,15 @@ class TaskItemView(APIView):
         try:
             return TaskItem.objects.get(pk=pk)
         except TaskItem.DoesNotExist:
-            raise Http404
+            return Response({"error": "Todo item not found."}, status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, pk=None, format=None):
         if pk:
-            task = TaskItem.objects.get(pk=pk)
-            serializer = TaskItemSerializer(task)
+            try:
+              task = TaskItem.objects.get(pk=pk)
+              serializer = TaskItemSerializer(task)
+            except task.DoesNotExist:
+                return Response(status=status.HTTP_404_NOT_FOUND)
         else:
             tasks = TaskItem.objects.all()
             serializer = TaskItemSerializer(tasks, many=True)

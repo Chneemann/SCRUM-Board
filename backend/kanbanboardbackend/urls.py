@@ -21,9 +21,9 @@ from kanbanboard.views import TaskItemView, SubtaskItemView, UserListView, Login
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('tasks/', TaskItemView.as_view()),
-    path('subtasks/', SubtaskItemView.as_view()),
     path('tasks/<int:pk>/', TaskItemView.as_view()),
-    path('task/<int:pk>/subtasks/', SubtaskItemView.as_view()),
+    path('subtasks/', SubtaskItemView.as_view()),
+    path('subtasks/<int:pk>/', SubtaskItemView.as_view()),
     path('users/', UserListView.as_view()),
     path('auth/', AuthView.as_view()),
     path('login/', LoginView.as_view()),
