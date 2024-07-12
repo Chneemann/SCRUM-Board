@@ -240,7 +240,7 @@ export class AddTaskComponent implements OnInit {
         id: 0,
         title: titleValue,
         task_id: this.currentTaskId,
-        author: this.subtaskData.author,
+        author: this.authService.currentUserId,
       };
       this.allSubtasks.push(newSubtask);
     }
@@ -248,28 +248,12 @@ export class AddTaskComponent implements OnInit {
     this.createSubtask(titleValue);
   }
 
-  updateSubtask() {
-    const body = {
-      title: this.taskData.title,
-      task_id: this.currentTaskId,
-      author: this.taskData.author,
-    };
-    this.dbService
-      .updateSubtask(body, this.currentTaskId)
-      .then((updatedSubtask) => {
-        this.taskUpdated.emit(updatedSubtask);
-        if (this.dbService.dataUploaded) {
-          this.taskOverviewClose('');
-        }
-      });
-  }
-
   createSubtask(titleValue: string) {
     let subtaskId;
     const bodySubtask = {
       title: titleValue,
       task_id: this.currentTaskId,
-      author: this.subtaskData.author,
+      author: this.authService.currentUserId,
     };
     this.dbService.createSubtask(bodySubtask).then((updatedSubtask) => {
       this.taskCreated.emit(updatedSubtask);

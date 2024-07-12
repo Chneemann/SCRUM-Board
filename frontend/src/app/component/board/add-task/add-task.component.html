@@ -103,7 +103,7 @@
             <div class="subtask-details">
               @for (subtask of allSubtasks; track subtask) {
               <!-- -->
-              @if (subtask.id && checkSubtask(subtask.id)) {
+              @if (subtask.id && subtask.task_id === currentTaskId) {
               <p>
                 {{ displaySubtaskTitle(subtask.id) }}
                 <span (click)="deleteSubtask(subtask.id)"
