@@ -47,7 +47,7 @@ export class AddTaskComponent implements OnInit {
     description: '',
     status: '',
     priority: 'medium',
-    author: '1',
+    author: this.authService.currentUserId,
     created_at: '',
     due_date: this.todaysDate(),
     color: 'yellow',
@@ -134,8 +134,10 @@ export class AddTaskComponent implements OnInit {
     if (ngForm.submitted && ngForm.form.valid) {
       if (this.isThisANewTask) {
         this.createTask();
+        // this.createSubtask();
       } else {
         this.updateTask();
+        // this.updateSubtask();
       }
     }
   }
@@ -175,6 +177,21 @@ export class AddTaskComponent implements OnInit {
     });
   }
 
+  createSubtask() {
+    this.taskData.assigned.push(this.authService.currentUserId);
+    const body = {
+      title: this.subtaskData.title,
+      task_id: this.subtaskData.task_id,
+      author: this.subtaskData.author,
+    };
+    this.dbService.createSubtask(body).then((updatedSubtask) => {
+      this.taskCreated.emit(updatedSubtask);
+      if (this.dbService.dataUploaded) {
+        this.taskOverviewClose('');
+      }
+    });
+  }
+
   updateTask() {
     const body = {
       title: this.taskData.title,
@@ -192,19 +209,21 @@ export class AddTaskComponent implements OnInit {
     });
   }
 
-  // updateSubtask() {
-  //   const body = {
-  //     title: this.taskData.title,
-  //     task_id: this.currentTaskId,
-  //     author: this.taskData.author,
-  //   };
-  //   this.dbService.updateTask(body, this.currentTaskId).then((updatedTask) => {
-  //     this.taskUpdated.emit(updatedTask);
-  //     if (this.dbService.dataUploaded) {
-  //       this.taskOverviewClose('');
-  //     }
-  //   });
-  // }
+  updateSubtask() {
+    const body = {
+      title: this.taskData.title,
+      task_id: this.currentTaskId,
+      author: this.taskData.author,
+    };
+    this.dbService
+      .updateSubtask(body, this.currentTaskId)
+      .then((updatedSubtask) => {
+        this.taskUpdated.emit(updatedSubtask);
+        if (this.dbService.dataUploaded) {
+          this.taskOverviewClose('');
+        }
+      });
+  }
 
   // Assigned
 
@@ -282,8 +301,10 @@ export class AddTaskComponent implements OnInit {
 
   deleteSubtask(selectedValue: string) {
     if (this.checkSubtask(selectedValue)) {
-      let index = this.taskData.subtasks.indexOf(selectedValue);
-      this.taskData.subtasks.splice(index, 1);
+      let index = this.clonedTaskDataSubtasks.findIndex(
+        (obj) => obj.id === selectedValue
+      );
+      this.clonedTaskDataSubtasks.splice(index, 1);
     }
   }
 }

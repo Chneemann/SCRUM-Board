@@ -85,4 +85,19 @@ export class DatabaseService {
     const url = `${environment.baseUrl}/tasks/${postId}/`;
     return this.performRequest('PUT', url, body);
   }
+
+  deleteSubtask(postId: string): Promise<any> {
+    const url = `${environment.baseUrl}/subtasks/${postId}/`;
+    return this.performRequest('DELETE', url);
+  }
+
+  createSubtask(body: any): Promise<any> {
+    const url = `${environment.baseUrl}/subtasks/`;
+    return this.performRequest('POST', url, body);
+  }
+
+  updateSubtask(body: any, postId: string): Promise<any> {
+    const url = `${environment.baseUrl}/subtasks/${postId}/`;
+    return this.performRequest('PUT', url, body);
+  }
 }
