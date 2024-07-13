@@ -42,6 +42,31 @@
           autocomplete="off"
           required
         ></textarea>
+        <div class="subtask">
+          <input
+            type="text"
+            id="subtask"
+            name="subtask"
+            class="title-form-field"
+            #subtask="ngModel"
+            placeholder="Enter a subtask..."
+            [(ngModel)]="subtaskInputValue"
+            autocomplete="off"
+            (keydown.enter)="addSubtask(subtaskInputValue)"
+          />
+          <div class="subtask-details">
+            @for (subtask of allSubtasks; track subtask) {
+            <!-- -->
+            @if (subtask.id && subtask.task_id === currentTaskId) {
+            <p>
+              {{ displaySubtaskTitle(subtask.id) }}
+              <span (click)="deleteSubtask(subtask.id)"
+                ><img src="./../../../../assets/img/close.svg" alt=""
+              /></span>
+            </p>
+            } }
+          </div>
+        </div>
         <div class="color">
           <div class="color-circle"></div>
           <select
@@ -61,56 +86,31 @@
             <option value="cyan">Cyan</option>
           </select>
         </div>
-        <div class="date-and-priority">
-          <div class="priority">
-            <select
-              id="priority"
-              name="priority"
-              class="select-form-field"
-              #color="ngModel"
-              [(ngModel)]="taskData.priority"
-            >
-              <option value="low">Low</option>
-              <option value="medium" selected>Medium</option>
-              <option value="high">High</option>
-            </select>
-          </div>
-          <div class="date">
-            <input
-              type="date"
-              id="date"
-              name="date"
-              class="title-form-field"
-              #date="ngModel"
-              [(ngModel)]="taskData.due_date"
-              [attr.min]="todaysDate()"
-            />
-          </div>
-        </div>
-        <div class="subtasks-and-assigned">
-          <div class="subtask">
-            <input
-              type="text"
-              id="subtask"
-              name="subtask"
-              class="title-form-field"
-              #subtask="ngModel"
-              placeholder="Enter a subtask..."
-              [(ngModel)]="subtaskInputValue"
-              autocomplete="off"
-              (keydown.enter)="addSubtask(subtaskInputValue)"
-            />
-            <div class="subtask-details">
-              @for (subtask of allSubtasks; track subtask) {
-              <!-- -->
-              @if (subtask.id && subtask.task_id === currentTaskId) {
-              <p>
-                {{ displaySubtaskTitle(subtask.id) }}
-                <span (click)="deleteSubtask(subtask.id)"
-                  ><img src="./../../../../assets/img/close.svg" alt=""
-                /></span>
-              </p>
-              } }
+        <div class="date-priority-assigned">
+          <div class="date-priority">
+            <div class="priority">
+              <select
+                id="priority"
+                name="priority"
+                class="select-form-field"
+                #color="ngModel"
+                [(ngModel)]="taskData.priority"
+              >
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            <div class="date">
+              <input
+                type="date"
+                id="date"
+                name="date"
+                class="title-form-field"
+                #date="ngModel"
+                [(ngModel)]="taskData.due_date"
+                [attr.min]="todaysDate()"
+              />
             </div>
           </div>
           <div class="assigned">
