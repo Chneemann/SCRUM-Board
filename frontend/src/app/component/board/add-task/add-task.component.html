@@ -24,7 +24,7 @@
           type="text"
           id="title"
           name="title"
-          class="title-form-field"
+          class="form-field form-field-font-weight600"
           #title="ngModel"
           placeholder="Task name..."
           [(ngModel)]="taskData.title"
@@ -34,9 +34,10 @@
         <textarea
           id="description"
           name="description"
-          class="description-form-field"
+          class="form-field form-field-none-outline"
           #description="ngModel"
           minlength="10"
+          rows="3"
           placeholder="Description..."
           [(ngModel)]="taskData.description"
           autocomplete="off"
@@ -47,7 +48,7 @@
             type="text"
             id="subtask"
             name="subtask"
-            class="title-form-field"
+            class="form-field"
             #subtask="ngModel"
             placeholder="Enter a subtask..."
             [(ngModel)]="subtaskInputValue"
@@ -59,6 +60,12 @@
             <!-- -->
             @if (subtask.id && subtask.task_id === currentTaskId) {
             <p>
+              <input
+                type="checkbox"
+                id="checkbox{{ subtask.id }}"
+                name="checkbox{{ subtask.id }}"
+                class="checkbox"
+              />
               {{ displaySubtaskTitle(subtask.id) }}
               <span (click)="deleteSubtask(subtask.id)"
                 ><img src="./../../../../assets/img/close.svg" alt=""
@@ -92,7 +99,7 @@
               <select
                 id="priority"
                 name="priority"
-                class="select-form-field"
+                class="form-field"
                 #color="ngModel"
                 [(ngModel)]="taskData.priority"
               >
@@ -106,7 +113,7 @@
                 type="date"
                 id="date"
                 name="date"
-                class="title-form-field"
+                class="form-field"
                 #date="ngModel"
                 [(ngModel)]="taskData.due_date"
                 [attr.min]="todaysDate()"
@@ -117,7 +124,7 @@
             <select
               id="assigned"
               name="assigned"
-              class="select-form-field"
+              class="form-field"
               #assigned="ngModel"
               (change)="addAssigned($event)"
               [(ngModel)]="startAssignedValue"

@@ -14,54 +14,28 @@ form {
   padding: 0 24px;
 }
 
-.title-form-field {
+.form-field {
   border: none;
   border-bottom: 2px solid $medium-gray;
-  padding: 8px 0;
-  font-size: 20px;
+  padding: 8px 4px;
+  font-size: 19px;
+  width: 100%;
+  background-color: var(--taskColor);
+  outline: none;
+  margin-bottom: 18px;
+  &:focus {
+    background-color: $very-light-gray;
+    border-bottom-color: var(--taskBorderColor);
+  }
+}
+
+.form-field-font-weight600 {
   font-weight: 600;
-  width: 100%;
-  background-color: var(--taskColor);
-  outline: none;
-  margin-bottom: 12px;
-  &:focus {
-    background-color: $very-light-gray;
-    border-bottom-color: var(--taskBorderColor);
-  }
 }
 
-.select-form-field {
-  border: none;
-  border-bottom: 2px solid $medium-gray;
-  padding: 8px 0;
-  font-size: 20px;
-  font-weight: 400;
-  width: 100%;
-  background-color: var(--taskColor);
-  outline: none;
-  margin-bottom: 12px;
-  &:focus {
-    background-color: $very-light-gray;
-    border-bottom-color: var(--taskBorderColor);
-  }
-}
-
-.description-form-field {
-  border: none;
-  border-bottom: 2px solid $medium-gray;
-  padding: 8px 0;
-  height: 64px;
-  font-size: 18px;
-  font-weight: 400;
-  width: 100%;
-  background-color: var(--taskColor);
+.form-field-none-outline {
   outline: none;
   resize: none;
-  margin-bottom: 12px;
-  &:focus {
-    background-color: $very-light-gray;
-    border-bottom-color: var(--taskBorderColor);
-  }
 }
 
 // Date & Priority
@@ -106,6 +80,7 @@ form {
     }
   }
 }
+
 .assigned-details,
 .subtask-details {
   display: flex;
@@ -118,6 +93,7 @@ form {
   overflow-y: auto;
   overflow-x: hidden;
   p {
+    position: relative;
     display: flex;
     align-items: center;
     position: relative;
@@ -125,6 +101,9 @@ form {
     margin: 3px;
     width: 100%;
     border-radius: 6px;
+    .checkbox {
+      margin-right: 12px;
+    }
     &:hover {
       background-color: $light-gray;
     }

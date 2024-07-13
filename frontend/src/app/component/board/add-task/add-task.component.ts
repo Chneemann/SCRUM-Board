@@ -39,6 +39,7 @@ export class AddTaskComponent implements OnInit {
     title: '',
     task_id: '',
     author: this.authService.currentUserId,
+    status: false,
   };
 
   taskData: Task = {
@@ -114,6 +115,7 @@ export class AddTaskComponent implements OnInit {
     this.subtaskData.title = this.allSubtasks[taskIndex].title;
     this.subtaskData.task_id = this.allSubtasks[taskIndex].task_id;
     this.subtaskData.author = this.allSubtasks[taskIndex].author;
+    this.subtaskData.status = this.allSubtasks[taskIndex].status;
   }
 
   findColor(color: string) {
@@ -235,28 +237,18 @@ export class AddTaskComponent implements OnInit {
   }
 
   addSubtask(titleValue: string) {
-    if (titleValue !== '') {
-      const newSubtask = {
-        id: 0,
-        title: titleValue,
-        task_id: this.currentTaskId,
-        author: this.authService.currentUserId,
-      };
-      this.allSubtasks.push(newSubtask);
-    }
-    this.subtaskInputValue = '';
-    this.createSubtask(titleValue);
-  }
-
-  createSubtask(titleValue: string) {
     let subtaskId;
     const bodySubtask = {
+      id: 0,
       title: titleValue,
       task_id: this.currentTaskId,
       author: this.authService.currentUserId,
+      status: false,
     };
     this.dbService.createSubtask(bodySubtask).then((updatedSubtask) => {
       this.taskCreated.emit(updatedSubtask);
+      this.allSubtasks.push(bodySubtask);
+      this.subtaskInputValue = '';
       const index = this.allSubtasks.findIndex((subtask) => subtask.id === 0);
       if (index !== -1) {
         this.allSubtasks[index].id = updatedSubtask.id;

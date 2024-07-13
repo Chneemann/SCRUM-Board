@@ -17,4 +17,5 @@ export interface Subtask {
   title: string;
   task_id: string;
   author: string;
+  status: boolean;
 }
