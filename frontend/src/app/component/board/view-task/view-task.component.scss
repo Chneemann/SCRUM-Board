@@ -19,7 +19,6 @@ section {
     border: 1px dashed var(--taskBorderColor);
   }
   .description,
-  .subtasks,
   .date {
     height: fit-content;
     span {
@@ -58,6 +57,18 @@ section {
     padding: 3px;
     border-radius: 100%;
     border: 1px solid var(--taskBorderColor);
+  }
+}
+
+.subtask-title {
+  display: flex;
+  align-items: center;
+  padding-bottom: 9px;
+  img {
+    padding-right: 3px;
+    width: 18px;
+    height: auto;
+    filter: brightness(0) saturate(100%);
   }
 }
 

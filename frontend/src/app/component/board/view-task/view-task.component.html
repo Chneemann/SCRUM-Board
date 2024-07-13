@@ -55,7 +55,14 @@
     @for (subtask of allSubtasks; track subtask) {
     <!-- -->
     @if (task.id == subtask.task_id) {
-    <p>- {{ subtask.title }}</p>
+    <div class="subtask-title">
+      @if(subtask.status) {
+      <img src="./../../../../assets/img/checked.svg" alt="checked" />
+      } @else {
+      <img src="./../../../../assets/img/unchecked.svg" alt="unchecked" />
+      }
+      <p>{{ subtask.title }}</p>
+    </div>
     } }
   </div>
   } @if (isDateOpen(task.id)) {

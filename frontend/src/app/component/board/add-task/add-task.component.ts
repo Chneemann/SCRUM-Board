@@ -256,6 +256,24 @@ export class AddTaskComponent implements OnInit {
     });
   }
 
+  changeCheckboxSubtask(subtaskId: number, event: Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+
+    const body = {
+      status: checked,
+    };
+    this.dbService
+      .updateSubtask(body, subtaskId.toString())
+      .then((updatedSubtask) => {
+        const index = this.allSubtasks.findIndex(
+          (subtask) => subtask.id === subtaskId
+        );
+        if (index !== -1) {
+          this.allSubtasks[index].status = checked;
+        }
+      });
+  }
+
   checkSubtask(selectedValue: number) {
     return this.allSubtasks.some((subtask) => subtask.id == selectedValue);
   }
