@@ -15,7 +15,7 @@ export interface Task {
 export interface Subtask {
   id?: number;
   title: string;
-  task_id: string;
+  task_id: number;
   author: string;
   status: boolean;
 }

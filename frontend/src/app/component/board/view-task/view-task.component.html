@@ -56,7 +56,7 @@
   <div class="subtasks">
     @for (subtask of allSubtasks; track subtask) {
     <!-- -->
-    @if (task.id == subtask.task_id) {
+    @if (+task.id == subtask.task_id) {
     <div class="subtask-title">
       @if(subtask.status) {
       <img src="./../../../../assets/img/checked.svg" alt="checked" />

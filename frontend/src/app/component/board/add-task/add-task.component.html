@@ -58,7 +58,7 @@
           <div class="subtask-details">
             @for (subtask of allSubtasks; track subtask) {
             <!-- -->
-            @if (subtask.id && subtask.task_id === currentTaskId) {
+            @if (subtask.id && subtask.task_id === +currentTaskId) {
             <p>
               <input
                 type="checkbox"

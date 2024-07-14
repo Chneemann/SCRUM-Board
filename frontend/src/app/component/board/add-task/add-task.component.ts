@@ -37,7 +37,7 @@ export class AddTaskComponent implements OnInit {
 
   subtaskData: Subtask = {
     title: '',
-    task_id: '',
+    task_id: 0,
     author: this.authService.currentUserId,
     status: false,
   };
@@ -232,7 +232,7 @@ export class AddTaskComponent implements OnInit {
 
   loadSubtasks() {
     return (this.taskData.subtasks = this.allSubtasks
-      .filter((subtask) => subtask.task_id === this.currentTaskId)
+      .filter((subtask) => subtask.task_id === +this.currentTaskId)
       .map((subtask) => subtask.id!.toString()));
   }
 
@@ -241,7 +241,7 @@ export class AddTaskComponent implements OnInit {
     const bodySubtask = {
       id: 0,
       title: titleValue,
-      task_id: this.currentTaskId,
+      task_id: +this.currentTaskId,
       author: this.authService.currentUserId,
       status: false,
     };
