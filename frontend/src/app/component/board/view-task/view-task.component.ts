@@ -34,7 +34,7 @@ export class ViewTaskComponent {
   }
 
   hasTaskASubtask(taskId: string) {
-    return this.allSubtasks.some((subtask) => subtask.id?.toString() == taskId);
+    return this.allSubtasks.some((subtask) => subtask.task_id == +taskId);
   }
 
   startDragging(status: string) {
