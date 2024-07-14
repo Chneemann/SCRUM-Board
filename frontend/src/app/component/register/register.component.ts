@@ -6,16 +6,18 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [FormBtnComponent, FormsModule, CommonModule, RouterLink],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss',
 })
-export class LoginComponent {
+export class RegisterComponent {
   loginData = {
     username: '',
+    mail: '',
     password: '',
+    passwordConfirm: '',
   };
 
   isPasswordIconVisible: boolean = true;

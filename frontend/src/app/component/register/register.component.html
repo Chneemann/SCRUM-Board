@@ -1,0 +1,124 @@
+<section>
+  <div class="login">
+    <div class="headline">Register</div>
+    <form
+      id="form"
+      #taskForm="ngForm"
+      (ngSubmit)="onSubmit(taskForm)"
+      onsubmit="return false"
+    >
+      <div class="input-fields">
+        <input
+          type="text"
+          id="text"
+          name="text"
+          #username="ngModel"
+          placeholder="Username"
+          class="custom-input"
+          autocomplete="new-password"
+          [(ngModel)]="loginData.username"
+          required
+        />
+        @if(!loginData.username) {
+        <img class="custom-img" src="./../../../assets/img/user.svg" alt="" />
+        } @else {
+        <img class="custom-img" alt="" />
+        }
+        <div class="error-msg">
+          @if (!username.valid && username.touched) {
+          <p>Please enter a username</p>
+          }
+        </div>
+        <input
+          type="mail"
+          id="mail"
+          name="mail"
+          #mail="ngModel"
+          placeholder="Mail"
+          class="custom-input"
+          autocomplete="new-password"
+          [(ngModel)]="loginData.mail"
+          required
+        />
+        @if(!loginData.username) {
+        <img class="custom-img" src="./../../../assets/img/mail.svg" alt="" />
+        } @else {
+        <img class="custom-img" alt="" />
+        }
+        <div class="error-msg">
+          @if (!mail.valid && mail.touched) {
+          <p>Please enter your email</p>
+          }
+        </div>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          #password="ngModel"
+          [type]="authService.passwordFieldType"
+          placeholder="Password"
+          class="custom-input"
+          autocomplete="new-password"
+          pattern="[^<>]*"
+          [(ngModel)]="loginData.password"
+          minlength="6"
+          required
+        />
+        @if(!loginData.password) {
+        <img class="custom-img" src="./../../../assets/img/lock.svg" alt="" />
+        } @else {
+        <img
+          class="passwordEye"
+          *ngIf="isPasswordIconVisible"
+          (click)="authService.togglePasswordVisibility()"
+          [src]="authService.passwordIcon"
+        />
+        }
+        <div class="error-msg">
+          @if (!password.valid && password.touched) {
+          <p>Please enter your password</p>
+          }
+        </div>
+        <input
+          type="password"
+          id="password_confirm"
+          name="password_confirm"
+          #passwordConfirm="ngModel"
+          [type]="authService.passwordFieldType"
+          placeholder="Confirm Password"
+          class="custom-input"
+          autocomplete="new-password"
+          pattern="[^<>]*"
+          [(ngModel)]="loginData.passwordConfirm"
+          minlength="6"
+          required
+        />
+        @if(!loginData.passwordConfirm) {
+        <img class="custom-img" src="./../../../assets/img/lock.svg" alt="" />
+        } @else {
+        <img
+          class="passwordEyeConfirm"
+          *ngIf="isPasswordIconVisible"
+          (click)="authService.togglePasswordVisibility()"
+          [src]="authService.passwordIcon"
+        />
+        }
+        <div class="error-msg">
+          @if (!passwordConfirm.valid && passwordConfirm.touched) {
+          <p>Please confirm your password</p>
+          }
+        </div>
+      </div>
+      <div class="buttons">
+        <app-form-btn
+          [class]="'btn-submit'"
+          [type]="'submit'"
+          [value]="'Register'"
+        ></app-form-btn>
+      </div>
+    </form>
+  </div>
+  <div class="back-to-login">
+    <a routerLink="/login/">Back to the login</a>
+  </div>
+</section>
