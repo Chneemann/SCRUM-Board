@@ -24,7 +24,7 @@
           type="text"
           id="title"
           name="title"
-          class="form-field form-field-font-weight600"
+          class="form-field font-weight600 margin-bottom-18px"
           #title="ngModel"
           placeholder="Task name..."
           [(ngModel)]="taskData.title"
@@ -34,7 +34,7 @@
         <textarea
           id="description"
           name="description"
-          class="form-field form-field-none-outline"
+          class="form-field none-outline margin-bottom-18px"
           #description="ngModel"
           minlength="10"
           rows="3"
@@ -101,7 +101,7 @@
               <select
                 id="priority"
                 name="priority"
-                class="form-field"
+                class="form-field margin-bottom-18px"
                 #color="ngModel"
                 [(ngModel)]="taskData.priority"
               >
@@ -115,7 +115,7 @@
                 type="date"
                 id="date"
                 name="date"
-                class="form-field"
+                class="form-field margin-bottom-18px"
                 #date="ngModel"
                 [(ngModel)]="taskData.due_date"
                 [attr.min]="todaysDate()"

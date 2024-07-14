@@ -33,6 +33,10 @@ export class ViewTaskComponent {
     this.openTaskOverview.emit(taskId);
   }
 
+  hasTaskASubtask(taskId: string) {
+    return this.allSubtasks.some((subtask) => subtask.id?.toString() == taskId);
+  }
+
   startDragging(status: string) {
     this.startDraggingStatus.emit(status);
     this.openDescriptions = {};

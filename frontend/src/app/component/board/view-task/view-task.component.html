@@ -20,15 +20,17 @@
       alt=""
     />
   </div>
-  @if (task.description) {
   <div class="footer">
     <div class="images">
+      @if (task.description) {
       <div class="description-svg" (click)="toggleDescription(task.id, $event)">
         <img src="./../../../../assets/img/description.svg" alt="" />
       </div>
+      } @if (hasTaskASubtask(task.id)) {
       <div class="subtasks-svg" (click)="toggleSubtasks(task.id, $event)">
         <img src="./../../../../assets/img/checklist.svg" alt="" />
       </div>
+      }
       <div class="calendar-svg" (click)="toggleDate(task.id, $event)">
         <img src="./../../../../assets/img/calendar.svg" alt="" />
       </div>
@@ -75,6 +77,6 @@
     <span>Due Date:</span>
     <p>{{ formatDate(task.due_date, false) }}</p>
   </div>
-  } }
+  }
 </section>
 } }
