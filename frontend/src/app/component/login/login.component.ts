@@ -20,7 +20,7 @@ export class LoginComponent {
 
   isPasswordIconVisible: boolean = true;
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService) {}
 
   guestLogin() {
     const body = {

@@ -27,6 +27,8 @@
         <div class="error-msg">
           @if (!username.valid && username.touched) {
           <p>Please enter a username</p>
+          } @if (existUsername(loginData.username)) {
+          <p>Username already exists</p>
           }
         </div>
         <input
@@ -110,6 +112,7 @@
         </div>
       </div>
       <div class="buttons">
+        {{ !ifUserEmailIsValid(loginData.mail) }}
         <app-form-btn
           [class]="'btn-submit'"
           [type]="'submit'"

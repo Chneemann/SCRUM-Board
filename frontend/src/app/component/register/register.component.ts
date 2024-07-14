@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { DatabaseService } from '../../services/database.service';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,9 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
+  allUsers: any[] = [];
+  isPasswordIconVisible: boolean = true;
+
   loginData = {
     username: '',
     mail: '',
@@ -20,25 +24,41 @@ export class RegisterComponent {
     passwordConfirm: '',
   };
 
-  isPasswordIconVisible: boolean = true;
+  constructor(
+    public dbService: DatabaseService,
+    public authService: AuthService
+  ) {}
 
-  constructor(public authService: AuthService, private router: Router) {}
+  async ngOnInit() {
+    this.loadDatabaseUsers();
+  }
 
-  guestLogin() {
-    const body = {
-      username: 'guest',
-      password: '1Fv^39;b&p',
-    };
-    this.authService.login(body);
+  async loadDatabaseUsers() {
+    this.allUsers = await this.dbService.loadUsers();
+    console.log(this.allUsers);
+  }
+
+  existUsername(username: string) {
+    return this.allUsers.find((user) => user.username === username);
+  }
+
+  ifUserEmailIsValid(emailValue: string) {
+    const emailRegex = /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
+    if (emailRegex.test(emailValue)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   onSubmit(ngForm: NgForm) {
     if (ngForm.submitted && ngForm.form.valid) {
       const body = {
         username: this.loginData.username,
+        email: this.loginData.mail,
         password: this.loginData.password,
       };
-      this.authService.login(body);
+      this.authService.register(body);
     }
   }
 }

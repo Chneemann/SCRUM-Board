@@ -1,6 +1,6 @@
 from asyncio import exceptions
 from django.http import Http404
-from django.shortcuts import get_object_or_404, render
+from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, generics
@@ -30,7 +30,17 @@ class LogoutView(APIView):
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
       
-class AuthView(APIView):
+class RegisterView(APIView):
+    def post(self, request):
+        serialized = UserSerializer(data=request.data) 
+        if serialized.is_valid():
+            serialized.save()
+            return Response(serialized.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serialized.errors, status=status.HTTP_400_BAD_REQUEST)
+          
+          
+class AuthView(ObtainAuthToken):
     authentication_classes = [authentication.TokenAuthentication]
   
     def get(self, request, format=None):

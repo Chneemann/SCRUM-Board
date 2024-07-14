@@ -79,7 +79,19 @@ export class AuthService {
         },
         (error) => {
           console.log(error);
+          reject(error);
+        }
+      );
+    });
+  }
 
+  register(body: any): Promise<any> {
+    return new Promise((reject) => {
+      this.http.post<any>(environment.baseUrl + '/register/', body).subscribe(
+        (data) => {
+          this.login(body);
+        },
+        (error) => {
           reject(error);
         }
       );
