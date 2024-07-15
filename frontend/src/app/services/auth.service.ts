@@ -11,6 +11,7 @@ export class AuthService {
   currentUserId: string = '';
   passwordFieldType: string = 'password';
   passwordIcon: string = './../../../assets/img/close-eye.svg';
+  errorMsg: any = {};
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -78,7 +79,6 @@ export class AuthService {
           this.router.navigate(['/board/']);
         },
         (error) => {
-          console.log(error);
           reject(error);
         }
       );
@@ -92,6 +92,7 @@ export class AuthService {
           this.login(body);
         },
         (error) => {
+          this.errorMsg = error.error;
           reject(error);
         }
       );

@@ -50,6 +50,8 @@
         <div class="error-msg">
           @if (!mail.valid && mail.touched) {
           <p>Please enter your email</p>
+          } @if (authService.errorMsg.email) {
+          <p>{{ authService.errorMsg.email }}</p>
           }
         </div>
         <input
@@ -79,7 +81,9 @@
         <div class="error-msg">
           @if (!password.valid && password.touched) {
           <p>Please enter your password</p>
-          }
+          } @else { @if (loginData.password.length < 6 && password.touched) {
+          <p>Password is too short, min 6 characters</p>
+          } }
         </div>
         <input
           type="password"
@@ -108,15 +112,24 @@
         <div class="error-msg">
           @if (!passwordConfirm.valid && passwordConfirm.touched) {
           <p>Please confirm your password</p>
+          } @if (loginData.password !== loginData.passwordConfirm) {
+          <p>The passwords do not match</p>
           }
         </div>
       </div>
       <div class="buttons">
-        {{ !ifUserEmailIsValid(loginData.mail) }}
         <app-form-btn
           [class]="'btn-submit'"
           [type]="'submit'"
           [value]="'Register'"
+          [disabled]="
+            username.invalid ||
+            password.invalid ||
+            passwordConfirm.invalid ||
+            loginData.password !== loginData.passwordConfirm ||
+            existUsername(loginData.username) ||
+            !ifUserEmailIsValid(loginData.mail)
+          "
         ></app-form-btn>
       </div>
     </form>
