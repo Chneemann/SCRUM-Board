@@ -12,23 +12,42 @@
           type="text"
           id="text"
           name="text"
-          #username="ngModel"
-          placeholder="Username"
+          #firstName="ngModel"
+          placeholder="First Name"
           class="custom-input"
           autocomplete="new-password"
-          [(ngModel)]="loginData.username"
+          [(ngModel)]="loginData.firstName"
           required
         />
-        @if(!loginData.username) {
+        @if(!loginData.firstName) {
         <img class="custom-img" src="./../../../assets/img/user.svg" alt="" />
         } @else {
         <img class="custom-img" alt="" />
         }
         <div class="error-msg">
-          @if (!username.valid && username.touched) {
-          <p>Please enter a username</p>
-          } @if (existUsername(loginData.username)) {
-          <p>Username already exists</p>
+          @if (!firstName.valid && firstName.touched) {
+          <p>Please enter your first name</p>
+          }
+        </div>
+        <input
+          type="text"
+          id="text"
+          name="text"
+          #lastName="ngModel"
+          placeholder="Last Name"
+          class="custom-input"
+          autocomplete="new-password"
+          [(ngModel)]="loginData.lastName"
+          required
+        />
+        @if(!loginData.lastName) {
+        <img class="custom-img" src="./../../../assets/img/user.svg" alt="" />
+        } @else {
+        <img class="custom-img" alt="" />
+        }
+        <div class="error-msg">
+          @if (!lastName.valid && lastName.touched) {
+          <p>Please enter your last name</p>
           }
         </div>
         <input
@@ -42,7 +61,7 @@
           [(ngModel)]="loginData.mail"
           required
         />
-        @if(!loginData.username) {
+        @if(!loginData.mail) {
         <img class="custom-img" src="./../../../assets/img/mail.svg" alt="" />
         } @else {
         <img class="custom-img" alt="" />
@@ -79,11 +98,9 @@
         />
         }
         <div class="error-msg">
-          @if (!password.valid && password.touched) {
-          <p>Please enter your password</p>
-          } @else { @if (loginData.password.length < 6 && password.touched) {
+          @if (loginData.password.length < 6 && password.touched) {
           <p>Password is too short, min 6 characters</p>
-          } }
+          }
         </div>
         <input
           type="password"
@@ -110,9 +127,8 @@
         />
         }
         <div class="error-msg">
-          @if (!passwordConfirm.valid && passwordConfirm.touched) {
-          <p>Please confirm your password</p>
-          } @if (loginData.password !== loginData.passwordConfirm) {
+          @if (loginData.password !== loginData.passwordConfirm &&
+          passwordConfirm.touched) {
           <p>The passwords do not match</p>
           }
         </div>
@@ -123,11 +139,11 @@
           [type]="'submit'"
           [value]="'Register'"
           [disabled]="
-            username.invalid ||
+            firstName.invalid ||
+            lastName.invalid ||
             password.invalid ||
             passwordConfirm.invalid ||
             loginData.password !== loginData.passwordConfirm ||
-            existUsername(loginData.username) ||
             !ifUserEmailIsValid(loginData.mail)
           "
         ></app-form-btn>

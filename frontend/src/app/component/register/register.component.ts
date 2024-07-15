@@ -3,8 +3,7 @@ import { FormBtnComponent } from '../../shared/component/form-btn/form-btn.compo
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
-import { DatabaseService } from '../../services/database.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -14,33 +13,17 @@ import { DatabaseService } from '../../services/database.service';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
-  allUsers: any[] = [];
   isPasswordIconVisible: boolean = true;
 
   loginData = {
-    username: '',
+    firstName: '',
+    lastName: '',
     mail: '',
     password: '',
     passwordConfirm: '',
   };
 
-  constructor(
-    public dbService: DatabaseService,
-    public authService: AuthService
-  ) {}
-
-  async ngOnInit() {
-    this.loadDatabaseUsers();
-  }
-
-  async loadDatabaseUsers() {
-    this.allUsers = await this.dbService.loadUsers();
-    console.log(this.allUsers);
-  }
-
-  existUsername(username: string) {
-    return this.allUsers.find((user) => user.username === username);
-  }
+  constructor(public authService: AuthService) {}
 
   ifUserEmailIsValid(emailValue: string) {
     const emailRegex = /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
@@ -54,7 +37,9 @@ export class RegisterComponent {
   onSubmit(ngForm: NgForm) {
     if (ngForm.submitted && ngForm.form.valid) {
       const body = {
-        username: this.loginData.username,
+        first_name: this.loginData.firstName,
+        last_name: this.loginData.lastName,
+        username: this.loginData.firstName + this.loginData.lastName,
         email: this.loginData.mail,
         password: this.loginData.password,
       };

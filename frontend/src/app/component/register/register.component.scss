@@ -21,7 +21,7 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 450px;
+  height: 530px;
   width: 300px;
   background-color: $light-gray;
   border-radius: 6px;
@@ -82,17 +82,22 @@ section {
       right: 0;
       top: 264px;
     }
+    &:nth-child(14) {
+      position: absolute;
+      right: 0;
+      top: 347px;
+    }
   }
   .passwordEye {
     position: absolute;
     right: -5px;
-    top: 181px;
+    top: 264px;
     cursor: pointer;
   }
   .passwordEyeConfirm {
     position: absolute;
     right: -5px;
-    top: 264px;
+    top: 347px;
     cursor: pointer;
   }
   .custom-input:focus + .custom-img {
