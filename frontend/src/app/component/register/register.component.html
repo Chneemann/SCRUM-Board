@@ -8,46 +8,46 @@
       onsubmit="return false"
     >
       <div class="input-fields">
-        <input
-          type="text"
-          id="text"
-          name="text"
-          #firstName="ngModel"
-          placeholder="First Name"
-          class="custom-input"
-          autocomplete="new-password"
-          [(ngModel)]="loginData.firstName"
-          required
-        />
-        @if(!loginData.firstName) {
-        <img class="custom-img" src="./../../../assets/img/user.svg" alt="" />
-        } @else {
-        <img class="custom-img" alt="" />
-        }
-        <div class="error-msg">
-          @if (!firstName.valid && firstName.touched) {
-          <p>Please enter your first name</p>
-          }
+        <div class="names">
+          <input
+            type="text"
+            id="text"
+            name="text"
+            #firstName="ngModel"
+            placeholder="First Name"
+            class="custom-input"
+            autocomplete="new-password"
+            [(ngModel)]="loginData.firstName"
+            required
+          />
+          <div class="spacer"></div>
+          <input
+            type="text"
+            id="text"
+            name="text"
+            #lastName="ngModel"
+            placeholder="Last Name"
+            class="custom-input"
+            autocomplete="new-password"
+            [(ngModel)]="loginData.lastName"
+            required
+          />
         </div>
-        <input
-          type="text"
-          id="text"
-          name="text"
-          #lastName="ngModel"
-          placeholder="Last Name"
-          class="custom-input"
-          autocomplete="new-password"
-          [(ngModel)]="loginData.lastName"
-          required
-        />
         @if(!loginData.lastName) {
         <img class="custom-img" src="./../../../assets/img/user.svg" alt="" />
         } @else {
         <img class="custom-img" alt="" />
+        } @if(!loginData.firstName) {
+        <img class="custom-img" src="./../../../assets/img/user.svg" alt="" />
+        } @else {
+        <img class="custom-img" alt="" />
         }
         <div class="error-msg">
-          @if (!lastName.valid && lastName.touched) {
-          <p>Please enter your last name</p>
+          @if (!firstName.valid && firstName.touched && !lastName.valid &&
+          lastName.touched) {
+          <p>Please enter your first and last name</p>
+          } @if (authService.errorMsg.username) {
+          <p>{{ authService.errorMsg.username }}</p>
           }
         </div>
         <input
