@@ -10,6 +10,7 @@
   background-color: $white;
   font-size: 18px;
   font-weight: 600;
+  transition: 125ms ease-in-out;
   cursor: pointer;
   &:hover {
     border: 1px solid $gray;

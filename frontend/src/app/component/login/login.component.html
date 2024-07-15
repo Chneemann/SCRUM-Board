@@ -13,13 +13,13 @@
           id="mail"
           name="mail"
           #mail="ngModel"
-          placeholder="Username"
+          placeholder="Mail"
           class="custom-input"
           autocomplete="email"
-          [(ngModel)]="loginData.username"
+          [(ngModel)]="loginData.mail"
           required
         />
-        @if(!loginData.username) {
+        @if(!loginData.mail) {
         <img class="custom-img" src="./../../../assets/img/mail.svg" alt="" />
         } @else {
         <img class="custom-img" alt="" />
@@ -67,6 +67,11 @@
           [class]="'btn-submit'"
           [type]="'submit'"
           [value]="'Login'"
+          [disabled]="
+            mail.invalid ||
+            password.invalid ||
+            !ifUserEmailIsValid(loginData.mail)
+          "
         ></app-form-btn>
         <app-form-btn
           [class]="'btn-submit'"

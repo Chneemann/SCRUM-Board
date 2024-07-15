@@ -5,23 +5,35 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, generics
 from kanbanboard.models import TaskItem, SubtaskItem
-from kanbanboard.serializers import  TaskItemSerializer, SubtaskItemSerializer, UserSerializer
-from django.contrib.auth import get_user_model
+from kanbanboard.serializers import  TaskItemSerializer, SubtaskItemSerializer, UserSerializer, LoginSerializer
+from django.contrib.auth import get_user_model, authenticate
 from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
-class LoginView(ObtainAuthToken):
-    def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data,
-                                           context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({
-            token.key,
-        }) 
+class LoginView(APIView):
+    serializer_class = LoginSerializer
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            email = serializer.data['email']
+            password = serializer.data['password']
+            user = authenticate(email=email, password=password)
+
+            if user:
+                token, created = Token.objects.get_or_create(user=user)
+                return Response(token.key, status=status.HTTP_200_OK)
+            else:
+                content = {'detail':
+                           ('Unable to login with provided credentials.')}
+                return Response(content, status=status.HTTP_401_UNAUTHORIZED)
+
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
         
 class LogoutView(APIView):
     authentication_classes = [authentication.TokenAuthentication]

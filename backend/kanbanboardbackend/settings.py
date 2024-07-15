@@ -33,6 +33,7 @@ CORS_ALLOWED_ORIGINS = [
 
 
 # Application definition
+AUTH_EMAIL_VERIFICATION = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -137,3 +138,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
+
+AUTHENTICATION_BACKENDS = (
+    'kanbanboard.custom_backend.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)

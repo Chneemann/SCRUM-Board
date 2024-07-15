@@ -14,13 +14,22 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class LoginComponent {
   loginData = {
-    username: '',
+    mail: '',
     password: '',
   };
 
   isPasswordIconVisible: boolean = true;
 
   constructor(public authService: AuthService) {}
+
+  ifUserEmailIsValid(emailValue: string) {
+    const emailRegex = /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
+    if (emailRegex.test(emailValue)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   guestLogin() {
     const body = {
@@ -33,7 +42,7 @@ export class LoginComponent {
   onSubmit(ngForm: NgForm) {
     if (ngForm.submitted && ngForm.form.valid) {
       const body = {
-        username: this.loginData.username,
+        email: this.loginData.mail,
         password: this.loginData.password,
       };
       this.authService.login(body);

@@ -13,6 +13,7 @@ class SubtaskItemSerializer(serializers.ModelSerializer):
         fields = '__all__'
              
 class UserSerializer(serializers.ModelSerializer): 
+    email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
 
     class Meta:
@@ -33,3 +34,7 @@ class UserSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(max_length=255)
+    password = serializers.CharField(max_length=128)
