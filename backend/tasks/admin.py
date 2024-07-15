@@ -1,5 +1,5 @@
 from django.contrib import admin
-from kanbanboard.models import TaskItem, SubtaskItem
+from tasks.models import TaskItem, SubtaskItem
 
 # Register your models here.
 admin.site.register(TaskItem)

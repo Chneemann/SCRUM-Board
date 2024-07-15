@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
     'rest_framework',
-    'kanbanboard'
+    'tasks',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -140,6 +141,6 @@ REST_FRAMEWORK = {
 }
 
 AUTHENTICATION_BACKENDS = (
-    'kanbanboard.custom_backend.EmailBackend',
+    'users.custom_backend.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
