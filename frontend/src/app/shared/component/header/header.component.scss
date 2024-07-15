@@ -9,6 +9,33 @@ section {
   background-color: $light-gray;
 }
 
+.right-corner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.welcome {
+  span {
+    cursor: pointer;
+    &:hover {
+      color: $gray;
+    }
+  }
+}
+
 .logout {
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  img {
+    height: 36px;
+    width: auto;
+    cursor: pointer;
+    filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(16%)
+      hue-rotate(338deg) brightness(93%) contrast(107%);
+    &:hover {
+      filter: brightness(0) saturate(100%) invert(63%) sepia(0%) saturate(1%)
+        hue-rotate(153deg) brightness(93%) contrast(85%);
+    }
+  }
 }

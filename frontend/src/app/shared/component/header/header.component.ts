@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -9,7 +9,18 @@ import { AuthService } from '../../../services/auth.service';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+  @Input() allUsers: any[] = [];
+
   constructor(public authService: AuthService) {}
+
+  currentUsername() {
+    let index = this.allUsers.findIndex(
+      (user) => user.id === this.authService.currentUserId
+    );
+    if (index !== -1) {
+      return this.allUsers[index].username;
+    }
+  }
 
   logout() {
     this.authService.logout();
