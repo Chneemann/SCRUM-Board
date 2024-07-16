@@ -14,9 +14,103 @@
       @for (user of allUsers; track user) {
       <!-- Current User -->
       @if (user.id === authService.currentUserId) {
-      <div class="username">
-        {{ user.username }}
-      </div>
+      <form
+        id="form"
+        #taskForm="ngForm"
+        (ngSubmit)="onSubmit(taskForm)"
+        onsubmit="return false"
+      >
+        <div class="input-fields">
+          <div class="input-container">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              #username="ngModel"
+              placeholder=""
+              class="input-field"
+              autocomplete="new-password"
+              [(ngModel)]="userData.username"
+              required
+            />
+            <label for="username" class="input-label">Username:</label>
+          </div>
+          <div class="error-msg">
+            @if (!username.valid && username.touched) {
+            <p>Please enter a username</p>
+            }
+          </div>
+          <div class="input-container">
+            <input
+              type="mail"
+              id="mail"
+              name="mail"
+              #mail="ngModel"
+              placeholder=""
+              class="input-field"
+              autocomplete="new-password"
+              [(ngModel)]="userData.mail"
+              required
+            />
+            <label for="mail" class="input-label">Mail:</label>
+          </div>
+          <div class="error-msg">
+            @if (!mail.valid && mail.touched) {
+            <p>Please enter a mail</p>
+            }
+          </div>
+          <div class="first-and-lastname">
+            <div class="input-container">
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                #firstName="ngModel"
+                placeholder=""
+                class="input-field"
+                autocomplete="new-password"
+                [(ngModel)]="userData.firstName"
+                required
+              />
+              <label for="firstName" class="input-label">First Name:</label>
+            </div>
+            <div class="spacer"></div>
+            <div class="input-container">
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                #lastName="ngModel"
+                placeholder=""
+                class="input-field"
+                autocomplete="new-password"
+                [(ngModel)]="userData.lastName"
+                required
+              />
+              <label for="lastName" class="input-label">Last Name:</label>
+            </div>
+          </div>
+          <div class="error-msg">
+            @if (!firstName.valid && firstName.touched || !lastName.valid &&
+            lastName.touched) {
+            <p>Please enter your first and last name</p>
+            }
+          </div>
+        </div>
+        <div class="button">
+          <app-form-btn
+            [class]="'btn-submit'"
+            [type]="'submit'"
+            [value]="'Save'"
+            [disabled]="
+              !username.valid ||
+              !firstName.valid ||
+              !lastName.valid ||
+              !sharedService.isUserEmailValid(userData.mail)
+            "
+          ></app-form-btn>
+        </div>
+      </form>
       } }
     </div>
   </div>

@@ -120,6 +120,5 @@ export class BoardComponent implements OnInit {
 
   toggleUserOverview(value: any) {
     this.openCurrentUserOverview = value;
-    console.log(value);
   }
 }

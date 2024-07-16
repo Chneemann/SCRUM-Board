@@ -158,7 +158,7 @@ export class AddTaskComponent implements OnInit {
       priority: this.taskData.priority,
       assigned: this.clonedTaskDataAssigned,
     };
-    this.dbService.createTask(body).then((updatedTask) => {
+    this.dbService.createDB(body, 'tasks').then((updatedTask) => {
       this.taskCreated.emit(updatedTask);
       if (this.dbService.dataUploaded) {
         this.createSubtask(updatedTask.id);
@@ -176,11 +176,13 @@ export class AddTaskComponent implements OnInit {
         author: this.tempTaskDataSubtasks[i].author,
         status: this.tempTaskDataSubtasks[i].status,
       };
-      this.dbService.createSubtask(bodySubtask).then((updatedSubtask) => {
-        this.tempTaskDataSubtasks.splice(i, 1);
-        bodySubtask.id = updatedSubtask.id;
-        this.allSubtasks.push(bodySubtask);
-      });
+      this.dbService
+        .createDB(bodySubtask, 'subtasks')
+        .then((updatedSubtask) => {
+          this.tempTaskDataSubtasks.splice(i, 1);
+          bodySubtask.id = updatedSubtask.id;
+          this.allSubtasks.push(bodySubtask);
+        });
     }
   }
 
@@ -193,19 +195,21 @@ export class AddTaskComponent implements OnInit {
       priority: this.taskData.priority,
       assigned: this.clonedTaskDataAssigned,
     };
-    this.dbService.updateTask(body, this.currentTaskId).then((updatedTask) => {
-      this.taskUpdated.emit(updatedTask);
-      if (this.dbService.dataUploaded) {
-        this.createSubtask(updatedTask.id);
-        this.taskOverviewClose('');
-      }
-    });
+    this.dbService
+      .updateDB(body, this.currentTaskId, 'tasks')
+      .then((updatedTask) => {
+        this.taskUpdated.emit(updatedTask);
+        if (this.dbService.dataUploaded) {
+          this.createSubtask(updatedTask.id);
+          this.taskOverviewClose('');
+        }
+      });
   }
 
   deleteTask() {
     const confirmed = confirm('Do you really want to delete the task?');
     if (confirmed) {
-      this.dbService.deleteTask(this.currentTaskId).then((success) => {
+      this.dbService.deleteDB(this.currentTaskId, 'tasks').then((success) => {
         if (success) {
           this.taskDeleted.emit(this.currentTaskId);
           if (this.dbService.dataUploaded) {
@@ -235,7 +239,7 @@ export class AddTaskComponent implements OnInit {
       status: checked,
     };
     this.dbService
-      .updateSubtask(body, subtaskId.toString())
+      .updateDB(body, subtaskId.toString(), 'subtasks')
       .then((updatedSubtask) => {
         const index = this.allSubtasks.findIndex(
           (subtask) => subtask.id === subtaskId
@@ -247,7 +251,7 @@ export class AddTaskComponent implements OnInit {
   }
 
   deleteSubtask(selectedValue: number) {
-    this.dbService.deleteSubtask(selectedValue).then((success) => {
+    this.dbService.deleteDB(selectedValue, 'subtasks').then((success) => {
       let index = this.allSubtasks.findIndex((obj) => obj.id === selectedValue);
       this.allSubtasks.splice(index, 1);
     });

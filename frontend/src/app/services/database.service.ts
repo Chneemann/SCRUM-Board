@@ -71,33 +71,18 @@ export class DatabaseService {
     });
   }
 
-  deleteTask(postId: string): Promise<any> {
-    const url = `${environment.baseUrl}/tasks/${postId}/`;
+  deleteDB(postId: string | number, directory: string): Promise<any> {
+    const url = `${environment.baseUrl}/${directory}/${postId}/`;
     return this.performRequest('DELETE', url);
   }
 
-  createTask(body: any): Promise<any> {
-    const url = `${environment.baseUrl}/tasks/`;
+  createDB(body: any, directory: string): Promise<any> {
+    const url = `${environment.baseUrl}/${directory}/`;
     return this.performRequest('POST', url, body);
   }
 
-  updateTask(body: any, postId: string): Promise<any> {
-    const url = `${environment.baseUrl}/tasks/${postId}/`;
-    return this.performRequest('PUT', url, body);
-  }
-
-  deleteSubtask(postId: number): Promise<any> {
-    const url = `${environment.baseUrl}/subtasks/${postId}/`;
-    return this.performRequest('DELETE', url);
-  }
-
-  createSubtask(body: any): Promise<any> {
-    const url = `${environment.baseUrl}/subtasks/`;
-    return this.performRequest('POST', url, body);
-  }
-
-  updateSubtask(body: any, postId: string): Promise<any> {
-    const url = `${environment.baseUrl}/subtasks/${postId}/`;
+  updateDB(body: any, postId: string, directory: string): Promise<any> {
+    const url = `${environment.baseUrl}/${directory}/${postId}/`;
     return this.performRequest('PUT', url, body);
   }
 }
