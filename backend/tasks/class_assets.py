@@ -1,7 +1,7 @@
 PRIORITY_CHOICES = [
-  ('low', 'Low'),
-  ('medium', 'Medium'),
-  ('hight', 'High'),
+    ('low', 'Low'),
+    ('medium', 'Medium'),
+    ('high', 'High'),
 ]
 
 STATUS_CHOICES = [
@@ -12,12 +12,12 @@ STATUS_CHOICES = [
 ]
 
 COLOR_CHOICES = [
-  ('yellow', 'Yellow'), 
-  ('green', 'Green'), 
-  ('blue', 'Blue'), 
-  ('red', 'Red'), 
-  ('orange', 'Orange'), 
-  ('purple', 'Purple'), 
-  ('magenta', 'Magenta'), 
-  ('cyan', 'Cyan'),
+    ('yellow', 'Yellow'), 
+    ('green', 'Green'), 
+    ('blue', 'Blue'), 
+    ('red', 'Red'), 
+    ('orange', 'Orange'), 
+    ('purple', 'Purple'), 
+    ('magenta', 'Magenta'), 
+    ('cyan', 'Cyan'),
 ]
