@@ -28,6 +28,8 @@ export class EditUserComponent implements OnInit {
     mail: '',
     firstName: '',
     lastName: '',
+    password: '',
+    passwordConfirm: '',
   };
 
   ngOnInit() {
@@ -63,6 +65,21 @@ export class EditUserComponent implements OnInit {
     }
   }
 
+  isInputNew() {
+    if (
+      this.userData.username !== this.allUsers[this.userIndex()].username ||
+      this.userData.mail !== this.allUsers[this.userIndex()].email ||
+      this.userData.firstName !== this.allUsers[this.userIndex()].first_name ||
+      this.userData.lastName !== this.allUsers[this.userIndex()].last_name ||
+      this.userData.password !== '' ||
+      this.userData.passwordConfirm !== ''
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   updateData() {
     const body = {
       username: this.userData.username,
@@ -73,9 +90,13 @@ export class EditUserComponent implements OnInit {
       first_name: string;
       last_name: string;
       email?: string;
+      password?: string;
     };
     if (this.userData.mail !== this.allUsers[this.userIndex()].email) {
       body.email = this.userData.mail;
+    }
+    if (this.userData.password === this.userData.passwordConfirm) {
+      body.password = this.userData.password;
     }
     this.dbService
       .updateDB(body, this.authService.currentUserId, 'users')

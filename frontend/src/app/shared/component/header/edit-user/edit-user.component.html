@@ -59,7 +59,7 @@
             <p>Please enter a mail</p>
             }
           </div>
-          <div class="first-and-lastname">
+          <div class="double-input-fields">
             <div class="input-container">
               <input
                 type="text"
@@ -96,6 +96,51 @@
             <p>Please enter your first and last name</p>
             }
           </div>
+          <div class="double-input-fields">
+            <div class="input-container">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                #password="ngModel"
+                placeholder=""
+                class="input-field"
+                autocomplete="new-password"
+                [(ngModel)]="userData.password"
+                pattern="[^<>]*"
+                minlength="8"
+                required
+              />
+              <label for="password" class="input-label">New Password:</label>
+            </div>
+            <div class="spacer"></div>
+            <div class="input-container">
+              <input
+                type="password"
+                id="passwordConfirm"
+                name="passwordConfirm"
+                #passwordConfirm="ngModel"
+                placeholder=""
+                class="input-field"
+                autocomplete="new-password"
+                [(ngModel)]="userData.passwordConfirm"
+                pattern="[^<>]*"
+                minlength="8"
+                required
+              />
+              <label for="passwordConfirm" class="input-label"
+                >Confirm Password:</label
+              >
+            </div>
+          </div>
+          <div class="error-msg">
+            @if (userData.password.length < 8 && password.touched) {
+            <p>Password is too short, min 8 characters</p>
+            } @else { @if (userData.password !== userData.passwordConfirm &&
+            passwordConfirm.touched) {
+            <p>The passwords do not match</p>
+            } }
+          </div>
         </div>
         <div class="button">
           <app-form-btn
@@ -106,7 +151,9 @@
               !username.valid ||
               !firstName.valid ||
               !lastName.valid ||
-              !sharedService.isUserEmailValid(userData.mail)
+              !sharedService.isUserEmailValid(userData.mail) ||
+              userData.password !== userData.passwordConfirm ||
+              !isInputNew()
             "
           ></app-form-btn>
         </div>
