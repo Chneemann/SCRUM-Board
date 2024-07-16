@@ -1,5 +1,8 @@
 @if (authService.isUserLogin) {
-<app-header [allUsers]="allUsers"></app-header>
+<app-header
+  [allUsers]="allUsers"
+  (openUserOverview)="toggleUserOverview($event)"
+></app-header>
 <section>
   <div class="status">
     <div class="header">
@@ -118,4 +121,9 @@
   (taskCreated)="handleTaskCreated($event)"
   (taskDeleted)="handleTaskDeletion($event)"
 ></app-add-task>
+} @if(openCurrentUserOverview) {
+<app-edit-user
+  [allUsers]="allUsers"
+  (closeUserOverview)="toggleUserOverview($event)"
+></app-edit-user>
 } }

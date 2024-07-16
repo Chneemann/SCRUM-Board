@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -10,8 +10,13 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class HeaderComponent {
   @Input() allUsers: any[] = [];
+  @Output() openUserOverview = new EventEmitter<string>();
 
   constructor(public authService: AuthService) {}
+
+  userOverviewOpen(value: string) {
+    this.openUserOverview.emit(value);
+  }
 
   currentUsername() {
     let index = this.allUsers.findIndex(

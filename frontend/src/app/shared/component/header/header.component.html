@@ -2,7 +2,10 @@
   <div class="headline"><h1>My first board</h1></div>
   <div class="right-corner">
     <div class="welcome">
-      Welcome, <span>{{ currentUsername() }}</span>
+      Welcome,
+      <span (click)="userOverviewOpen(authService.currentUserId)">{{
+        currentUsername()
+      }}</span>
     </div>
     <div class="logout" (click)="logout()">
       <img src="./../../../../assets/img/logout.svg" alt="" />

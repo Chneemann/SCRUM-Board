@@ -1,0 +1,23 @@
+<div class="overlay" (click)="userOverviewClose('')">
+  <div class="overlay-content" (click)="stopPropagation($event)">
+    <div class="content">
+      <div class="header">
+        <div class="headline">Edit user data</div>
+        <div class="btn-close">
+          <img
+            src="./../../../../assets/img/close.svg"
+            alt=""
+            (click)="userOverviewClose('')"
+          />
+        </div>
+      </div>
+      @for (user of allUsers; track user) {
+      <!-- Current User -->
+      @if (user.id === authService.currentUserId) {
+      <div class="username">
+        {{ user.username }}
+      </div>
+      } }
+    </div>
+  </div>
+</div>

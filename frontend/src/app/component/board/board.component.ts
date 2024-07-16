@@ -5,16 +5,23 @@ import { DatabaseService } from '../../services/database.service';
 import { DragDropService } from '../../services/drag-drop.service';
 import { HeaderComponent } from '../../shared/component/header/header.component';
 import { AuthService } from '../../services/auth.service';
+import { EditUserComponent } from '../../shared/component/header/edit-user/edit-user.component';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [ViewTaskComponent, AddTaskComponent, HeaderComponent],
+  imports: [
+    ViewTaskComponent,
+    AddTaskComponent,
+    HeaderComponent,
+    EditUserComponent,
+  ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })
 export class BoardComponent implements OnInit {
   openCurrentTaskOverview: string = '';
+  openCurrentUserOverview: string = '';
   startDraggingStatus: string = '';
   allTasks: any[] = [];
   allSubtasks: any[] = [];
@@ -109,5 +116,10 @@ export class BoardComponent implements OnInit {
       this.loadDatabaseTasks();
       this.dbService.dataUploaded = false;
     }
+  }
+
+  toggleUserOverview(value: any) {
+    this.openCurrentUserOverview = value;
+    console.log(value);
   }
 }
