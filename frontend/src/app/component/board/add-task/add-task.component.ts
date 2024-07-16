@@ -121,6 +121,7 @@ export class AddTaskComponent implements OnInit {
   }
 
   taskOverviewClose(value: string) {
+    this.tempTaskDataSubtasks = [];
     this.closeTaskOverview.emit(value);
   }
 
@@ -195,6 +196,7 @@ export class AddTaskComponent implements OnInit {
     this.dbService.updateTask(body, this.currentTaskId).then((updatedTask) => {
       this.taskUpdated.emit(updatedTask);
       if (this.dbService.dataUploaded) {
+        this.createSubtask(updatedTask.id);
         this.taskOverviewClose('');
       }
     });
@@ -215,45 +217,20 @@ export class AddTaskComponent implements OnInit {
   }
 
   addSubtask(titleValue: string) {
-    if (this.isCurrentTaskIdNumber) {
-      const bodySubtask = {
-        id: this.tempTaskDataSubtasks.length + 1,
-        title: titleValue,
-        task_id: 0,
-        author: this.authService.currentUserId,
-        status: false,
-      };
-      this.tempTaskDataSubtasks.push(bodySubtask);
-      console.log(this.tempTaskDataSubtasks);
-      this.subtaskInputValue = '';
-    } else {
-      this.saveSubtask(titleValue);
-    }
-  }
-
-  saveSubtask(titleValue: string) {
-    let subtaskId;
     const bodySubtask = {
-      id: 0,
+      id: this.tempTaskDataSubtasks.length + 1,
       title: titleValue,
-      task_id: +this.currentTaskId,
+      task_id: 0,
       author: this.authService.currentUserId,
       status: false,
     };
-    this.dbService.createSubtask(bodySubtask).then((updatedSubtask) => {
-      this.taskCreated.emit(updatedSubtask);
-      this.allSubtasks.push(bodySubtask);
-      this.subtaskInputValue = '';
-      const index = this.allSubtasks.findIndex((subtask) => subtask.id === 0);
-      if (index !== -1) {
-        this.allSubtasks[index].id = updatedSubtask.id;
-      }
-    });
+    this.tempTaskDataSubtasks.push(bodySubtask);
+    console.log(this.tempTaskDataSubtasks);
+    this.subtaskInputValue = '';
   }
 
   changeCheckboxSubtask(subtaskId: number, event: Event) {
     const checked = (event.target as HTMLInputElement).checked;
-
     const body = {
       status: checked,
     };
