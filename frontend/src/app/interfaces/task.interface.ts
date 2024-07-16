@@ -9,7 +9,6 @@ export interface Task {
   due_date: string;
   color: string;
   assigned: string[];
-  subtasks: string[];
 }
 
 export interface Subtask {

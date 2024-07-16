@@ -56,6 +56,7 @@
             (keydown.enter)="addSubtask(subtaskInputValue)"
           />
           <div class="subtask-details">
+            <!-- Server subtask -->
             @for (subtask of allSubtasks; track subtask) {
             <!-- -->
             @if (subtask.id && subtask.task_id === +currentTaskId) {
@@ -70,6 +71,25 @@
               />
               {{ displaySubtaskTitle(subtask.id) }}
               <span (click)="deleteSubtask(subtask.id)"
+                ><img src="./../../../../assets/img/close.svg" alt=""
+              /></span>
+            </p>
+            } }
+            <!-- Temp subtask -->
+            @for (subtask of tempTaskDataSubtasks; track subtask) {
+            <!-- -->
+            @if (subtask.id) {
+            <p>
+              <input
+                type="checkbox"
+                id="checkbox{{ subtask.id }}"
+                name="checkbox"
+                class="checkbox"
+                [checked]="subtask.status"
+                (change)="tempChangeCheckboxSubtask(subtask.id, $event)"
+              />
+              {{ subtask.title }}
+              <span (click)="tempDeleteSubtask(subtask.id)"
                 ><img src="./../../../../assets/img/close.svg" alt=""
               /></span>
             </p>

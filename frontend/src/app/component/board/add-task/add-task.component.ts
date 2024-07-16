@@ -26,6 +26,7 @@ export class AddTaskComponent implements OnInit {
   startAssignedValue: string | null = 'null';
   subtaskInputValue: string = '';
   clonedTaskDataAssigned: string[] = [];
+  tempTaskDataSubtasks: Subtask[] = [];
   isThisANewTask: boolean = false;
   isCurrentTaskIdNumber: boolean = false;
 
@@ -51,7 +52,6 @@ export class AddTaskComponent implements OnInit {
     created_at: '',
     due_date: this.todaysDate(),
     color: 'yellow',
-    subtasks: [],
     assigned: [],
   };
 
@@ -107,7 +107,6 @@ export class AddTaskComponent implements OnInit {
     this.taskData.assigned = this.allTasks[taskIndex].assigned;
     this.taskData.priority = this.allTasks[taskIndex].priority;
     this.taskData.due_date = this.allTasks[taskIndex].due_date;
-    this.taskData.subtasks = this.loadSubtasks();
     this.clonedTaskDataAssigned = [...this.taskData.assigned];
   }
 
@@ -162,7 +161,6 @@ export class AddTaskComponent implements OnInit {
       color: this.taskData.color,
       status: this.taskData.status,
       author: this.taskData.author,
-      subtask: this.taskData.subtasks,
       due_date: this.taskData.due_date,
       priority: this.taskData.priority,
       assigned: this.clonedTaskDataAssigned,
@@ -170,9 +168,27 @@ export class AddTaskComponent implements OnInit {
     this.dbService.createTask(body).then((updatedTask) => {
       this.taskCreated.emit(updatedTask);
       if (this.dbService.dataUploaded) {
+        this.createSubtask(updatedTask.id);
         this.taskOverviewClose('');
       }
     });
+  }
+
+  createSubtask(taskId: string) {
+    for (let i = 0; i < this.tempTaskDataSubtasks.length; i++) {
+      const bodySubtask = {
+        id: this.tempTaskDataSubtasks[i].id,
+        title: this.tempTaskDataSubtasks[i].title,
+        task_id: +taskId,
+        author: this.tempTaskDataSubtasks[i].author,
+        status: this.tempTaskDataSubtasks[i].status,
+      };
+      this.dbService.createSubtask(bodySubtask).then((updatedSubtask) => {
+        this.allSubtasks[i].id = updatedSubtask.id;
+        this.allSubtasks.push(bodySubtask);
+      });
+    }
+    this.tempTaskDataSubtasks = [];
   }
 
   updateTask() {
@@ -230,13 +246,24 @@ export class AddTaskComponent implements OnInit {
 
   // Subtask
 
-  loadSubtasks() {
-    return (this.taskData.subtasks = this.allSubtasks
-      .filter((subtask) => subtask.task_id === +this.currentTaskId)
-      .map((subtask) => subtask.id!.toString()));
+  addSubtask(titleValue: string) {
+    if (this.isCurrentTaskIdNumber) {
+      const bodySubtask = {
+        id: this.tempTaskDataSubtasks.length + 1,
+        title: titleValue,
+        task_id: 0,
+        author: this.authService.currentUserId,
+        status: false,
+      };
+      this.tempTaskDataSubtasks.push(bodySubtask);
+      console.log(this.tempTaskDataSubtasks);
+      this.subtaskInputValue = '';
+    } else {
+      this.saveSubtask(titleValue);
+    }
   }
 
-  addSubtask(titleValue: string) {
+  saveSubtask(titleValue: string) {
     let subtaskId;
     const bodySubtask = {
       id: 0,
@@ -274,6 +301,18 @@ export class AddTaskComponent implements OnInit {
       });
   }
 
+  tempChangeCheckboxSubtask(subtaskId: number, event: Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+
+    const index = this.tempTaskDataSubtasks.findIndex(
+      (subtask) => subtask.id === subtaskId
+    );
+    if (index !== -1) {
+      this.tempTaskDataSubtasks[index].status = checked;
+    }
+    console.log(this.tempTaskDataSubtasks);
+  }
+
   checkSubtask(selectedValue: number) {
     return this.allSubtasks.some((subtask) => subtask.id == selectedValue);
   }
@@ -291,5 +330,12 @@ export class AddTaskComponent implements OnInit {
       let index = this.allSubtasks.findIndex((obj) => obj.id === selectedValue);
       this.allSubtasks.splice(index, 1);
     });
+  }
+
+  tempDeleteSubtask(selectedValue: number) {
+    let index = this.tempTaskDataSubtasks.findIndex(
+      (obj) => obj.id === selectedValue
+    );
+    this.tempTaskDataSubtasks.splice(index, 1);
   }
 }
