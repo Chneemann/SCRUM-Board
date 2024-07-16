@@ -125,5 +125,6 @@
 <app-edit-user
   [allUsers]="allUsers"
   (closeUserOverview)="toggleUserOverview($event)"
+  (userUpdated)="handleUserUpdate($event)"
 ></app-edit-user>
 } }

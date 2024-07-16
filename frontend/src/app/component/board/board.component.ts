@@ -75,7 +75,7 @@ export class BoardComponent implements OnInit {
     const body = {
       status: status,
     };
-    this.dbService.updateTask(body, id).then((updatedTask) => {
+    this.dbService.updateDB(body, id, 'tasks').then((updatedTask) => {
       this.replaceTask(updatedTask);
     });
   }
@@ -91,6 +91,17 @@ export class BoardComponent implements OnInit {
     if (index !== -1) {
       this.allTasks[index] = taskId;
     }
+  }
+
+  replaceUser(userId: any) {
+    const index = this.allUsers.findIndex((task) => task.id === userId.id);
+    if (index !== -1) {
+      this.allUsers[index] = userId;
+    }
+  }
+
+  handleUserUpdate(userId: any) {
+    this.replaceUser(userId);
   }
 
   handleTaskUpdate(taskId: any) {

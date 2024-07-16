@@ -3,6 +3,7 @@ import { AuthService } from '../../../../services/auth.service';
 import { FormBtnComponent } from '../../form-btn/form-btn.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import { SharedService } from '../../../../services/shared.service';
+import { DatabaseService } from '../../../../services/database.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -14,10 +15,12 @@ import { SharedService } from '../../../../services/shared.service';
 export class EditUserComponent implements OnInit {
   @Input() allUsers: any[] = [];
   @Output() closeUserOverview = new EventEmitter<string>();
+  @Output() userUpdated = new EventEmitter<any>();
 
   constructor(
     public authService: AuthService,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private dbService: DatabaseService
   ) {}
 
   userData = {
@@ -31,14 +34,17 @@ export class EditUserComponent implements OnInit {
     this.initializeUserData();
   }
 
-  initializeUserData() {
-    let index = this.allUsers.findIndex(
+  userIndex() {
+    return this.allUsers.findIndex(
       (user) => user.id === +this.authService.currentUserId
     );
-    this.userData.username = this.allUsers[index].username;
-    this.userData.mail = this.allUsers[index].email;
-    this.userData.firstName = this.allUsers[index].first_name;
-    this.userData.lastName = this.allUsers[index].last_name;
+  }
+
+  initializeUserData() {
+    this.userData.username = this.allUsers[this.userIndex()].username;
+    this.userData.mail = this.allUsers[this.userIndex()].email;
+    this.userData.firstName = this.allUsers[this.userIndex()].first_name;
+    this.userData.lastName = this.allUsers[this.userIndex()].last_name;
   }
 
   // Auxiliary functions
@@ -53,7 +59,31 @@ export class EditUserComponent implements OnInit {
 
   onSubmit(ngForm: NgForm) {
     if (ngForm.submitted && ngForm.form.valid) {
-      console.log('send');
+      this.updateData();
     }
+  }
+
+  updateData() {
+    const body = {
+      username: this.userData.username,
+      first_name: this.userData.firstName,
+      last_name: this.userData.lastName,
+    } as {
+      username: string;
+      first_name: string;
+      last_name: string;
+      email?: string;
+    };
+    if (this.userData.mail !== this.allUsers[this.userIndex()].email) {
+      body.email = this.userData.mail;
+    }
+    this.dbService
+      .updateDB(body, this.authService.currentUserId, 'users')
+      .then((updatedUser) => {
+        this.userUpdated.emit(updatedUser);
+        if (this.dbService.dataUploaded) {
+          this.userOverviewClose('');
+        }
+      });
   }
 }

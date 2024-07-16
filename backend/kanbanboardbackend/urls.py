@@ -26,6 +26,7 @@ urlpatterns = [
     path('subtasks/', SubtaskItemView.as_view()),
     path('subtasks/<int:pk>/', SubtaskItemView.as_view()),
     path('users/', UserListView.as_view()),
+    path('users/<int:pk>/', UserListView.as_view()),
     path('auth/', AuthView.as_view()),
     path('login/', LoginView.as_view()),
     path('logout/', LogoutView.as_view()),
