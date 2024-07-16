@@ -61,20 +61,17 @@ export class AddTaskComponent implements OnInit {
     this.isCurrentTaskIdNumber = isNaN(+this.currentTaskId);
   }
 
-  preventEnterKey(event: KeyboardEvent): void {
-    if (event.key === 'Enter') {
-      event.preventDefault();
+  onSubmit(ngForm: NgForm) {
+    if (ngForm.submitted && ngForm.form.valid) {
+      if (this.isThisANewTask) {
+        this.createTask();
+      } else {
+        this.updateTask();
+      }
     }
   }
 
-  todaysDate() {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-  }
+  // Initialization
 
   initializeTaskData() {
     const currentTaskIndex = this.allTasks.findIndex(
@@ -117,41 +114,36 @@ export class AddTaskComponent implements OnInit {
     this.subtaskData.status = this.allSubtasks[taskIndex].status;
   }
 
-  findColor(color: string) {
-    return this.taskColorService.findColor(color);
+  // Auxiliary functions
+
+  stopPropagation(event: MouseEvent) {
+    event.stopPropagation();
   }
 
   taskOverviewClose(value: string) {
     this.closeTaskOverview.emit(value);
   }
 
-  stopPropagation(event: MouseEvent) {
-    event.stopPropagation();
+  findColor(color: string) {
+    return this.taskColorService.findColor(color);
   }
 
-  onSubmit(ngForm: NgForm) {
-    if (ngForm.submitted && ngForm.form.valid) {
-      if (this.isThisANewTask) {
-        this.createTask();
-      } else {
-        this.updateTask();
-      }
+  preventEnterKey(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      event.preventDefault();
     }
   }
 
-  deleteTask() {
-    const confirmed = confirm('Do you really want to delete the task?');
-    if (confirmed) {
-      this.dbService.deleteTask(this.currentTaskId).then((success) => {
-        if (success) {
-          this.taskDeleted.emit(this.currentTaskId);
-          if (this.dbService.dataUploaded) {
-            this.taskOverviewClose('');
-          }
-        }
-      });
-    }
+  todaysDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
+
+  // Post, Put & Delete on Server
 
   createTask() {
     this.taskData.assigned.push(this.authService.currentUserId);
@@ -184,11 +176,11 @@ export class AddTaskComponent implements OnInit {
         status: this.tempTaskDataSubtasks[i].status,
       };
       this.dbService.createSubtask(bodySubtask).then((updatedSubtask) => {
-        this.allSubtasks[i].id = updatedSubtask.id;
+        this.tempTaskDataSubtasks.splice(i, 1);
+        bodySubtask.id = updatedSubtask.id;
         this.allSubtasks.push(bodySubtask);
       });
     }
-    this.tempTaskDataSubtasks = [];
   }
 
   updateTask() {
@@ -208,43 +200,19 @@ export class AddTaskComponent implements OnInit {
     });
   }
 
-  // Assigned
-
-  addAssigned(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    const selectedValue = selectElement.value;
-
-    if (
-      selectedValue !== 'null' &&
-      !this.clonedTaskDataAssigned.some((assigned) => assigned == selectedValue)
-    ) {
-      this.clonedTaskDataAssigned.push(selectedValue);
-      this.resetSelectValue();
+  deleteTask() {
+    const confirmed = confirm('Do you really want to delete the task?');
+    if (confirmed) {
+      this.dbService.deleteTask(this.currentTaskId).then((success) => {
+        if (success) {
+          this.taskDeleted.emit(this.currentTaskId);
+          if (this.dbService.dataUploaded) {
+            this.taskOverviewClose('');
+          }
+        }
+      });
     }
   }
-
-  checkAssigned(selectedValue: string) {
-    return this.clonedTaskDataAssigned.some(
-      (assigned) => assigned == selectedValue
-    );
-  }
-
-  deleteAssigned(selectedValue: string) {
-    if (this.checkAssigned(selectedValue)) {
-      let index = this.clonedTaskDataAssigned.indexOf(selectedValue);
-      this.clonedTaskDataAssigned.splice(index, 1);
-      this.resetSelectValue();
-    }
-  }
-
-  resetSelectValue(): void {
-    this.startAssignedValue = '';
-    setTimeout(() => {
-      this.startAssignedValue = 'null';
-    }, 0);
-  }
-
-  // Subtask
 
   addSubtask(titleValue: string) {
     if (this.isCurrentTaskIdNumber) {
@@ -301,6 +269,51 @@ export class AddTaskComponent implements OnInit {
       });
   }
 
+  deleteSubtask(selectedValue: number) {
+    this.dbService.deleteSubtask(selectedValue).then((success) => {
+      let index = this.allSubtasks.findIndex((obj) => obj.id === selectedValue);
+      this.allSubtasks.splice(index, 1);
+    });
+  }
+
+  // Assigned Data
+
+  addAssigned(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedValue = selectElement.value;
+
+    if (
+      selectedValue !== 'null' &&
+      !this.clonedTaskDataAssigned.some((assigned) => assigned == selectedValue)
+    ) {
+      this.clonedTaskDataAssigned.push(selectedValue);
+      this.resetSelectValue();
+    }
+  }
+
+  checkAssigned(selectedValue: string) {
+    return this.clonedTaskDataAssigned.some(
+      (assigned) => assigned == selectedValue
+    );
+  }
+
+  deleteAssigned(selectedValue: string) {
+    if (this.checkAssigned(selectedValue)) {
+      let index = this.clonedTaskDataAssigned.indexOf(selectedValue);
+      this.clonedTaskDataAssigned.splice(index, 1);
+      this.resetSelectValue();
+    }
+  }
+
+  resetSelectValue(): void {
+    this.startAssignedValue = '';
+    setTimeout(() => {
+      this.startAssignedValue = 'null';
+    }, 0);
+  }
+
+  // Subtask Data
+
   tempChangeCheckboxSubtask(subtaskId: number, event: Event) {
     const checked = (event.target as HTMLInputElement).checked;
 
@@ -310,26 +323,6 @@ export class AddTaskComponent implements OnInit {
     if (index !== -1) {
       this.tempTaskDataSubtasks[index].status = checked;
     }
-    console.log(this.tempTaskDataSubtasks);
-  }
-
-  checkSubtask(selectedValue: number) {
-    return this.allSubtasks.some((subtask) => subtask.id == selectedValue);
-  }
-
-  displaySubtaskTitle(selectedValue: number) {
-    if (this.checkSubtask(selectedValue)) {
-      let index = this.allSubtasks.findIndex((obj) => obj.id === selectedValue);
-      return this.allSubtasks[index].title;
-    }
-    return;
-  }
-
-  deleteSubtask(selectedValue: number) {
-    this.dbService.deleteSubtask(selectedValue).then((success) => {
-      let index = this.allSubtasks.findIndex((obj) => obj.id === selectedValue);
-      this.allSubtasks.splice(index, 1);
-    });
   }
 
   tempDeleteSubtask(selectedValue: number) {

@@ -69,7 +69,7 @@
                 [checked]="subtask.status"
                 (change)="changeCheckboxSubtask(subtask.id, $event)"
               />
-              {{ displaySubtaskTitle(subtask.id) }}
+              {{ subtask.title }}
               <span (click)="deleteSubtask(subtask.id)"
                 ><img src="./../../../../assets/img/close.svg" alt=""
               /></span>
