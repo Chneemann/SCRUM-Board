@@ -33,6 +33,8 @@
           <div class="error-msg">
             @if (!username.valid && username.touched) {
             <p>Please enter a username</p>
+            } @if (dbService.errorMsg.username) {
+            <p>{{ dbService.errorMsg.username }}</p>
             }
           </div>
           <app-form-field
@@ -86,7 +88,6 @@
               #password="ngModel"
               pattern="[^<>]*"
               minlength="8"
-              required
             ></app-form-field>
             <div class="spacer"></div>
             <app-form-field
@@ -98,7 +99,6 @@
               #passwordConfirm="ngModel"
               pattern="[^<>]*"
               minlength="8"
-              required
             ></app-form-field>
           </div>
           <div class="error-msg">

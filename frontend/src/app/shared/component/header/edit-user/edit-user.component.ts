@@ -21,7 +21,7 @@ export class EditUserComponent implements OnInit {
   constructor(
     public authService: AuthService,
     public sharedService: SharedService,
-    private dbService: DatabaseService
+    public dbService: DatabaseService
   ) {}
 
   userData = {

@@ -10,6 +10,7 @@ export class DatabaseService {
   constructor(private http: HttpClient) {}
 
   dataUploaded: boolean = false;
+  errorMsg: any = {};
 
   private getAuthHeaders(): HttpHeaders {
     const authToken = localStorage.getItem('authToken');
@@ -64,8 +65,8 @@ export class DatabaseService {
           resolve(method === 'DELETE' ? true : data);
         },
         (error) => {
+          this.errorMsg = error.error;
           console.error('Error occurred:', error);
-          reject(error);
         }
       );
     });
