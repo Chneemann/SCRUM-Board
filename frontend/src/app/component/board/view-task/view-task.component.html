@@ -41,7 +41,9 @@
       @for (assigned of task.assigned; track assigned) { @if (assigned ==
       user.id) {
       <div class="circle">
-        {{ firstLetter(user.first_name) }}{{ firstLetter(user.last_name) }}
+        <p>
+          {{ firstLetter(user.first_name) }}{{ firstLetter(user.last_name) }}
+        </p>
       </div>
       } } }
     </div>

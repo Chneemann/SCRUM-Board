@@ -42,22 +42,31 @@ section {
   align-items: end;
   height: 32px;
   margin-top: 12px;
+  .images {
+    display: flex;
+    align-items: center;
+    padding-right: 12px;
+    gap: 12px;
+  }
   .members {
     display: flex;
+    overflow: auto;
     gap: 6px;
   }
   .circle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background-color: $white;
-    height: 24px;
-    width: 24px;
-    font-size: 14px;
-    font-weight: 600;
     padding: 3px;
     border-radius: 100%;
     border: 1px solid var(--taskBorderColor);
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 24px;
+      width: 24px;
+      font-size: 14px;
+      font-weight: 600;
+    }
   }
 }
 
@@ -71,12 +80,6 @@ section {
     height: auto;
     filter: brightness(0) saturate(100%);
   }
-}
-
-.images {
-  display: flex;
-  align-items: center;
-  gap: 12px;
 }
 
 .description-svg,
