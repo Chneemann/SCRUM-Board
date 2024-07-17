@@ -11,8 +11,8 @@
         <div class="names">
           <input
             type="text"
-            id="text"
-            name="text"
+            id="firstName"
+            name="firstName"
             #firstName="ngModel"
             placeholder="First Name"
             class="custom-input"
@@ -23,8 +23,8 @@
           <div class="spacer"></div>
           <input
             type="text"
-            id="text"
-            name="text"
+            id="lastName"
+            name="lastName"
             #lastName="ngModel"
             placeholder="Last Name"
             class="custom-input"
@@ -104,8 +104,8 @@
         </div>
         <input
           type="password"
-          id="password_confirm"
-          name="password_confirm"
+          id="passwordConfirm"
+          name="passwordConfirm"
           #passwordConfirm="ngModel"
           [type]="authService.passwordFieldType"
           placeholder="Confirm Password"
