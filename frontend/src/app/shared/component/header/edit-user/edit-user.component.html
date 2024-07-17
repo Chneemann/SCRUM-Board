@@ -21,74 +21,54 @@
         onsubmit="return false"
       >
         <div class="input-fields">
-          <div class="input-container">
-            <input
-              type="text"
-              id="username"
-              name="username"
-              #username="ngModel"
-              placeholder=""
-              class="input-field"
-              autocomplete="new-password"
-              [(ngModel)]="userData.username"
-              required
-            />
-            <label for="username" class="input-label">Username:</label>
-          </div>
+          <app-form-field
+            [(ngModel)]="userData.username"
+            name="username"
+            text="Username:"
+            id="username"
+            type="text"
+            #username="ngModel"
+            required
+          ></app-form-field>
           <div class="error-msg">
             @if (!username.valid && username.touched) {
             <p>Please enter a username</p>
             }
           </div>
-          <div class="input-container">
-            <input
-              type="mail"
-              id="mail"
-              name="mail"
-              #mail="ngModel"
-              placeholder=""
-              class="input-field"
-              autocomplete="new-password"
-              [(ngModel)]="userData.mail"
-              required
-            />
-            <label for="mail" class="input-label">Mail:</label>
-          </div>
+          <app-form-field
+            [(ngModel)]="userData.mail"
+            name="mail"
+            text="Mail:"
+            id="mail"
+            type="mail"
+            #mail="ngModel"
+            required
+          ></app-form-field>
           <div class="error-msg">
             @if (!mail.valid && mail.touched) {
             <p>Please enter a mail</p>
             }
           </div>
           <div class="double-input-fields">
-            <div class="input-container">
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                #firstName="ngModel"
-                placeholder=""
-                class="input-field"
-                autocomplete="new-password"
-                [(ngModel)]="userData.firstName"
-                required
-              />
-              <label for="firstName" class="input-label">First Name:</label>
-            </div>
+            <app-form-field
+              [(ngModel)]="userData.firstName"
+              name="firstName"
+              text="First Name:"
+              id="firstName"
+              type="text"
+              #firstName="ngModel"
+              required
+            ></app-form-field>
             <div class="spacer"></div>
-            <div class="input-container">
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                #lastName="ngModel"
-                placeholder=""
-                class="input-field"
-                autocomplete="new-password"
-                [(ngModel)]="userData.lastName"
-                required
-              />
-              <label for="lastName" class="input-label">Last Name:</label>
-            </div>
+            <app-form-field
+              [(ngModel)]="userData.lastName"
+              name="lastName"
+              text="Last Name:"
+              id="lastName"
+              type="text"
+              #lastName="ngModel"
+              required
+            ></app-form-field>
           </div>
           <div class="error-msg">
             @if (!firstName.valid && firstName.touched || !lastName.valid &&
@@ -97,41 +77,29 @@
             }
           </div>
           <div class="double-input-fields">
-            <div class="input-container">
-              <input
-                type="password"
-                id="password"
-                name="password"
-                #password="ngModel"
-                placeholder=""
-                class="input-field"
-                autocomplete="new-password"
-                [(ngModel)]="userData.password"
-                pattern="[^<>]*"
-                minlength="8"
-                required
-              />
-              <label for="password" class="input-label">New Password:</label>
-            </div>
+            <app-form-field
+              [(ngModel)]="userData.password"
+              name="password"
+              text="New Password:"
+              id="password"
+              type="password"
+              #password="ngModel"
+              pattern="[^<>]*"
+              minlength="8"
+              required
+            ></app-form-field>
             <div class="spacer"></div>
-            <div class="input-container">
-              <input
-                type="password"
-                id="passwordConfirm"
-                name="passwordConfirm"
-                #passwordConfirm="ngModel"
-                placeholder=""
-                class="input-field"
-                autocomplete="new-password"
-                [(ngModel)]="userData.passwordConfirm"
-                pattern="[^<>]*"
-                minlength="8"
-                required
-              />
-              <label for="passwordConfirm" class="input-label"
-                >Confirm Password:</label
-              >
-            </div>
+            <app-form-field
+              [(ngModel)]="userData.passwordConfirm"
+              name="passwordConfirm"
+              text="Confirm Password:"
+              id="passwordConfirm"
+              type="password"
+              #passwordConfirm="ngModel"
+              pattern="[^<>]*"
+              minlength="8"
+              required
+            ></app-form-field>
           </div>
           <div class="error-msg">
             @if (userData.password.length < 8 && password.touched) {

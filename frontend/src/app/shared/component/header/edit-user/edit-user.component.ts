@@ -4,11 +4,12 @@ import { FormBtnComponent } from '../../form-btn/form-btn.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import { SharedService } from '../../../../services/shared.service';
 import { DatabaseService } from '../../../../services/database.service';
+import { FormFieldComponent } from '../../form-field/form-field.component';
 
 @Component({
   selector: 'app-edit-user',
   standalone: true,
-  imports: [FormBtnComponent, FormsModule],
+  imports: [FormBtnComponent, FormFieldComponent, FormsModule],
   templateUrl: './edit-user.component.html',
   styleUrl: './edit-user.component.scss',
 })
@@ -95,7 +96,11 @@ export class EditUserComponent implements OnInit {
     if (this.userData.mail !== this.allUsers[this.userIndex()].email) {
       body.email = this.userData.mail;
     }
-    if (this.userData.password === this.userData.passwordConfirm) {
+    if (
+      (this.userData.password === this.userData.passwordConfirm &&
+        this.userData.password !== '') ||
+      this.userData.passwordConfirm !== ''
+    ) {
       body.password = this.userData.password;
     }
     this.dbService
