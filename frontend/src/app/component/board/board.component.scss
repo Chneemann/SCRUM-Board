@@ -3,9 +3,14 @@
 section {
   display: flex;
   justify-content: space-between;
+  position: absolute;
+  top: 60px;
+  left: 0;
   padding: 12px;
   background-color: $light-gray;
   width: calc(100% - 24px);
+  min-width: 1000px;
+  height: calc(100vh - 84px);
 }
 
 .status {
@@ -53,5 +58,11 @@ section {
     border-top: 0px;
     background-color: $white;
     padding: 12px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  section {
+    height: calc(100vh - 90px);
   }
 }

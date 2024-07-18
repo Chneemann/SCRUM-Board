@@ -4,8 +4,11 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  top: 0;
   padding: 12px 24px;
   height: 36px;
+  width: calc(100vw - 48px);
   background-color: $light-gray;
 }
 
