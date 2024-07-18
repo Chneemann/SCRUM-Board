@@ -18,5 +18,8 @@
 </section>
 
 @if (openEditBoard) {
-<app-edit-board [allBoards]="allBoards"></app-edit-board>
+<app-edit-board
+  [allBoards]="allBoards"
+  (closeEditBoard)="toggleEditBoard($event)"
+></app-edit-board>
 }

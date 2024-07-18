@@ -89,7 +89,11 @@ export class DatabaseService {
     return this.performRequest('POST', url, body);
   }
 
-  updateDB(body: any, postId: string, directory: string): Promise<any> {
+  updateDB(
+    body: any,
+    postId: string | number,
+    directory: string
+  ): Promise<any> {
     const url = `${environment.baseUrl}/${directory}/${postId}/`;
     return this.performRequest('PUT', url, body);
   }

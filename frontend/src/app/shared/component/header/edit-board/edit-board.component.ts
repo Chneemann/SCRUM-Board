@@ -1,4 +1,10 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { DatabaseService } from '../../../../services/database.service';
 import { FormFieldComponent } from '../../form-field/form-field.component';
 import { FormBtnComponent } from '../../form-btn/form-btn.component';
@@ -14,13 +20,13 @@ import { timeout } from 'rxjs';
 })
 export class EditBoardComponent {
   @Input() allBoards: any[] = [];
-
-  openEditBoard: boolean = true;
+  @Output() closeEditBoard = new EventEmitter<boolean>();
 
   constructor(public dbService: DatabaseService) {}
 
   boardData = {
     title: '',
+    initialTitle: '',
   };
 
   ngOnChanges(changes: SimpleChanges) {
@@ -39,15 +45,45 @@ export class EditBoardComponent {
 
   initializeBoardData() {
     this.boardData.title = this.allBoards[this.boardIndex()].title;
+    this.boardData.initialTitle = this.allBoards[this.boardIndex()].title;
   }
 
   displayBoardData(query: string) {
     return this.allBoards[this.boardIndex()][query];
   }
 
+  isInputNew() {
+    if (this.boardData.title === this.boardData.initialTitle) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   onSubmit(ngForm: NgForm) {
     if (ngForm.submitted && ngForm.form.valid) {
-      console.log('submit');
+      this.updateData();
+    }
+  }
+
+  updateData() {
+    const body = {
+      title: this.boardData.title,
+    };
+    this.dbService
+      .updateDB(body, this.dbService.currentBoard, 'boards')
+      .then((updatedBoard) => {
+        this.replaceBoard(updatedBoard);
+        if (this.dbService.dataUploaded) {
+          this.closeEditBoard.emit(false);
+        }
+      });
+  }
+
+  replaceBoard(boardId: any) {
+    const index = this.allBoards.findIndex((board) => board.id === boardId.id);
+    if (index !== -1) {
+      this.allBoards[index] = boardId;
     }
   }
 }

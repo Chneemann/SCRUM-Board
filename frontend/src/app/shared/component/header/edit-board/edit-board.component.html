@@ -36,7 +36,7 @@
             [class]="'btn-submit'"
             [type]="'submit'"
             [value]="'Update'"
-            [disabled]="!boardName.valid"
+            [disabled]="!boardName.valid || isInputNew()"
           ></app-form-btn>
         </div>
       </div>

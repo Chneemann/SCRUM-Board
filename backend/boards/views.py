@@ -11,6 +11,13 @@ from rest_framework.response import Response
 
 class BoardItemView(APIView):
     authentication_classes = [authentication.TokenAuthentication]
+    
+    def get_object(self, pk):
+        try:
+            return BoardItem.objects.get(pk=pk)
+        except BoardItem.DoesNotExist:
+            raise Http404
+
 
     def get(self, request, pk=None, format=None):
         user = request.user 
@@ -30,3 +37,11 @@ class BoardItemView(APIView):
             serializer = BoardItemSerializer(boards, many=True)
 
         return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        serializer = BoardItemSerializer(snippet, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

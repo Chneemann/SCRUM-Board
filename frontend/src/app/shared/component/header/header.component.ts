@@ -42,6 +42,10 @@ export class HeaderComponent {
     this.openUserOverview.emit(value);
   }
 
+  toggleEditBoard(value: boolean) {
+    this.openEditBoard = value;
+  }
+
   currentUsername() {
     let index = this.allUsers.findIndex(
       (user) => user.id === this.authService.currentUserId
