@@ -1,11 +1,18 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+} from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { DatabaseService } from '../../../services/database.service';
+import { EditBoardComponent } from './edit-board/edit-board.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [EditBoardComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -31,10 +38,6 @@ export class HeaderComponent {
     }
   }
 
-  toggleEditBoardOverview() {
-    this.openEditBoard = !this.openEditBoard;
-  }
-
   userOverviewOpen(value: string) {
     this.openUserOverview.emit(value);
   }
@@ -50,5 +53,19 @@ export class HeaderComponent {
 
   logout() {
     this.authService.logout();
+  }
+
+  @HostListener('document:click', ['$event'])
+  checkOpenEditBoard(event: MouseEvent) {
+    const targetElement = event.target as HTMLElement;
+    const isInsideEditBoard = targetElement.closest('#edit-board');
+    const isEditBoardTitle = targetElement.closest('#edit-board-title');
+    const isEditBoardBtnClose = targetElement.closest('#edit-board-close-img');
+
+    if (isEditBoardTitle || isEditBoardBtnClose) {
+      this.openEditBoard = !this.openEditBoard;
+    } else if (!isInsideEditBoard) {
+      this.openEditBoard = false;
+    }
   }
 }

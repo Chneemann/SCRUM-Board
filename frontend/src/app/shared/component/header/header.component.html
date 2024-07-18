@@ -1,6 +1,8 @@
 <section>
   <div class="headline">
-    <h1 (click)="toggleEditBoardOverview()">{{ displayBoardData("title") }}</h1>
+    <h1 id="edit-board-title">
+      {{ displayBoardData("title") }}
+    </h1>
   </div>
   <div class="right-corner">
     <div class="welcome">
@@ -16,5 +18,5 @@
 </section>
 
 @if (openEditBoard) {
-<div class="edit-board"></div>
+<app-edit-board [allBoards]="allBoards"></app-edit-board>
 }

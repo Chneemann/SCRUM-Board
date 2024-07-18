@@ -1,13 +1,21 @@
 @import "./../../../../../assets/style/colors.scss";
 
-.content {
+section {
   position: relative;
-  width: 320px;
-  height: 460px;
-  border-radius: 6px;
-  border: 1px solid $gray;
+}
+
+#edit-board {
+  position: absolute;
+  top: 60px;
+  left: 24px;
   background-color: $white;
-  padding: 24px;
+  border: 1px solid $medium-gray;
+  border-radius: 3px;
+  box-shadow: 5px 5px 5px $medium-gray;
+  width: 300px;
+  height: 200px;
+  z-index: 5;
+  padding: 12px;
 }
 
 .header {
@@ -22,23 +30,14 @@
   text-align: center;
   font-size: 24px;
   font-weight: 600;
-  width: 90%;
+  width: 80%;
   padding-left: 10%;
 }
 
 .input-fields {
   display: flex;
   flex-direction: column;
-  position: relative;
   width: 97%;
-  .spacer {
-    padding: 12px;
-  }
-}
-
-.double-input-fields {
-  display: flex;
-  justify-content: space-between;
 }
 
 .error-msg {
@@ -58,17 +57,14 @@
 // Buttons
 
 .button {
-  display: flex;
-  justify-content: center;
   position: absolute;
   bottom: 0;
   right: 0;
-  left: 0;
 }
 
 .btn-close {
   text-align: end;
-  width: 10%;
+  width: 20%;
   height: 48px;
   img {
     width: 36px;
@@ -82,33 +78,4 @@
         hue-rotate(338deg) brightness(93%) contrast(107%);
     }
   }
-}
-
-// Overlay
-
-.overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100vw;
-  height: 100vh;
-  backdrop-filter: blur(2px);
-  background-color: rgba($color: #000000, $alpha: 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.overlay-mobile {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 999;
 }

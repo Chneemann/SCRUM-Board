@@ -1,0 +1,45 @@
+<section id="edit-board">
+  <div class="header">
+    <div class="headline">Edit user data</div>
+    <div class="btn-close">
+      <img
+        id="edit-board-close-img"
+        src="./../../../../assets/img/close.svg"
+        alt=""
+      />
+    </div>
+  </div>
+  <div class="content">
+    <form
+      id="form"
+      #taskForm="ngForm"
+      (ngSubmit)="onSubmit(taskForm)"
+      onsubmit="return false"
+    >
+      <div class="input-fields">
+        <app-form-field
+          [(ngModel)]="boardData.title"
+          name="title"
+          text="Board Name:"
+          id="boardName"
+          type="text"
+          #boardName="ngModel"
+          required
+        ></app-form-field>
+        <div class="error-msg">
+          @if (!boardName.valid && boardName.touched) {
+          <p>Please enter a username</p>
+          }
+        </div>
+        <div class="button">
+          <app-form-btn
+            [class]="'btn-submit'"
+            [type]="'submit'"
+            [value]="'Update'"
+            [disabled]="!boardName.valid"
+          ></app-form-btn>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
