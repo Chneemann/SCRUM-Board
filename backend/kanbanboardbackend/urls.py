@@ -18,9 +18,12 @@ from django.contrib import admin
 from django.urls import include, path
 from tasks.views import TaskItemView, SubtaskItemView
 from users.views import UserListView, LoginView, RegisterView, LogoutView, AuthView
+from boards.views import BoardItemView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('boards/', BoardItemView.as_view()),
+    path('boards/<int:pk>/', BoardItemView.as_view()),
     path('tasks/', TaskItemView.as_view()),
     path('tasks/<int:pk>/', TaskItemView.as_view()),
     path('subtasks/', SubtaskItemView.as_view()),

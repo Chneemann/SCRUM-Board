@@ -23,6 +23,7 @@ export class BoardComponent implements OnInit {
   openCurrentTaskOverview: string = '';
   openCurrentUserOverview: string = '';
   startDraggingStatus: string = '';
+  allBoards: any[] = [];
   allTasks: any[] = [];
   allSubtasks: any[] = [];
   allUsers: any[] = [];
@@ -37,6 +38,7 @@ export class BoardComponent implements OnInit {
     try {
       const loginSuccessful = await this.authService.checkAuthUser();
       if (loginSuccessful) {
+        this.loadDatabaseBoards();
         this.loadDatabaseTasks();
         this.loadDatabaseSubtasks();
         this.loadDatabaseUsers();
@@ -48,6 +50,10 @@ export class BoardComponent implements OnInit {
   }
 
   //  Database
+
+  async loadDatabaseBoards() {
+    this.allBoards = await this.dbService.loadBoards();
+  }
 
   async loadDatabaseTasks() {
     this.allTasks = await this.dbService.loadTasks();

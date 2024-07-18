@@ -19,6 +19,12 @@ export class DatabaseService {
     });
   }
 
+  loadBoards(): Promise<any> {
+    const url = environment.baseUrl + '/boards/';
+    const headers = this.getAuthHeaders();
+    return lastValueFrom(this.http.get(url, { headers }));
+  }
+
   loadTasks(): Promise<any> {
     const url = environment.baseUrl + '/tasks/';
     const headers = this.getAuthHeaders();

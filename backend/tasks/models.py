@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from .class_assets import PRIORITY_CHOICES, STATUS_CHOICES, COLOR_CHOICES
+from boards.models import BoardItem
 
 class SubtaskItem(models.Model):
     title = models.CharField(max_length=100,blank=True)
@@ -13,6 +14,7 @@ class SubtaskItem(models.Model):
 
 class TaskItem(models.Model):
     title = models.CharField(max_length=50,blank=True)
+    board_id = models.ForeignKey(BoardItem, on_delete=models.CASCADE, null=True, blank=True)
     description = models.TextField(max_length=500,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     due_date = models.DateField(null=True, blank=True)
@@ -24,3 +26,4 @@ class TaskItem(models.Model):
     
     def __str__(self):
         return f'({self.id}) {self.title} - {self.description} - {self.author}'
+    
