@@ -8,4 +8,4 @@ class BoardItem(models.Model):
     assigned = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='assigned_board', blank=True)
   
     def __str__(self):
-        return f'({self.id}) {self.author}'
+        return f'({self.id}) {self.title} - {self.author}'

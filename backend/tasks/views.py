@@ -18,14 +18,19 @@ class TaskItemView(APIView):
             return Response({"error": "Todo item not found."}, status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, pk=None, format=None):
+        board_id = request.query_params.get('board_id', None)
+        
         if pk:
             try:
-              task = TaskItem.objects.get(pk=pk)
-              serializer = TaskItemSerializer(task)
-            except task.DoesNotExist:
+                task = TaskItem.objects.get(pk=pk)
+                serializer = TaskItemSerializer(task)
+            except TaskItem.DoesNotExist:
                 return Response(status=status.HTTP_404_NOT_FOUND)
         else:
-            tasks = TaskItem.objects.all()
+            if board_id is not None:
+                tasks = TaskItem.objects.filter(board_id=board_id)
+            else:
+                tasks = TaskItem.objects.all()
             serializer = TaskItemSerializer(tasks, many=True)
         return Response(serializer.data)
     
@@ -58,15 +63,17 @@ class SubtaskItemView(APIView):
         except SubtaskItem.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk=None, format=None):
-        if pk:
-            task = SubtaskItem.objects.get(pk=pk)
-            serializer = SubtaskItemSerializer(task)
+    def get(self, request, format=None):
+        task_id = request.query_params.get('task_id', None)
+
+        if task_id is not None:
+            subtasks = SubtaskItem.objects.filter(task_id=task_id)
         else:
-            tasks = SubtaskItem.objects.all()
-            serializer = SubtaskItemSerializer(tasks, many=True)
+            subtasks = SubtaskItem.objects.all()
+
+        serializer = SubtaskItemSerializer(subtasks, many=True)
         return Response(serializer.data)
-      
+    
     def post(self, request, format=None):
         serializer = SubtaskItemSerializer(data=request.data)
         if serializer.is_valid():

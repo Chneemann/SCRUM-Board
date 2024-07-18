@@ -1,5 +1,7 @@
 <section>
-  <div class="headline"><h1>My first board</h1></div>
+  <div class="headline">
+    <h1 (click)="toggleEditBoardOverview()">{{ displayBoardData("title") }}</h1>
+  </div>
   <div class="right-corner">
     <div class="welcome">
       Welcome,
@@ -12,3 +14,7 @@
     </div>
   </div>
 </section>
+
+@if (openEditBoard) {
+<div class="edit-board"></div>
+}

@@ -10,6 +10,7 @@ export class DatabaseService {
   constructor(private http: HttpClient) {}
 
   dataUploaded: boolean = false;
+  currentBoard: number = 2;
   errorMsg: any = {};
 
   private getAuthHeaders(): HttpHeaders {
@@ -19,20 +20,20 @@ export class DatabaseService {
     });
   }
 
-  loadBoards(): Promise<any> {
+  getBoards(): Promise<any> {
     const url = environment.baseUrl + '/boards/';
     const headers = this.getAuthHeaders();
     return lastValueFrom(this.http.get(url, { headers }));
   }
 
-  loadTasks(): Promise<any> {
-    const url = environment.baseUrl + '/tasks/';
+  getTasksByBoardId(boardId: number): Promise<any> {
+    const url = `${environment.baseUrl}/tasks/?board_id=${boardId}`;
     const headers = this.getAuthHeaders();
     return lastValueFrom(this.http.get(url, { headers }));
   }
 
-  loadSubtasks(): Promise<any> {
-    const url = environment.baseUrl + '/subtasks/';
+  getSubtasksByTaskId(taskId: number): Promise<any> {
+    const url = environment.baseUrl + `/subtasks/?task_id=${taskId}`;
     const headers = this.getAuthHeaders();
     return lastValueFrom(this.http.get(url, { headers }));
   }

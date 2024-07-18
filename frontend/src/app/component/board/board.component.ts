@@ -39,8 +39,6 @@ export class BoardComponent implements OnInit {
       const loginSuccessful = await this.authService.checkAuthUser();
       if (loginSuccessful) {
         this.loadDatabaseBoards();
-        this.loadDatabaseTasks();
-        this.loadDatabaseSubtasks();
         this.loadDatabaseUsers();
         this.handleDragAndDrop();
       }
@@ -52,15 +50,28 @@ export class BoardComponent implements OnInit {
   //  Database
 
   async loadDatabaseBoards() {
-    this.allBoards = await this.dbService.loadBoards();
+    try {
+      this.allBoards = await this.dbService.getBoards();
+      console.log('Boards loaded:', this.allBoards);
+      await this.loadDatabaseTasks();
+      await this.loadDatabaseSubtasks();
+    } catch (error) {
+      console.error('Error loading boards:', error);
+    }
   }
 
   async loadDatabaseTasks() {
-    this.allTasks = await this.dbService.loadTasks();
+    const currentBoard = this.dbService.currentBoard;
+    this.allTasks = await this.dbService.getTasksByBoardId(currentBoard);
+    console.log('Tasks loaded:', this.allTasks);
   }
 
   async loadDatabaseSubtasks() {
-    this.allSubtasks = await this.dbService.loadSubtasks();
+    const taskIds = this.allTasks.map((task) => task.id);
+    this.allSubtasks = await Promise.all(
+      taskIds.map((taskId) => this.dbService.getSubtasksByTaskId(taskId))
+    ).then((results) => results.flat());
+    console.log('Subtasks loaded:', this.allSubtasks);
   }
 
   async loadDatabaseUsers() {

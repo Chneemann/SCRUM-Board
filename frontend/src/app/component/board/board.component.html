@@ -1,6 +1,7 @@
 @if (authService.isUserLogin) {
 <app-header
   [allUsers]="allUsers"
+  [allBoards]="allBoards"
   (openUserOverview)="toggleUserOverview($event)"
 ></app-header>
 <section>

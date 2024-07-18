@@ -12,6 +12,10 @@ section {
   background-color: $light-gray;
 }
 
+h1 {
+  cursor: pointer;
+}
+
 .right-corner {
   display: flex;
   align-items: center;
@@ -41,4 +45,19 @@ section {
         hue-rotate(153deg) brightness(93%) contrast(85%);
     }
   }
+}
+
+// Edit Board
+
+.edit-board {
+  position: absolute;
+  top: 60px;
+  left: 24px;
+  background-color: $white;
+  border: 1px solid $medium-gray;
+  border-radius: 3px;
+  box-shadow: 5px 5px 5px $medium-gray;
+  width: 200px;
+  height: 100px;
+  z-index: 5;
 }
