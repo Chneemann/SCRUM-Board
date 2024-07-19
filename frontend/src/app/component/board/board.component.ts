@@ -64,17 +64,15 @@ export class BoardComponent implements OnInit {
 
   async loadDatabaseBoards() {
     this.allBoards = await this.dbService.getBoards();
-    console.log('Boards loaded:', this.allBoards);
+    // console.log('Boards loaded:', this.allBoards);
     await this.loadDatabaseTasks();
     await this.loadDatabaseSubtasks();
   }
 
   async loadDatabaseTasks() {
     const currentBoard = this.dbService.getCurrentBoard();
-    console.log(currentBoard);
-
     this.allTasks = await this.dbService.getTasksByBoardId(+currentBoard);
-    console.log('Tasks loaded:', this.allTasks);
+    // console.log('Tasks loaded:', this.allTasks);
   }
 
   async loadDatabaseSubtasks() {
@@ -82,7 +80,7 @@ export class BoardComponent implements OnInit {
     this.allSubtasks = await Promise.all(
       taskIds.map((taskId) => this.dbService.getSubtasksByTaskId(taskId))
     ).then((results) => results.flat());
-    console.log('Subtasks loaded:', this.allSubtasks);
+    // console.log('Subtasks loaded:', this.allSubtasks);
   }
 
   async loadDatabaseUsers() {

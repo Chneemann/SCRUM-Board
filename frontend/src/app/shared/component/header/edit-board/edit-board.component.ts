@@ -41,7 +41,7 @@ export class EditBoardComponent {
 
   boardIndex() {
     return this.allBoards.findIndex(
-      (board) => board.id === this.dbService.getCurrentBoard()
+      (board) => board.id == this.dbService.getCurrentBoard()
     );
   }
 
@@ -72,6 +72,7 @@ export class EditBoardComponent {
 
   onSubmitSwitch(ngForm: NgForm) {
     this.dbService.setCurrentBoard(ngForm.value.initialTitle);
+    this.closeEditBoard.emit(false);
   }
 
   updateData() {

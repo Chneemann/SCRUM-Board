@@ -46,22 +46,21 @@
   <div class="header">
     <div class="headline">Switch Board</div>
   </div>
-  <div class="content">
-    <form
-      id="form"
-      #boardSwitchForm="ngForm"
-      (change)="onSubmitSwitch(boardSwitchForm)"
-    >
-      <app-form-field
-        [(ngModel)]="boardData.initialTitle"
-        field="selectBoard"
-        name="initialTitle"
-        text="Switch Board:"
-        id="switchBoard"
-        type="text"
-        #switchBoard="ngModel"
-        [allBoards]="allBoards"
-      ></app-form-field>
-    </form>
-  </div>
+  <form
+    id="form"
+    class="form"
+    #boardSwitchForm="ngForm"
+    (change)="onSubmitSwitch(boardSwitchForm)"
+  >
+    <app-form-field
+      [(ngModel)]="boardData.initialTitle"
+      field="selectBoard"
+      name="initialTitle"
+      text="Switch Board:"
+      id="switchBoard"
+      type="text"
+      #switchBoard="ngModel"
+      [allBoards]="allBoards"
+    ></app-form-field>
+  </form>
 </section>

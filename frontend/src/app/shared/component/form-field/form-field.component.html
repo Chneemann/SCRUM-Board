@@ -12,20 +12,24 @@
     [disabled]="disabled"
   />
   } @if (field === 'selectBoard') {
+  <!-- -->
   <select
     [id]="id"
     placeholder=""
     class="input-field"
     autocomplete="new-password"
-    [value]="value"
+    [value]=""
     (blur)="onTouched()"
     (input)="onInput($event)"
     [disabled]="disabled"
   >
     @for (board of allBoards; track board) {
     <!-- -->
+    @if (board.id == dbService.getCurrentBoard()) {
+    <option value="{{ board.id }}" selected>{{ board.title }}</option>
+    } @else {
     <option value="{{ board.id }}">{{ board.title }}</option>
-    }
+    } }
   </select>
   }
   <label for="id" class="input-label">{{ text }}</label>
