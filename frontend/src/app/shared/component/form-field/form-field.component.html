@@ -11,8 +11,7 @@
     (input)="onInput($event)"
     [disabled]="disabled"
   />
-  } @if (field === 'selectBoard') {
-  <!-- -->
+  } @if (field === 'switchBoard') {
   <select
     [id]="id"
     placeholder=""
@@ -32,5 +31,5 @@
     } }
   </select>
   }
-  <label for="id" class="input-label">{{ text }}</label>
+  <div class="input-label">{{ text }}</div>
 </div>

@@ -22,7 +22,7 @@ export class HeaderComponent {
   @Output() openUserOverview = new EventEmitter<string>();
 
   boardName: string = '';
-  openEditBoard: boolean = true;
+  openEditBoard: boolean = false;
 
   constructor(
     public authService: AuthService,

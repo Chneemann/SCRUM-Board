@@ -1,6 +1,7 @@
 export interface Task {
   id?: string;
   title: string;
+  board_id: string;
   description: string;
   priority: string;
   status: string;

@@ -45,6 +45,7 @@ export class AddTaskComponent implements OnInit {
 
   taskData: Task = {
     title: '',
+    board_id: '',
     description: '',
     status: '',
     priority: 'medium',
@@ -97,6 +98,7 @@ export class AddTaskComponent implements OnInit {
 
   loadCurrentTaskData(taskIndex: number) {
     this.taskData.title = this.allTasks[taskIndex].title;
+    this.taskData.board_id = this.allTasks[taskIndex].board_id;
     this.taskData.description = this.allTasks[taskIndex].description;
     this.taskData.status = this.allTasks[taskIndex].status;
     this.taskData.color = this.allTasks[taskIndex].color;
@@ -150,6 +152,7 @@ export class AddTaskComponent implements OnInit {
     this.taskData.assigned.push(this.authService.currentUserId);
     const body = {
       title: this.taskData.title,
+      board_id: this.dbService.getCurrentBoard(),
       description: this.taskData.description,
       color: this.taskData.color,
       status: this.taskData.status,
