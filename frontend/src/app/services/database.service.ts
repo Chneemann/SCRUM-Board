@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,8 +9,10 @@ import { lastValueFrom } from 'rxjs';
 export class DatabaseService {
   constructor(private http: HttpClient) {}
 
+  private currentBoardSubject = new BehaviorSubject<number>(2);
+  currentBoard$ = this.currentBoardSubject.asObservable();
+
   dataUploaded: boolean = false;
-  currentBoard: number = 2;
   errorMsg: any = {};
 
   private getAuthHeaders(): HttpHeaders {
@@ -18,6 +20,14 @@ export class DatabaseService {
     return new HttpHeaders({
       Authorization: `token ${authToken}`,
     });
+  }
+
+  setCurrentBoard(board: number) {
+    this.currentBoardSubject.next(board);
+  }
+
+  getCurrentBoard(): number {
+    return this.currentBoardSubject.value;
   }
 
   getBoards(): Promise<any> {

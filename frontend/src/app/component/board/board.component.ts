@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ViewTaskComponent } from './view-task/view-task.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { DatabaseService } from '../../services/database.service';
@@ -27,6 +27,7 @@ export class BoardComponent implements OnInit {
   allTasks: any[] = [];
   allSubtasks: any[] = [];
   allUsers: any[] = [];
+  currentBoard: number = 0;
 
   constructor(
     public dbService: DatabaseService,
@@ -45,6 +46,18 @@ export class BoardComponent implements OnInit {
     } catch (error) {
       console.error('Error during login check:', error);
     }
+
+    this.dbService.currentBoard$.subscribe((newBoard) => {
+      if (this.currentBoard !== newBoard) {
+        this.currentBoard = newBoard;
+        this.onBoardChange(newBoard);
+      }
+    });
+  }
+
+  async onBoardChange(newBoard: number) {
+    await this.loadDatabaseTasks();
+    await this.loadDatabaseSubtasks();
   }
 
   //  Database
@@ -57,8 +70,10 @@ export class BoardComponent implements OnInit {
   }
 
   async loadDatabaseTasks() {
-    const currentBoard = this.dbService.currentBoard;
-    this.allTasks = await this.dbService.getTasksByBoardId(currentBoard);
+    const currentBoard = this.dbService.getCurrentBoard();
+    console.log(currentBoard);
+
+    this.allTasks = await this.dbService.getTasksByBoardId(+currentBoard);
     console.log('Tasks loaded:', this.allTasks);
   }
 

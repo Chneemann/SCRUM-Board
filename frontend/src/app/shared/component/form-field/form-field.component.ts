@@ -4,6 +4,7 @@ import {
   ControlValueAccessor,
   FormsModule,
 } from '@angular/forms';
+import { DatabaseService } from '../../../services/database.service';
 
 @Component({
   selector: 'app-form-field',
@@ -24,7 +25,11 @@ export class FormFieldComponent implements ControlValueAccessor {
   @Input() id: string = '';
   @Input() type: string = '';
   @Input() text: string = '';
+  @Input() field: string = '';
   @Input() disabled: boolean = false;
+  @Input() allBoards: any[] = [];
+
+  constructor(public dbService: DatabaseService) {}
 
   onChange: (value: string) => void = () => {};
   onTouched: () => void = () => {};

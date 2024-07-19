@@ -1,4 +1,5 @@
 <div class="input-container">
+  @if (field === 'input') {
   <input
     [type]="type"
     [id]="id"
@@ -10,5 +11,22 @@
     (input)="onInput($event)"
     [disabled]="disabled"
   />
+  } @if (field === 'selectBoard') {
+  <select
+    [id]="id"
+    placeholder=""
+    class="input-field"
+    autocomplete="new-password"
+    [value]="value"
+    (blur)="onTouched()"
+    (input)="onInput($event)"
+    [disabled]="disabled"
+  >
+    @for (board of allBoards; track board) {
+    <!-- -->
+    <option value="{{ board.id }}">{{ board.title }}</option>
+    }
+  </select>
+  }
   <label for="id" class="input-label">{{ text }}</label>
 </div>

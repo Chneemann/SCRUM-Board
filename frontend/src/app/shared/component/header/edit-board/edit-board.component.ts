@@ -25,6 +25,7 @@ export class EditBoardComponent {
   constructor(public dbService: DatabaseService) {}
 
   boardData = {
+    id: '',
     title: '',
     initialTitle: '',
     currentBoard: '',
@@ -40,11 +41,12 @@ export class EditBoardComponent {
 
   boardIndex() {
     return this.allBoards.findIndex(
-      (board) => board.id === this.dbService.currentBoard
+      (board) => board.id === this.dbService.getCurrentBoard()
     );
   }
 
   initializeBoardData() {
+    this.boardData.id = this.allBoards[this.boardIndex()].id;
     this.boardData.title = this.allBoards[this.boardIndex()].title;
     this.boardData.initialTitle = this.allBoards[this.boardIndex()].title;
     this.boardData.currentBoard = this.allBoards[this.boardIndex()].id;
@@ -68,12 +70,16 @@ export class EditBoardComponent {
     }
   }
 
+  onSubmitSwitch(ngForm: NgForm) {
+    this.dbService.setCurrentBoard(ngForm.value.initialTitle);
+  }
+
   updateData() {
     const body = {
       title: this.boardData.title,
     };
     this.dbService
-      .updateDB(body, this.dbService.currentBoard, 'boards')
+      .updateDB(body, this.dbService.getCurrentBoard(), 'boards')
       .then((updatedBoard) => {
         this.replaceBoard(updatedBoard);
         if (this.dbService.dataUploaded) {

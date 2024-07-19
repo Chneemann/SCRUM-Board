@@ -23,6 +23,7 @@
         <div class="input-fields">
           <app-form-field
             [(ngModel)]="userData.username"
+            field="input"
             name="username"
             text="Username:"
             id="username"
@@ -39,6 +40,7 @@
           </div>
           <app-form-field
             [(ngModel)]="userData.mail"
+            field="input"
             name="mail"
             text="Mail:"
             id="mail"
@@ -54,6 +56,7 @@
           <div class="double-input-fields">
             <app-form-field
               [(ngModel)]="userData.firstName"
+              field="input"
               name="firstName"
               text="First Name:"
               id="firstName"
@@ -64,6 +67,7 @@
             <div class="spacer"></div>
             <app-form-field
               [(ngModel)]="userData.lastName"
+              field="input"
               name="lastName"
               text="Last Name:"
               id="lastName"
@@ -81,6 +85,7 @@
           <div class="double-input-fields">
             <app-form-field
               [(ngModel)]="userData.password"
+              field="input"
               name="password"
               text="New Password:"
               id="password"
@@ -92,6 +97,7 @@
             <div class="spacer"></div>
             <app-form-field
               [(ngModel)]="userData.passwordConfirm"
+              field="input"
               name="passwordConfirm"
               text="Confirm Password:"
               id="passwordConfirm"

@@ -12,13 +12,14 @@
   <div class="content">
     <form
       id="form"
-      #taskForm="ngForm"
-      (ngSubmit)="onSubmit(taskForm)"
+      #boardForm="ngForm"
+      (ngSubmit)="onSubmit(boardForm)"
       onsubmit="return false"
     >
       <div class="input-fields">
         <app-form-field
           [(ngModel)]="boardData.title"
+          field="input"
           name="title"
           text="Board Name:"
           id="boardName"
@@ -48,20 +49,19 @@
   <div class="content">
     <form
       id="form"
-      #taskForm="ngForm"
-      (ngSubmit)="onSubmit(taskForm)"
-      onsubmit="return false"
+      #boardSwitchForm="ngForm"
+      (change)="onSubmitSwitch(boardSwitchForm)"
     >
-      <select
+      <app-form-field
+        [(ngModel)]="boardData.initialTitle"
+        field="selectBoard"
+        name="initialTitle"
+        text="Switch Board:"
         id="switchBoard"
-        name="switchBoard"
-        #color="ngModel"
-        [(ngModel)]="boardData.title"
-      >
-        <option value="boardData.currentBoard" selected>
-          {{ boardData.title }}
-        </option>
-      </select>
+        type="text"
+        #switchBoard="ngModel"
+        [allBoards]="allBoards"
+      ></app-form-field>
     </form>
   </div>
 </section>

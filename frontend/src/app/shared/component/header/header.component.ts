@@ -31,7 +31,7 @@ export class HeaderComponent {
 
   displayBoardData(query: string) {
     const index = this.allBoards.findIndex(
-      (board) => board.id === this.dbService.currentBoard
+      (board) => board.id == this.dbService.getCurrentBoard()
     );
     if (index !== -1) {
       return this.allBoards[index][query];
