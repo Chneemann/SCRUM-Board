@@ -1,6 +1,6 @@
 <section id="edit-board">
   <div class="header">
-    <div class="headline">Edit user data</div>
+    <div class="headline">Edit Board Data</div>
     <div class="btn-close">
       <img
         id="edit-board-close-img"
@@ -40,6 +40,28 @@
           ></app-form-btn>
         </div>
       </div>
+    </form>
+  </div>
+  <div class="header">
+    <div class="headline">Switch Board</div>
+  </div>
+  <div class="content">
+    <form
+      id="form"
+      #taskForm="ngForm"
+      (ngSubmit)="onSubmit(taskForm)"
+      onsubmit="return false"
+    >
+      <select
+        id="switchBoard"
+        name="switchBoard"
+        #color="ngModel"
+        [(ngModel)]="boardData.title"
+      >
+        <option value="boardData.currentBoard" selected>
+          {{ boardData.title }}
+        </option>
+      </select>
     </form>
   </div>
 </section>

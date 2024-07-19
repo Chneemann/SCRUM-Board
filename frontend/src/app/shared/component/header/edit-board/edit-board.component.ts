@@ -27,6 +27,7 @@ export class EditBoardComponent {
   boardData = {
     title: '',
     initialTitle: '',
+    currentBoard: '',
   };
 
   ngOnChanges(changes: SimpleChanges) {
@@ -46,6 +47,7 @@ export class EditBoardComponent {
   initializeBoardData() {
     this.boardData.title = this.allBoards[this.boardIndex()].title;
     this.boardData.initialTitle = this.allBoards[this.boardIndex()].title;
+    this.boardData.currentBoard = this.allBoards[this.boardIndex()].id;
   }
 
   displayBoardData(query: string) {
