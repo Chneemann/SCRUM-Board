@@ -58,18 +58,4 @@ export class HeaderComponent {
   logout() {
     this.authService.logout();
   }
-
-  @HostListener('document:click', ['$event'])
-  checkOpenEditBoard(event: MouseEvent) {
-    const targetElement = event.target as HTMLElement;
-    const isInsideEditBoard = targetElement.closest('#edit-board');
-    const isEditBoardTitle = targetElement.closest('#edit-board-title');
-    const isEditBoardBtnClose = targetElement.closest('#edit-board-close-img');
-
-    if (isEditBoardTitle || isEditBoardBtnClose) {
-      this.openEditBoard = !this.openEditBoard;
-    } else if (!isInsideEditBoard) {
-      this.openEditBoard = false;
-    }
-  }
 }

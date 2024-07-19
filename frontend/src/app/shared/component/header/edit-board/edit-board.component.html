@@ -1,66 +1,71 @@
-<section id="edit-board">
-  <div class="header">
-    <div class="headline">Edit Board Data</div>
-    <div class="btn-close">
-      <img
-        id="edit-board-close-img"
-        src="./../../../../assets/img/close.svg"
-        alt=""
-      />
-    </div>
-  </div>
-  <div class="content">
-    <form
-      id="form"
-      #boardForm="ngForm"
-      (ngSubmit)="onSubmit(boardForm)"
-      onsubmit="return false"
-    >
-      <div class="input-fields">
-        <app-form-field
-          [(ngModel)]="boardData.title"
-          field="input"
-          name="title"
-          text="Board Name:"
-          id="boardName"
-          type="text"
-          #boardName="ngModel"
-          required
-        ></app-form-field>
-        <div class="error-msg">
-          @if (!boardName.valid && boardName.touched) {
-          <p>Please enter a username</p>
-          }
-        </div>
-        <div class="button">
-          <app-form-btn
-            [class]="'btn-submit'"
-            [type]="'submit'"
-            [value]="'Update'"
-            [disabled]="!boardName.valid || isInputNew()"
-          ></app-form-btn>
+<div class="overlay" (click)="boardOverviewClose()">
+  <div class="overlay-content" (click)="stopPropagation($event)">
+    <div class="content">
+      <div class="header">
+        <div class="headline">Edit Board Data</div>
+        <div class="btn-close">
+          <img
+            id="edit-board-close-img"
+            src="./../../../../assets/img/close.svg"
+            alt=""
+            (click)="boardOverviewClose()"
+          />
         </div>
       </div>
-    </form>
+      <div class="edit-board">
+        <form
+          id="form"
+          #boardForm="ngForm"
+          (ngSubmit)="onSubmit(boardForm)"
+          onsubmit="return false"
+        >
+          <div class="input-fields">
+            <app-form-field
+              [(ngModel)]="boardData.title"
+              field="input"
+              name="title"
+              text="Board Name:"
+              id="boardName"
+              type="text"
+              #boardName="ngModel"
+              required
+            ></app-form-field>
+            <div class="error-msg">
+              @if (!boardName.valid && boardName.touched) {
+              <p>Please enter a username</p>
+              }
+            </div>
+            <div class="button">
+              <app-form-btn
+                [class]="'btn-submit'"
+                [type]="'submit'"
+                [value]="'Update'"
+                [disabled]="!boardName.valid || isInputNew()"
+              ></app-form-btn>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="header">
+        <div class="headline">Switch Board</div>
+      </div>
+      <form
+        id="form"
+        class="form"
+        #boardSwitchForm="ngForm"
+        (change)="onSubmitSwitch(boardSwitchForm)"
+      >
+        <app-form-field
+          [(ngModel)]="boardData.initialTitle"
+          field="switchBoard"
+          name="initialTitle"
+          text="Switch Board:"
+          id="switchBoard"
+          type="text"
+          #switchBoard="ngModel"
+          [allBoards]="allBoards"
+        ></app-form-field>
+      </form>
+    </div>
   </div>
-  <div class="header">
-    <div class="headline">Switch Board</div>
-  </div>
-  <form
-    id="form"
-    class="form"
-    #boardSwitchForm="ngForm"
-    (change)="onSubmitSwitch(boardSwitchForm)"
-  >
-    <app-form-field
-      [(ngModel)]="boardData.initialTitle"
-      field="switchBoard"
-      name="initialTitle"
-      text="Switch Board:"
-      id="switchBoard"
-      type="text"
-      #switchBoard="ngModel"
-      [allBoards]="allBoards"
-    ></app-form-field>
-  </form>
-</section>
+</div>

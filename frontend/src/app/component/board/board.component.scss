@@ -6,7 +6,7 @@ section {
   position: absolute;
   top: 60px;
   left: 0;
-  padding: 12px;
+  padding: 0 12px 12px 12px;
   background-color: $light-gray;
   width: calc(100% - 24px);
   min-width: 1000px;
@@ -17,7 +17,7 @@ section {
   display: flex;
   flex-direction: column;
   width: 25%;
-  height: calc(100vh - 86px);
+  height: calc(100vh - 74px);
   .header {
     display: flex;
     justify-content: center;

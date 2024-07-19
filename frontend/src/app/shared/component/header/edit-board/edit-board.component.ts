@@ -9,7 +9,6 @@ import { DatabaseService } from '../../../../services/database.service';
 import { FormFieldComponent } from '../../form-field/form-field.component';
 import { FormBtnComponent } from '../../form-btn/form-btn.component';
 import { FormsModule, NgForm } from '@angular/forms';
-import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-edit-board',
@@ -62,6 +61,14 @@ export class EditBoardComponent {
     } else {
       return false;
     }
+  }
+
+  stopPropagation(event: MouseEvent) {
+    event.stopPropagation();
+  }
+
+  boardOverviewClose() {
+    this.closeEditBoard.emit(false);
   }
 
   onSubmit(ngForm: NgForm) {
