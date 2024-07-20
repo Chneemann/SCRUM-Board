@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { TaskColorsService } from '../../../services/task-colors.service';
 import { DragDropService } from '../../../services/drag-drop.service';
 import { Subtask, Task } from '../../../interfaces/task.interface';
+import { InitialsPipe } from '../../../pipes/initials.pipe';
 
 @Component({
   selector: 'app-view-task',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, InitialsPipe],
   templateUrl: './view-task.component.html',
   styleUrl: './view-task.component.scss',
 })

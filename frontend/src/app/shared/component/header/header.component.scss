@@ -12,8 +12,34 @@ section {
   background-color: $light-gray;
 }
 
+.headline {
+  display: flex;
+}
+
+.assigned {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  .circle {
+    background-color: $white;
+    padding: 3px;
+    border-radius: 100%;
+    border: 1px solid $gray;
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 24px;
+      width: 24px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+}
+
 h1 {
   cursor: pointer;
+  padding-right: 12px;
 }
 
 .right-corner {

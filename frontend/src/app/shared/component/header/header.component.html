@@ -1,8 +1,20 @@
 <section>
-  <div class="headline" (click)="toggleEditBoard(true)">
-    <h1 id="edit-board-title">
+  <div class="headline">
+    <h1 (click)="toggleEditBoard(true)">
       {{ displayBoardData("title") }}
     </h1>
+    <div class="assigned">
+      @for (user of allUsers; track user) {
+      <!-- -->
+      @for (task of allTasks; track task) {
+      <!-- -->
+      @for (assigned of task.assigned; track assigned) { @if (assigned ==
+      user.id) {
+      <div class="circle">
+        <p>{{ user.first_name | initials }}{{ user.last_name | initials }}</p>
+      </div>
+      } } } }
+    </div>
   </div>
   <div class="right-corner">
     <div class="welcome">

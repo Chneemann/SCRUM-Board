@@ -8,17 +8,20 @@ import {
 import { AuthService } from '../../../services/auth.service';
 import { DatabaseService } from '../../../services/database.service';
 import { EditBoardComponent } from './edit-board/edit-board.component';
+import { Task } from '../../../interfaces/task.interface';
+import { InitialsPipe } from '../../../pipes/initials.pipe';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [EditBoardComponent],
+  imports: [EditBoardComponent, InitialsPipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   @Input() allUsers: any[] = [];
   @Input() allBoards: any[] = [];
+  @Input() allTasks: Task[] = [];
   @Output() openUserOverview = new EventEmitter<string>();
 
   boardName: string = '';
@@ -53,6 +56,10 @@ export class HeaderComponent {
     if (index !== -1) {
       return this.allUsers[index].username;
     }
+  }
+
+  firstLetter(word: string) {
+    return word.charAt(0).toUpperCase();
   }
 
   logout() {
