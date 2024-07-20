@@ -64,6 +64,11 @@ export class BoardComponent implements OnInit {
 
   async loadDatabaseBoards() {
     this.allBoards = await this.dbService.getBoards();
+    if (this.allBoards.length > 0) {
+      this.dbService.setCurrentBoard(this.allBoards[0]?.id);
+    } else {
+      this.dbService.setCurrentBoard(0);
+    }
     // console.log('Boards loaded:', this.allBoards);
     await this.loadDatabaseTasks();
     await this.loadDatabaseSubtasks();

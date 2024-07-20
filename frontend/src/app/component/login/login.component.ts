@@ -33,7 +33,7 @@ export class LoginComponent {
 
   guestLogin() {
     const body = {
-      username: 'guest',
+      email: 'guest@example.com',
       password: '1Fv^39;b&p',
     };
     this.authService.login(body);

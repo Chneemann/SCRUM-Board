@@ -37,7 +37,14 @@ class BoardItemView(APIView):
             serializer = BoardItemSerializer(boards, many=True)
 
         return Response(serializer.data)
-
+      
+    def post(self, request, format=None):
+        serializer = BoardItemSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+      
     def put(self, request, pk, format=None):
         snippet = self.get_object(pk)
         serializer = BoardItemSerializer(snippet, data=request.data)
