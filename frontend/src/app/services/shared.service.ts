@@ -14,20 +14,4 @@ export class SharedService {
       return false;
     }
   }
-
-  getAssignedUsers(allUsers: any[], allTasks: any[]): any[] {
-    const assignedUserIds = new Set<number>();
-    const assignedUsers: any[] = [];
-
-    allUsers.forEach((user) => {
-      allTasks.forEach((task) => {
-        if (task.assigned.includes(user.id) && !assignedUserIds.has(user.id)) {
-          assignedUsers.push(user);
-          assignedUserIds.add(user.id);
-        }
-      });
-    });
-
-    return assignedUsers;
-  }
 }

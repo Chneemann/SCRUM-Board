@@ -36,15 +36,11 @@
       </div>
     </div>
     <div class="members">
-      @for (user of allUsers; track user) {
-      <!-- -->
-      @for (assigned of task.assigned; track assigned) {
-      <!-- -->
-      @if (assigned == user.id) {
+      @for (user of getAssignedUsers(task.id); track user) {
       <div class="circle">
         <p>{{ user.first_name | initials }}{{ user.last_name | initials }}</p>
       </div>
-      } } }
+      }
     </div>
   </div>
   @if (isDescriptionOpen(task.id)) {

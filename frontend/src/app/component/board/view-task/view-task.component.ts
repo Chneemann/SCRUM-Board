@@ -30,6 +30,13 @@ export class ViewTaskComponent {
     public dragDropService: DragDropService
   ) {}
 
+  getAssignedUsers(taskId: string) {
+    let index = this.allTasks.findIndex((task) => task.id === taskId);
+    return this.allUsers.filter((user) =>
+      this.allTasks[index].assigned.includes(user.id)
+    );
+  }
+
   openTask(taskId: string) {
     this.openTaskOverview.emit(taskId);
   }

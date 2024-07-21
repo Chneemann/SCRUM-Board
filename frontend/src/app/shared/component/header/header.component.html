@@ -4,8 +4,7 @@
       {{ displayBoardData("title") }}
     </h1>
     <div class="assigned">
-      @for (user of sharedService.getAssignedUsers(allUsers, allTasks); track
-      user) {
+      @for (user of allBoards; track user) {
       <div class="circle">
         <p>{{ user.first_name | initials }}{{ user.last_name | initials }}</p>
       </div>

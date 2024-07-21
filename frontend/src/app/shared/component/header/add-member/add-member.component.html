@@ -15,14 +15,14 @@
       <div class="ul-headline">
         All members from {{ displayBoardData("title") }}:
       </div>
-      <!-- -->
-      @for (user of sharedService.getAssignedUsers(allUsers, allTasks); track
-      user) {
+      @for (member of getAllBoardMembers(); track member) {
       <ul>
         <li>
-          {{ user.first_name | initials }}{{ user.last_name | initials }}
+          {{ displayMemberData(member).first_name | initials
+          }}{{ displayMemberData(member).last_name | initials }}
           -
-          {{ user.first_name }} {{ user.last_name }}
+          {{ displayMemberData(member).first_name }}
+          {{ displayMemberData(member).last_name }}
         </li>
       </ul>
       }

@@ -22,6 +22,25 @@ export class AddMemberComponent {
     public sharedService: SharedService
   ) {}
 
+  getAllBoardMembers() {
+    if (this.allBoards.length > 0) {
+      let index = this.allBoards.findIndex(
+        (board) => board.id === +this.dbService.getCurrentBoard()
+      );
+      let author = this.allBoards[index].author;
+      let members = this.allBoards[index].assigned;
+      if (!members.includes(author)) {
+        author.push(members);
+      }
+      return members;
+    }
+  }
+
+  displayMemberData(memberId: string) {
+    let index = this.allUsers.findIndex((member) => member.id === memberId);
+    return this.allUsers[index];
+  }
+
   addMemberOverviewClose() {
     this.closeAddMemberOverview.emit(false);
   }
