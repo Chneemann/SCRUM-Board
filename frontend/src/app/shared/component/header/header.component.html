@@ -15,7 +15,7 @@
         <p>{{ user.first_name | initials }}{{ user.last_name | initials }}</p>
       </div>
       } } } }
-      <div class="circle">
+      <div class="circle" (click)="toggleAddMember(true)">
         <img src="./../../../../assets/img/add.svg" alt="" />
       </div>
     </div>
@@ -38,4 +38,8 @@
   [allBoards]="allBoards"
   (closeEditBoard)="toggleEditBoard($event)"
 ></app-edit-board>
+} @if (openAddMember) {
+<app-add-member
+  (closeAddMemberOverview)="toggleAddMember($event)"
+></app-add-member>
 }

@@ -10,11 +10,12 @@ import { DatabaseService } from '../../../services/database.service';
 import { EditBoardComponent } from './edit-board/edit-board.component';
 import { Task } from '../../../interfaces/task.interface';
 import { InitialsPipe } from '../../../pipes/initials.pipe';
+import { AddMemberComponent } from './add-member/add-member.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [EditBoardComponent, InitialsPipe],
+  imports: [EditBoardComponent, AddMemberComponent, InitialsPipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -26,6 +27,7 @@ export class HeaderComponent {
 
   boardName: string = '';
   openEditBoard: boolean = false;
+  openAddMember: boolean = false;
 
   constructor(
     public authService: AuthService,
@@ -47,6 +49,10 @@ export class HeaderComponent {
 
   toggleEditBoard(value: boolean) {
     this.openEditBoard = value;
+  }
+
+  toggleAddMember(value: boolean) {
+    this.openAddMember = value;
   }
 
   currentUsername() {
