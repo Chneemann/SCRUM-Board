@@ -4,17 +4,12 @@
       {{ displayBoardData("title") }}
     </h1>
     <div class="assigned">
-      @for (user of allUsers; track user) {
-      <!-- -->
-      @for (task of allTasks; track task) {
-      <!-- -->
-      @for (assigned of task.assigned; track assigned) {
-      <!-- -->
-      @if (assigned == user.id) {
+      @for (user of sharedService.getAssignedUsers(allUsers, allTasks); track
+      user) {
       <div class="circle">
         <p>{{ user.first_name | initials }}{{ user.last_name | initials }}</p>
       </div>
-      } } } }
+      }
       <div class="circle" (click)="toggleAddMember(true)">
         <img src="./../../../../assets/img/add.svg" alt="" />
       </div>
@@ -40,6 +35,10 @@
 ></app-edit-board>
 } @if (openAddMember) {
 <app-add-member
+  [allBoards]="allBoards"
+  [allUsers]="allUsers"
+  [allTasks]="allTasks"
+  [displayBoardData]="displayBoardData"
   (closeAddMemberOverview)="toggleAddMember($event)"
 ></app-add-member>
 }

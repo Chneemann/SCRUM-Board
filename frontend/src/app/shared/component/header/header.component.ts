@@ -11,6 +11,7 @@ import { EditBoardComponent } from './edit-board/edit-board.component';
 import { Task } from '../../../interfaces/task.interface';
 import { InitialsPipe } from '../../../pipes/initials.pipe';
 import { AddMemberComponent } from './add-member/add-member.component';
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'app-header',
@@ -26,12 +27,14 @@ export class HeaderComponent {
   @Output() openUserOverview = new EventEmitter<string>();
 
   boardName: string = '';
+  assignedUsers: any[] = [];
   openEditBoard: boolean = false;
-  openAddMember: boolean = false;
+  openAddMember: boolean = true;
 
   constructor(
     public authService: AuthService,
-    public dbService: DatabaseService
+    public dbService: DatabaseService,
+    public sharedService: SharedService
   ) {}
 
   displayBoardData(query: string) {

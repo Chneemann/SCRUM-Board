@@ -12,6 +12,20 @@
           />
         </div>
       </div>
+      <div class="ul-headline">
+        All members from {{ displayBoardData("title") }}:
+      </div>
+      <!-- -->
+      @for (user of sharedService.getAssignedUsers(allUsers, allTasks); track
+      user) {
+      <ul>
+        <li>
+          {{ user.first_name | initials }}{{ user.last_name | initials }}
+          -
+          {{ user.first_name }} {{ user.last_name }}
+        </li>
+      </ul>
+      }
     </div>
   </div>
 </div>
