@@ -8,12 +8,16 @@
       <!-- -->
       @for (task of allTasks; track task) {
       <!-- -->
-      @for (assigned of task.assigned; track assigned) { @if (assigned ==
-      user.id) {
+      @for (assigned of task.assigned; track assigned) {
+      <!-- -->
+      @if (assigned == user.id) {
       <div class="circle">
         <p>{{ user.first_name | initials }}{{ user.last_name | initials }}</p>
       </div>
       } } } }
+      <div class="circle">
+        <img src="./../../../../assets/img/add.svg" alt="" />
+      </div>
     </div>
   </div>
   <div class="right-corner">
