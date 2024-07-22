@@ -35,13 +35,14 @@
         <img src="./../../../../assets/img/calendar.svg" alt="" />
       </div>
     </div>
-    <div class="members">
-      @for (user of getAssignedUsers(task.id); track user) {
-      <div class="circle">
-        <p>{{ user.first_name | initials }}{{ user.last_name | initials }}</p>
-      </div>
-      }
-    </div>
+    <app-user-initials
+      [allBoards]="allBoards"
+      [allUsers]="allUsers"
+      [allTasks]="allTasks"
+      [currentTaskId]="task.id"
+      [circles]="'assigned'"
+      [showAddMember]="false"
+    ></app-user-initials>
   </div>
   @if (isDescriptionOpen(task.id)) {
   <div class="dotted-line"></div>

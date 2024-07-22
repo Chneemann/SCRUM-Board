@@ -51,29 +51,6 @@ section {
     height: 38px;
     gap: 12px;
   }
-  .members {
-    display: flex;
-    overflow: auto;
-  }
-  .circle {
-    background-color: $white;
-    height: 24px;
-    width: 24px;
-    padding: 3px;
-    margin: 3px;
-    border-radius: 100%;
-    border: 1px solid var(--taskBorderColor);
-    box-shadow: 1px 1px 3px var(--taskBorderColor);
-    p {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 24px;
-      width: 24px;
-      font-size: 14px;
-      font-weight: 600;
-    }
-  }
 }
 
 .subtask-title {

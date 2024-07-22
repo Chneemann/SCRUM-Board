@@ -5,11 +5,17 @@ import { TaskColorsService } from '../../../services/task-colors.service';
 import { DragDropService } from '../../../services/drag-drop.service';
 import { Subtask, Task } from '../../../interfaces/task.interface';
 import { InitialsPipe } from '../../../pipes/initials.pipe';
+import { UserInitialsComponent } from '../../../shared/component/user-initials/user-initials.component';
 
 @Component({
   selector: 'app-view-task',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, InitialsPipe],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    UserInitialsComponent,
+    InitialsPipe,
+  ],
   templateUrl: './view-task.component.html',
   styleUrl: './view-task.component.scss',
 })
@@ -18,6 +24,7 @@ export class ViewTaskComponent {
   @Input() allTasks: Task[] = [];
   @Input() allSubtasks: Subtask[] = [];
   @Input() allUsers: any[] = [];
+  @Input() allBoards: any[] = [];
   @Output() openTaskOverview = new EventEmitter<string>();
   @Output() startDraggingStatus = new EventEmitter<string>();
 
@@ -29,13 +36,6 @@ export class ViewTaskComponent {
     private taskColorService: TaskColorsService,
     public dragDropService: DragDropService
   ) {}
-
-  getAssignedUsers(taskId: string) {
-    let index = this.allTasks.findIndex((task) => task.id === taskId);
-    return this.allUsers.filter((user) =>
-      this.allTasks[index].assigned.includes(user.id)
-    );
-  }
 
   openTask(taskId: string) {
     this.openTaskOverview.emit(taskId);

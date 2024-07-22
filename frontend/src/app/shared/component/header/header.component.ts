@@ -12,11 +12,17 @@ import { Task } from '../../../interfaces/task.interface';
 import { InitialsPipe } from '../../../pipes/initials.pipe';
 import { AddMemberComponent } from './add-member/add-member.component';
 import { SharedService } from '../../../services/shared.service';
+import { UserInitialsComponent } from '../user-initials/user-initials.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [EditBoardComponent, AddMemberComponent, InitialsPipe],
+  imports: [
+    EditBoardComponent,
+    AddMemberComponent,
+    UserInitialsComponent,
+    InitialsPipe,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -29,7 +35,7 @@ export class HeaderComponent {
   boardName: string = '';
   assignedUsers: any[] = [];
   openEditBoard: boolean = false;
-  openAddMember: boolean = true;
+  openAddMember: boolean = false;
 
   constructor(
     public authService: AuthService,

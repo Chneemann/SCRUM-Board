@@ -3,16 +3,13 @@
     <h1 (click)="toggleEditBoard(true)">
       {{ displayBoardData("title") }}
     </h1>
-    <div class="assigned">
-      @for (user of allBoards; track user) {
-      <div class="circle">
-        <p>{{ user.first_name | initials }}{{ user.last_name | initials }}</p>
-      </div>
-      }
-      <div class="circle" (click)="toggleAddMember(true)">
-        <img src="./../../../../assets/img/add.svg" alt="" />
-      </div>
-    </div>
+    <app-user-initials
+      [allBoards]="allBoards"
+      [allUsers]="allUsers"
+      [circles]="'members'"
+      [showAddMember]="true"
+      (openAddMemberOverview)="toggleAddMember($event)"
+    ></app-user-initials>
   </div>
   <div class="right-corner">
     <div class="welcome">

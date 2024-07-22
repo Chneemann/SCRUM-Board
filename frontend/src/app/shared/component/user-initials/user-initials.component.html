@@ -1,0 +1,27 @@
+<section>
+  @if(circles === "members") { @for (member of getAllBoardMembers(); track
+  member) {
+  <div class="circle-member">
+    <p>
+      {{ displayMemberData(member, "first_name") | initials
+      }}{{ displayMemberData(member, "last_name") | initials }}
+    </p>
+  </div>
+  } @if (showAddMember) {
+  <div class="circle-member">
+    <img
+      (click)="toggleAddMemberOverview(true)"
+      src="./../../../../assets/img/add.svg"
+      alt=""
+    />
+  </div>
+  } } @if (circles === "assigned") {
+  <div class="members">
+    @for (user of getAssignedUsers(currentTaskId); track user) {
+    <div class="circle-assigned">
+      <p>{{ user.first_name | initials }}{{ user.last_name | initials }}</p>
+    </div>
+    }
+  </div>
+  }
+</section>
