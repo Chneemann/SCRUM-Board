@@ -152,11 +152,12 @@
               [(ngModel)]="startAssignedValue"
             >
               <option value="null">assign someone</option>
-              @for (user of allUsers; track user) {
+              @for (assigned of getAllBoardMembers(); track assigned) {
               <!---->
-              @if (!checkAssigned(user.id)) {
-              <option value="{{ user.id }}">
-                {{ user.first_name }} {{ user.last_name }}
+              @if (!checkAssigned(assigned)) {
+              <option value="{{ assigned }}">
+                {{ displayMemberData(assigned, "first_name") }}
+                {{ displayMemberData(assigned, "last_name") }}
               </option>
               } }
             </select>

@@ -18,6 +18,7 @@ export class AddTaskComponent implements OnInit {
   @Input() allTasks: Task[] = [];
   @Input() allSubtasks: Subtask[] = [];
   @Input() allUsers: any[] = [];
+  @Input() allBoards: any[] = [];
   @Output() closeTaskOverview = new EventEmitter<string>();
   @Output() taskUpdated = new EventEmitter<any>();
   @Output() taskCreated = new EventEmitter<any>();
@@ -69,6 +70,27 @@ export class AddTaskComponent implements OnInit {
       } else {
         this.updateTask();
       }
+    }
+  }
+
+  getAllBoardMembers() {
+    if (this.allBoards.length > 0) {
+      let index = this.allBoards.findIndex(
+        (board) => board.id === +this.dbService.getCurrentBoard()
+      );
+      let author = this.allBoards[index].author;
+      let members = this.allBoards[index].assigned;
+      if (!members.includes(author)) {
+        author.push(members);
+      }
+      return members;
+    }
+  }
+
+  displayMemberData(memberId: string, query: string) {
+    let index = this.allUsers.findIndex((member) => member.id === memberId);
+    if (index != -1) {
+      return this.allUsers[index][query];
     }
   }
 
