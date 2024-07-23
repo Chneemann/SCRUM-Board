@@ -31,7 +31,27 @@
 ul {
   padding-left: 20px;
   li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 3px;
+    cursor: pointer;
+    &:hover {
+      background-color: $light-gray;
+    }
+    img {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      filter: brightness(0) saturate(100%) invert(63%) sepia(0%) saturate(1%)
+        hue-rotate(153deg) brightness(93%) contrast(85%);
+      &:hover {
+        filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(16%)
+          hue-rotate(338deg) brightness(93%) contrast(107%);
+      }
+    }
   }
 }
 

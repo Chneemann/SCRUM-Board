@@ -65,4 +65,11 @@ export class AddMemberComponent {
     };
     this.dbService.updateDB(body, this.dbService.getCurrentBoard(), 'boards');
   }
+
+  deleteMember(userId: string) {
+    this.addMember = this.getAllBoardMembers();
+    let index = this.addMember.findIndex((member) => member.id === userId);
+    this.addMember.splice(index, 1);
+    this.updateBoardData();
+  }
 }
