@@ -28,6 +28,7 @@ export class FormFieldComponent implements ControlValueAccessor {
   @Input() field: string = '';
   @Input() disabled: boolean = false;
   @Input() allBoards: any[] = [];
+  @Input() allUsers: any[] = [];
 
   constructor(public dbService: DatabaseService) {}
 

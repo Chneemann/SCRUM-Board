@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="ul-headline">
-        All members from {{ displayBoardData("title") }}:
+        Members from {{ displayBoardData("title") }}:
       </div>
       @for (member of getAllBoardMembers(); track member) {
       <ul>
@@ -26,6 +26,24 @@
         </li>
       </ul>
       }
+      <div class="spacer"></div>
+      <form
+        id="form"
+        class="form"
+        #addMemberForm="ngForm"
+        (change)="onSubmit(addMemberForm)"
+      >
+        <app-form-field
+          [(ngModel)]="addMember"
+          field="addMember"
+          name="addMember"
+          text="Add Member:"
+          id="addMember"
+          type="text"
+          #addMember="ngModel"
+          [allUsers]="allUsers"
+        ></app-form-field>
+      </form>
     </div>
   </div>
 </div>

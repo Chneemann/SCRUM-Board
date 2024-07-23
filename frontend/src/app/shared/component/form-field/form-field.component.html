@@ -30,6 +30,24 @@
     <option value="{{ board.id }}">{{ board.title }}</option>
     } }
   </select>
+  } @if (field === 'addMember') {
+  <select
+    [id]="id"
+    placeholder=""
+    class="input-field"
+    autocomplete="new-password"
+    [value]=""
+    (blur)="onTouched()"
+    (input)="onInput($event)"
+    [disabled]="disabled"
+  >
+    @for (user of allUsers; track user) {
+    <!-- -->
+    <option value="{{ user.id }}">
+      {{ user.first_name }} {{ user.last_name }}
+    </option>
+    }
+  </select>
   }
   <div class="input-label">{{ text }}</div>
 </div>

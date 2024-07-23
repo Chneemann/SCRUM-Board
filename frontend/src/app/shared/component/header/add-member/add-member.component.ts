@@ -2,11 +2,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DatabaseService } from '../../../../services/database.service';
 import { InitialsPipe } from '../../../../pipes/initials.pipe';
 import { SharedService } from '../../../../services/shared.service';
+import { FormsModule, NgForm } from '@angular/forms';
+import { FormFieldComponent } from '../../form-field/form-field.component';
 
 @Component({
   selector: 'app-add-member',
   standalone: true,
-  imports: [InitialsPipe],
+  imports: [FormFieldComponent, InitialsPipe, FormsModule],
   templateUrl: './add-member.component.html',
   styleUrl: './add-member.component.scss',
 })
@@ -16,6 +18,8 @@ export class AddMemberComponent {
   @Input() allTasks: any[] = [];
   @Input() displayBoardData!: (query: string) => any;
   @Output() closeAddMemberOverview = new EventEmitter<boolean>();
+
+  addMember: string = '';
 
   constructor(
     private dbService: DatabaseService,
@@ -47,5 +51,9 @@ export class AddMemberComponent {
 
   stopPropagation(event: MouseEvent) {
     event.stopPropagation();
+  }
+
+  onSubmit(ngForm: NgForm) {
+    console.log('addMember');
   }
 }
