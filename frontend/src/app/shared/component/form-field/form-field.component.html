@@ -23,7 +23,7 @@
     [disabled]="disabled"
   >
     @for (board of allBoards; track board) {
-    <!-- -->
+    <!-- Selected current board -->
     @if (board.id == dbService.getCurrentBoard()) {
     <option value="{{ board.id }}" selected>{{ board.title }}</option>
     } @else {
@@ -41,12 +41,14 @@
     (input)="onInput($event)"
     [disabled]="disabled"
   >
+    <option value="0" selected>add member</option>
     @for (user of allUsers; track user) {
-    <!-- -->
+    <!-- User is not a board member -->
+    @if (isNotBoardMember(user.id)) {
     <option value="{{ user.id }}">
       {{ user.first_name }} {{ user.last_name }}
     </option>
-    }
+    } }
   </select>
   }
   <div class="input-label">{{ text }}</div>

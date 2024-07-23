@@ -19,7 +19,7 @@ export class AddMemberComponent {
   @Input() displayBoardData!: (query: string) => any;
   @Output() closeAddMemberOverview = new EventEmitter<boolean>();
 
-  addMember: string = '';
+  addMember: any[] = [];
 
   constructor(
     private dbService: DatabaseService,
@@ -54,6 +54,15 @@ export class AddMemberComponent {
   }
 
   onSubmit(ngForm: NgForm) {
-    console.log('addMember');
+    this.addMember = this.getAllBoardMembers();
+    this.addMember.push(+ngForm.value.addMember);
+    this.updateBoardData();
+  }
+
+  updateBoardData() {
+    const body = {
+      assigned: this.addMember,
+    };
+    this.dbService.updateDB(body, this.dbService.getCurrentBoard(), 'boards');
   }
 }

@@ -29,6 +29,7 @@ export class FormFieldComponent implements ControlValueAccessor {
   @Input() disabled: boolean = false;
   @Input() allBoards: any[] = [];
   @Input() allUsers: any[] = [];
+  @Input() currentBoardMembers: any[] = [];
 
   constructor(public dbService: DatabaseService) {}
 
@@ -54,5 +55,9 @@ export class FormFieldComponent implements ControlValueAccessor {
   onInput(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     this.onChange(inputElement.value);
+  }
+
+  isNotBoardMember(userId: number): boolean {
+    return !this.currentBoardMembers.includes(userId);
   }
 }
