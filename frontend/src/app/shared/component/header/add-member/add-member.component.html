@@ -15,26 +15,28 @@
       <div class="ul-headline">
         Members from {{ displayBoardData("title") }}:
       </div>
-      @for (member of getAllBoardMembers(); track member) {
-      <ul>
-        <li>
-          <div>
-            {{ displayMemberData(member).first_name | initials
-            }}{{ displayMemberData(member).last_name | initials }}
-            -
-            {{ displayMemberData(member).first_name }}
-            {{ displayMemberData(member).last_name }}
-          </div>
-          <div>
-            <img
-              src="./../../../../../assets/img/close.svg"
-              alt=""
-              (click)="deleteMember(member)"
-            />
-          </div>
-        </li>
-      </ul>
-      }
+      <div class="ul-content">
+        @for (member of getAllBoardMembers(); track member) {
+        <ul>
+          <li>
+            <div>
+              {{ displayMemberData(member).first_name | initials
+              }}{{ displayMemberData(member).last_name | initials }}
+              -
+              {{ displayMemberData(member).first_name }}
+              {{ displayMemberData(member).last_name }}
+            </div>
+            <div>
+              <img
+                src="./../../../../../assets/img/close.svg"
+                alt=""
+                (click)="deleteMember(member)"
+              />
+            </div>
+          </li>
+        </ul>
+        }
+      </div>
       <div class="spacer"></div>
       <form
         id="form"

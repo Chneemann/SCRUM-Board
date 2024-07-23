@@ -2,7 +2,7 @@
 
 .content {
   width: 320px;
-  height: 460px;
+  height: fit-content;
   border-radius: 6px;
   border: 1px solid $gray;
   background-color: $white;
@@ -26,6 +26,11 @@
   font-size: 18px;
   font-weight: 600;
   padding-bottom: 6px;
+}
+
+.ul-content {
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 ul {
