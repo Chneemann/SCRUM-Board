@@ -66,10 +66,32 @@ export class AddMemberComponent {
     this.dbService.updateDB(body, this.dbService.getCurrentBoard(), 'boards');
   }
 
+  updateTaskData(assigned: string, taskId: string) {
+    const body = {
+      assigned: assigned,
+    };
+    this.dbService.updateDB(body, taskId, 'tasks');
+  }
+
   deleteMember(userId: string) {
     this.addMember = this.getAllBoardMembers();
-    let index = this.addMember.findIndex((member) => member.id === userId);
-    this.addMember.splice(index, 1);
+    let indexMember = this.addMember.findIndex(
+      (member) => member.id === userId
+    );
+    let indexTask = this.allTasks.findIndex((task) =>
+      task.assigned.includes(userId)
+    );
+    if (indexTask !== -1) {
+      let assignedIndex = this.allTasks[indexTask].assigned.indexOf(userId);
+      if (assignedIndex !== -1) {
+        this.allTasks[indexTask].assigned.splice(assignedIndex, 1);
+        this.updateTaskData(
+          this.allTasks[indexTask].assigned,
+          this.allTasks[indexTask].id
+        );
+      }
+    }
+    this.addMember.splice(indexMember, 1);
     this.updateBoardData();
   }
 }
