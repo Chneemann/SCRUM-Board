@@ -4,6 +4,7 @@ import { InitialsPipe } from '../../../../pipes/initials.pipe';
 import { SharedService } from '../../../../services/shared.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { FormFieldComponent } from '../../form-field/form-field.component';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-add-member',
@@ -23,7 +24,8 @@ export class AddMemberComponent {
 
   constructor(
     private dbService: DatabaseService,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    public authService: AuthService
   ) {}
 
   getAllBoardMembers() {

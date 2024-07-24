@@ -28,18 +28,11 @@
   padding-bottom: 6px;
 }
 
-.ul-content {
-  max-height: 200px;
-  overflow-y: auto;
-}
-
 ul {
   padding-left: 20px;
   li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 3px;
+    padding: 6px;
+    position: relative;
     cursor: pointer;
     &:hover {
       background-color: $light-gray;
@@ -47,6 +40,10 @@ ul {
     img {
       display: flex;
       align-items: center;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
       cursor: pointer;
       width: 24px;
       height: 24px;
