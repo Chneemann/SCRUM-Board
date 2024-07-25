@@ -60,10 +60,13 @@
 
 // Buttons
 
-.button {
+.buttons {
+  display: flex;
+  justify-content: center;
   position: absolute;
   bottom: 12px;
   right: 0;
+  left: 0;
 }
 
 .btn-close {

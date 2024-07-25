@@ -9,6 +9,7 @@ import { DatabaseService } from '../../../../services/database.service';
 import { FormFieldComponent } from '../../form-field/form-field.component';
 import { FormBtnComponent } from '../../form-btn/form-btn.component';
 import { FormsModule, NgForm } from '@angular/forms';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-edit-board',
@@ -21,7 +22,10 @@ export class EditBoardComponent {
   @Input() allBoards: any[] = [];
   @Output() closeEditBoard = new EventEmitter<boolean>();
 
-  constructor(public dbService: DatabaseService) {}
+  constructor(
+    public dbService: DatabaseService,
+    private authService: AuthService
+  ) {}
 
   boardData = {
     id: '',
@@ -36,6 +40,16 @@ export class EditBoardComponent {
         this.initializeBoardData();
       }
     }
+  }
+
+  isUserBoardAuthor() {
+    if (this.allBoards.length > 0) {
+      let index = this.allBoards.findIndex(
+        (board) => board.id === +this.dbService.getCurrentBoard()
+      );
+      return this.allBoards[index].author === this.authService.currentUserId;
+    }
+    return;
   }
 
   boardIndex() {
@@ -76,6 +90,8 @@ export class EditBoardComponent {
       this.updateData();
     }
   }
+
+  deleteBoard() {}
 
   onSubmitSwitch(ngForm: NgForm) {
     this.dbService.setCurrentBoard(ngForm.value.initialTitle);

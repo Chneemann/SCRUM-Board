@@ -35,7 +35,15 @@
               <p>Please enter a username</p>
               }
             </div>
-            <div class="button">
+            <div class="buttons">
+              @if (isUserBoardAuthor()) {
+              <app-form-btn
+                [class]="'btn-submit'"
+                [type]="'button'"
+                (click)="deleteBoard()"
+                [value]="'Delete'"
+              ></app-form-btn>
+              }
               <app-form-btn
                 [class]="'btn-submit'"
                 [type]="'submit'"
