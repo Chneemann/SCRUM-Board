@@ -37,13 +37,19 @@ ul {
     &:hover {
       background-color: $light-gray;
     }
-    img {
+    .author {
       display: flex;
       align-items: center;
       position: absolute;
       top: 0;
       bottom: 0;
-      right: 0;
+      right: 4px;
+    }
+    img {
+      position: absolute;
+      top: 3px;
+      bottom: 0;
+      right: 3px;
       cursor: pointer;
       width: 24px;
       height: 24px;

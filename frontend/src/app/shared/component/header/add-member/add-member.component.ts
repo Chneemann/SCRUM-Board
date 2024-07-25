@@ -42,6 +42,24 @@ export class AddMemberComponent {
     }
   }
 
+  getBoardMembers() {
+    if (this.allBoards.length > 0) {
+      let index = this.allBoards.findIndex(
+        (board) => board.id === +this.dbService.getCurrentBoard()
+      );
+      return this.allBoards[index].assigned;
+    }
+  }
+
+  getBoardAuthor() {
+    if (this.allBoards.length > 0) {
+      let index = this.allBoards.findIndex(
+        (board) => board.id === +this.dbService.getCurrentBoard()
+      );
+      return this.allBoards[index].author;
+    }
+  }
+
   displayMemberData(memberId: string) {
     let index = this.allUsers.findIndex((member) => member.id === memberId);
     return this.allUsers[index];
@@ -56,7 +74,7 @@ export class AddMemberComponent {
   }
 
   onSubmit(ngForm: NgForm) {
-    this.addMember = this.getAllBoardMembers();
+    this.addMember = this.getBoardMembers();
     this.addMember.push(+ngForm.value.addMember);
     this.updateBoardData();
   }
@@ -75,11 +93,9 @@ export class AddMemberComponent {
     this.dbService.updateDB(body, taskId, 'tasks');
   }
 
-  deleteMember(userId: string) {
-    this.addMember = this.getAllBoardMembers();
-    let indexMember = this.addMember.findIndex(
-      (member) => member.id === userId
-    );
+  deleteMember(userId: number) {
+    this.addMember = this.getBoardMembers();
+    let indexMember = this.addMember.findIndex((member) => member == userId);
     let indexTask = this.allTasks.findIndex((task) =>
       task.assigned.includes(userId)
     );

@@ -26,11 +26,15 @@
             }}{{ displayMemberData(member).last_name | initials }})
           </div>
           <div>
+            @if (member !== getBoardAuthor()) {
             <img
               src="./../../../../../assets/img/close.svg"
               alt=""
               (click)="deleteMember(member)"
             />
+            } @else {
+            <div class="author">(A)</div>
+            }
           </div>
         </li>
         }
