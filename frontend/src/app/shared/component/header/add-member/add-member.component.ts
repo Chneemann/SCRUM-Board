@@ -36,7 +36,7 @@ export class AddMemberComponent {
       let author = this.allBoards[index].author;
       let members = this.allBoards[index].assigned;
       if (!members.includes(author)) {
-        author.push(members);
+        members.push(author);
       }
       return members;
     }
