@@ -32,6 +32,7 @@ export class EditBoardComponent {
     title: '',
     initialTitle: '',
     currentBoard: '',
+    newBoard: '',
   };
 
   ngOnChanges(changes: SimpleChanges) {
@@ -85,9 +86,16 @@ export class EditBoardComponent {
     this.closeEditBoard.emit(false);
   }
 
-  onSubmit(ngForm: NgForm) {
+  onSubmitEditBoard(ngForm: NgForm) {
     if (ngForm.submitted && ngForm.form.valid) {
-      this.updateData();
+      this.updateBoardData();
+    }
+  }
+
+  onSubmitNewBoard(ngForm: NgForm) {
+    console.log(ngForm.submitted, ngForm.form.valid);
+    if (ngForm.submitted && ngForm.form.valid) {
+      this.addNewBoard();
     }
   }
 
@@ -111,7 +119,7 @@ export class EditBoardComponent {
     this.closeEditBoard.emit(false);
   }
 
-  updateData() {
+  updateBoardData() {
     const body = {
       title: this.boardData.title,
     };
@@ -123,6 +131,21 @@ export class EditBoardComponent {
           this.closeEditBoard.emit(false);
         }
       });
+  }
+
+  addNewBoard() {
+    const body = {
+      title: this.boardData.newBoard,
+      author: this.authService.currentUserId,
+    };
+    this.dbService.createDB(body, 'boards').then((updatedBoard) => {
+      this.replaceBoard(updatedBoard);
+      if (this.dbService.dataUploaded) {
+        this.closeEditBoard.emit(false);
+        this.allBoards.push(updatedBoard);
+        this.dbService.setCurrentBoard(updatedBoard.id);
+      }
+    });
   }
 
   replaceBoard(boardId: any) {

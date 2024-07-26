@@ -14,9 +14,9 @@
       </div>
       <div class="edit-board">
         <form
-          id="form"
-          #boardForm="ngForm"
-          (ngSubmit)="onSubmit(boardForm)"
+          id="onSubmitEditBoard"
+          #boardFormEdit="ngForm"
+          (ngSubmit)="onSubmitEditBoard(boardFormEdit)"
           onsubmit="return false"
         >
           <div class="input-fields">
@@ -32,7 +32,7 @@
             ></app-form-field>
             <div class="error-msg">
               @if (!boardName.valid && boardName.touched) {
-              <p>Please enter a username</p>
+              <p>Please enter a board name</p>
               }
             </div>
             <div class="buttons">
@@ -55,10 +55,48 @@
         </form>
       </div>
       <div class="header">
+        <div class="headline">Add New Board</div>
+      </div>
+      <div class="edit-board">
+        <form
+          id="onSubmitNewBoard"
+          #boardFormNew="ngForm"
+          (ngSubmit)="onSubmitNewBoard(boardFormNew)"
+          onsubmit="return false"
+        >
+          <div class="input-fields">
+            <app-form-field
+              [(ngModel)]="boardData.newBoard"
+              field="input"
+              name="newBoard"
+              text="New Board Name:"
+              id="newBoard"
+              type="text"
+              minlength="6"
+              #newBoard="ngModel"
+              required
+            ></app-form-field>
+            <div class="error-msg">
+              @if (!newBoard.valid && newBoard.touched) {
+              <p>Please enter a board name</p>
+              }
+            </div>
+            <div class="buttons">
+              <app-form-btn
+                [class]="'btn-submit'"
+                [type]="'submit'"
+                [value]="'Add Board'"
+                [disabled]="!newBoard.valid"
+              ></app-form-btn>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="header">
         <div class="headline">Switch Board</div>
       </div>
       <form
-        id="form"
+        id="onSubmitSwitch"
         class="form"
         #boardSwitchForm="ngForm"
         (change)="onSubmitSwitch(boardSwitchForm)"
