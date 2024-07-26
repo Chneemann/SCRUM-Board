@@ -91,7 +91,20 @@ export class EditBoardComponent {
     }
   }
 
-  deleteBoard() {}
+  deleteBoard() {
+    const confirmed = confirm('Do you really want to delete the board?');
+    if (confirmed) {
+      this.dbService
+        .deleteDB(this.dbService.getCurrentBoard(), 'boards')
+        .then((updatedBoard) => {
+          this.replaceBoard(updatedBoard);
+          if (this.dbService.dataUploaded) {
+            this.closeEditBoard.emit(false);
+            window.location.reload();
+          }
+        });
+    }
+  }
 
   onSubmitSwitch(ngForm: NgForm) {
     this.dbService.setCurrentBoard(ngForm.value.initialTitle);
