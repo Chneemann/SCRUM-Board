@@ -117,6 +117,15 @@
           </div>
         </div>
         <div class="button">
+          <!-- Check if it is not the guest account, here Id number 3 -->
+          @if (authService.currentUserId !== 3) {
+          <app-form-btn
+            [class]="'btn-submit'"
+            [type]="'button'"
+            (click)="deleteAccount()"
+            [value]="'Delete Account'"
+          ></app-form-btn>
+          }
           <app-form-btn
             [class]="'btn-submit'"
             [type]="'submit'"

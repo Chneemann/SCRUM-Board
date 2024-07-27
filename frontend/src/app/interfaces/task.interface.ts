@@ -5,17 +5,17 @@ export interface Task {
   description: string;
   priority: string;
   status: string;
-  author: string;
+  author: number;
   created_at: string;
   due_date: string;
   color: string;
-  assigned: string[];
+  assigned: number[];
 }
 
 export interface Subtask {
   id?: number;
   title: string;
   task_id: number;
-  author: string;
+  author: number;
   status: boolean;
 }

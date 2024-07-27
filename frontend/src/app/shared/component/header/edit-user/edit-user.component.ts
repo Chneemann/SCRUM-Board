@@ -112,4 +112,6 @@ export class EditUserComponent implements OnInit {
         }
       });
   }
+
+  deleteAccount() {}
 }

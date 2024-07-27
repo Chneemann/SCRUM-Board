@@ -30,7 +30,7 @@ export class HeaderComponent {
   @Input() allUsers: any[] = [];
   @Input() allBoards: any[] = [];
   @Input() allTasks: Task[] = [];
-  @Output() openUserOverview = new EventEmitter<string>();
+  @Output() openUserOverview = new EventEmitter<number>();
 
   boardName: string = '';
   assignedUsers: any[] = [];
@@ -53,7 +53,7 @@ export class HeaderComponent {
     }
   }
 
-  userOverviewOpen(value: string) {
+  userOverviewOpen(value: number) {
     this.openUserOverview.emit(value);
   }
 

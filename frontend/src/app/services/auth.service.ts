@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   isUserLogin: boolean = false;
-  currentUserId: string = '';
+  currentUserId: number = 0;
   passwordFieldType: string = 'password';
   passwordIcon: string = './../../../assets/img/close-eye.svg';
   errorMsg: any = {};

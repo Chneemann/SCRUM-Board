@@ -26,7 +26,7 @@ export class AddTaskComponent implements OnInit {
 
   startAssignedValue: string | null = 'null';
   subtaskInputValue: string = '';
-  clonedTaskDataAssigned: string[] = [];
+  clonedTaskDataAssigned: number[] = [];
   tempTaskDataSubtasks: Subtask[] = [];
   isThisANewTask: boolean = false;
   isCurrentTaskIdNumber: boolean = false;
@@ -290,22 +290,24 @@ export class AddTaskComponent implements OnInit {
 
     if (
       selectedValue !== 'null' &&
-      !this.clonedTaskDataAssigned.some((assigned) => assigned == selectedValue)
+      !this.clonedTaskDataAssigned.some(
+        (assigned) => assigned == +selectedValue
+      )
     ) {
-      this.clonedTaskDataAssigned.push(selectedValue);
+      this.clonedTaskDataAssigned.push(+selectedValue);
       this.resetSelectValue();
     }
   }
 
   checkAssigned(selectedValue: string) {
     return this.clonedTaskDataAssigned.some(
-      (assigned) => assigned == selectedValue
+      (assigned) => assigned === +selectedValue
     );
   }
 
   deleteAssigned(selectedValue: string) {
     if (this.checkAssigned(selectedValue)) {
-      let index = this.clonedTaskDataAssigned.indexOf(selectedValue);
+      let index = this.clonedTaskDataAssigned.indexOf(+selectedValue);
       this.clonedTaskDataAssigned.splice(index, 1);
       this.resetSelectValue();
     }
