@@ -60,19 +60,6 @@ export class BoardComponent implements OnInit {
     await this.loadDatabaseSubtasks();
   }
 
-  addNewBoard() {
-    const body = {
-      title: 'My First Board',
-      author: this.authService.currentUserId,
-    };
-    this.dbService.createDB(body, 'boards').then((updatedBoard) => {
-      if (this.dbService.dataUploaded) {
-        this.allBoards.push(updatedBoard);
-        this.dbService.setCurrentBoard(updatedBoard.id);
-      }
-    });
-  }
-
   //  Database
 
   async loadDatabaseBoards() {
@@ -82,13 +69,11 @@ export class BoardComponent implements OnInit {
     } else {
       this.addNewBoard();
     }
-    // console.log('Boards loaded:', this.allBoards);
   }
 
   async loadDatabaseTasks() {
     const currentBoard = this.dbService.getCurrentBoard();
     this.allTasks = await this.dbService.getTasksByBoardId(+currentBoard);
-    // console.log('Tasks loaded:', this.allTasks);
   }
 
   async loadDatabaseSubtasks() {
@@ -96,7 +81,6 @@ export class BoardComponent implements OnInit {
     this.allSubtasks = await Promise.all(
       taskIds.map((taskId) => this.dbService.getSubtasksByTaskId(taskId))
     ).then((results) => results.flat());
-    // console.log('Subtasks loaded:', this.allSubtasks);
   }
 
   async loadDatabaseUsers() {
@@ -173,5 +157,20 @@ export class BoardComponent implements OnInit {
 
   toggleUserOverview(value: any) {
     this.openCurrentUserOverview = value;
+  }
+
+  // Board
+
+  addNewBoard() {
+    const body = {
+      title: 'My First Board',
+      author: this.authService.currentUserId,
+    };
+    this.dbService.createDB(body, 'boards').then((updatedBoard) => {
+      if (this.dbService.dataUploaded) {
+        this.allBoards.push(updatedBoard);
+        this.dbService.setCurrentBoard(updatedBoard.id);
+      }
+    });
   }
 }
