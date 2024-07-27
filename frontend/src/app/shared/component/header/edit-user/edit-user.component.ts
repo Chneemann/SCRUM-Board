@@ -113,5 +113,11 @@ export class EditUserComponent implements OnInit {
       });
   }
 
-  deleteAccount() {}
+  deleteAccount() {
+    const confirmed = confirm('Do you really want to delete your account?');
+    if (confirmed) {
+      this.authService.logout();
+      this.dbService.deleteDB(this.authService.currentUserId, 'users');
+    }
+  }
 }
