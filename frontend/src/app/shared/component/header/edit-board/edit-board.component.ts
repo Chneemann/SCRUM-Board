@@ -20,7 +20,9 @@ import { AuthService } from '../../../../services/auth.service';
 })
 export class EditBoardComponent {
   @Input() allBoards: any[] = [];
+  @Input() boardOpen: string = '';
   @Output() closeEditBoard = new EventEmitter<boolean>();
+  @Output() closeSwitchBoard = new EventEmitter<boolean>();
 
   constructor(
     public dbService: DatabaseService,
@@ -84,6 +86,7 @@ export class EditBoardComponent {
 
   boardOverviewClose() {
     this.closeEditBoard.emit(false);
+    this.closeSwitchBoard.emit(false);
   }
 
   onSubmitEditBoard(ngForm: NgForm) {
@@ -116,7 +119,7 @@ export class EditBoardComponent {
 
   onSubmitSwitch(ngForm: NgForm) {
     this.dbService.setCurrentBoard(ngForm.value.initialTitle);
-    this.closeEditBoard.emit(false);
+    this.closeSwitchBoard.emit(false);
   }
 
   updateBoardData() {

@@ -1,5 +1,12 @@
 <section>
   <div class="headline">
+    <div class="burger-menu">
+      <img
+        src="./../../../../assets/img/menu.svg"
+        alt=""
+        (click)="toggleSwitchBoard(true)"
+      />
+    </div>
     <h1 (click)="toggleEditBoard(true)">
       {{ displayBoardData("title") }}
     </h1>
@@ -27,7 +34,14 @@
 @if (openEditBoard) {
 <app-edit-board
   [allBoards]="allBoards"
+  [boardOpen]="'openEditBoard'"
   (closeEditBoard)="toggleEditBoard($event)"
+></app-edit-board>
+}@if (openSwitchBoard) {
+<app-edit-board
+  [allBoards]="allBoards"
+  [boardOpen]="'openSwitchBoard'"
+  (closeSwitchBoard)="toggleSwitchBoard($event)"
 ></app-edit-board>
 } @if (openAddMember) {
 <app-add-member

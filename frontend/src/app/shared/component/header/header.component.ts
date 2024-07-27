@@ -35,6 +35,7 @@ export class HeaderComponent {
   boardName: string = '';
   assignedUsers: any[] = [];
   openEditBoard: boolean = false;
+  openSwitchBoard: boolean = false;
   openAddMember: boolean = false;
 
   constructor(
@@ -58,6 +59,10 @@ export class HeaderComponent {
 
   toggleEditBoard(value: boolean) {
     this.openEditBoard = value;
+  }
+
+  toggleSwitchBoard(value: boolean) {
+    this.openSwitchBoard = value;
   }
 
   toggleAddMember(value: boolean) {
