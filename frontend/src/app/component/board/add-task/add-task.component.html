@@ -181,7 +181,13 @@
           @if(!isCurrentTaskIdNumber) {
           <div class="button" (click)="deleteTask()">Delete Task</div>
           }
-          <button class="button" type="submit">Save Task</button>
+          <button
+            class="button"
+            type="submit"
+            [disabled]="!title.valid || !description.valid"
+          >
+            Save Task
+          </button>
         </div>
       </form>
     </div>

@@ -49,7 +49,7 @@
   <div class="description">
     <p>{{ task.description }}</p>
   </div>
-  } @if (isSubtasksOpen(task.id)) {
+  } @if (isSubtasksOpen(task.id) && hasTaskASubtask(task.id)) {
   <div class="dotted-line"></div>
   <div class="subtasks">
     @for (subtask of allSubtasks; track subtask) {
