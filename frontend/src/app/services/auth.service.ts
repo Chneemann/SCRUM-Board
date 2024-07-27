@@ -28,17 +28,6 @@ export class AuthService {
         : './../../../assets/img/close-eye.svg';
   }
 
-  checkUserId(): Promise<boolean> {
-    const headers = this.getAuthHeaders();
-    return new Promise<boolean>((resolve) => {
-      this.http
-        .get<any>(environment.baseUrl + '/auth/', { headers })
-        .subscribe((response) => {
-          console.log(response);
-        });
-    });
-  }
-
   checkAuthUser(): Promise<boolean> {
     const headers = this.getAuthHeaders();
     return new Promise<boolean>((resolve) => {

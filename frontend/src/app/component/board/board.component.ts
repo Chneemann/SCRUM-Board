@@ -50,14 +50,27 @@ export class BoardComponent implements OnInit {
     this.dbService.currentBoard$.subscribe((newBoard) => {
       if (this.currentBoard !== newBoard) {
         this.currentBoard = newBoard;
-        this.onBoardChange(newBoard);
+        this.onBoardChange();
       }
     });
   }
 
-  async onBoardChange(newBoard: number) {
+  async onBoardChange() {
     await this.loadDatabaseTasks();
     await this.loadDatabaseSubtasks();
+  }
+
+  addNewBoard() {
+    const body = {
+      title: 'My First Board',
+      author: this.authService.currentUserId,
+    };
+    this.dbService.createDB(body, 'boards').then((updatedBoard) => {
+      if (this.dbService.dataUploaded) {
+        this.allBoards.push(updatedBoard);
+        this.dbService.setCurrentBoard(updatedBoard.id);
+      }
+    });
   }
 
   //  Database
@@ -67,7 +80,7 @@ export class BoardComponent implements OnInit {
     if (this.allBoards.length > 0) {
       this.dbService.setCurrentBoard(this.allBoards[0]?.id);
     } else {
-      this.dbService.setCurrentBoard(0);
+      this.addNewBoard();
     }
     // console.log('Boards loaded:', this.allBoards);
   }

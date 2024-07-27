@@ -36,7 +36,7 @@
               }
             </div>
             <div class="buttons">
-              @if (isUserBoardAuthor()) {
+              @if (isUserBoardAuthor() && allBoards.length > 1) {
               <app-form-btn
                 [class]="'btn-submit'"
                 [type]="'button'"

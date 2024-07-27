@@ -68,12 +68,12 @@
   } @if (isDateOpen(task.id)) {
   <div class="dotted-line"></div>
   <div class="date">
-    <span>Created:</span>
-    <p>{{ formatDate(task.created_at, true) }}</p>
-  </div>
-  <div class="date">
     <span>Due Date:</span>
     <p>{{ formatDate(task.due_date, false) }}</p>
+  </div>
+  <div class="date">
+    <span>Created:</span>
+    <p>{{ formatDate(task.created_at, true) }}</p>
   </div>
   }
 </section>
