@@ -5,11 +5,12 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { DatabaseService } from '../../../services/database.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-form-field',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './form-field.component.html',
   styleUrl: './form-field.component.scss',
   providers: [
@@ -26,6 +27,8 @@ export class FormFieldComponent implements ControlValueAccessor {
   @Input() type: string = '';
   @Input() text: string = '';
   @Input() field: string = '';
+  @Input() colorBg: string = '';
+  @Input() colorBorder: string = '';
   @Input() disabled: boolean = false;
   @Input() allBoards: any[] = [];
   @Input() allUsers: any[] = [];
@@ -54,7 +57,8 @@ export class FormFieldComponent implements ControlValueAccessor {
 
   onInput(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
-    this.onChange(inputElement.value);
+    this.value = inputElement.value;
+    this.onChange(this.value);
   }
 
   isNotBoardMember(userId: number): boolean {

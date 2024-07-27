@@ -12,12 +12,13 @@
   padding: 8px 4px;
   font-size: 19px;
   width: 100%;
-  background-color: $white;
+  background-color: var(--bgColor);
   outline: none;
   margin-bottom: 6px;
+  resize: none;
   &:focus {
-    background-color: $very-light-gray;
-    border-bottom-color: $black;
+    background-color: var(--bgColor);
+    border-bottom-color: var(--borderColor);
   }
 }
 
@@ -31,12 +32,16 @@
   pointer-events: none;
 }
 
+.textarea {
+  top: 70%;
+}
+
 .input-field:focus + .input-label,
 .input-field:not(:placeholder-shown) + .input-label {
   top: -5px;
   left: 0;
   font-size: 12px;
   color: $gray;
-  background: $white;
+  background: var(--bgColor);
   padding: 0 5px;
 }

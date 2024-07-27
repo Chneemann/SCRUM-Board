@@ -5,11 +5,14 @@ import { TaskColorsService } from '../../../services/task-colors.service';
 import { Subtask, Task } from '../../../interfaces/task.interface';
 import { DatabaseService } from '../../../services/database.service';
 import { AuthService } from '../../../services/auth.service';
+import { FormFieldComponent } from '../../../shared/component/form-field/form-field.component';
+import { FormBtnComponent } from '../../../shared/component/form-btn/form-btn.component';
+import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-add-task',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormFieldComponent, FormBtnComponent, FormsModule, CommonModule],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
 })
@@ -24,7 +27,7 @@ export class AddTaskComponent implements OnInit {
   @Output() taskCreated = new EventEmitter<any>();
   @Output() taskDeleted = new EventEmitter<any>();
 
-  startAssignedValue: string | null = 'null';
+  startAssignedValue: string | null = null;
   subtaskInputValue: string = '';
   clonedTaskDataAssigned: number[] = [];
   tempTaskDataSubtasks: Subtask[] = [];
@@ -246,16 +249,17 @@ export class AddTaskComponent implements OnInit {
   }
 
   addSubtask(titleValue: string) {
-    const bodySubtask = {
-      id: this.tempTaskDataSubtasks.length + 1,
-      title: titleValue,
-      task_id: 0,
-      author: this.authService.currentUserId,
-      status: false,
-    };
-    this.tempTaskDataSubtasks.push(bodySubtask);
-    console.log(this.tempTaskDataSubtasks);
-    this.subtaskInputValue = '';
+    if (titleValue.length > 0) {
+      const bodySubtask = {
+        id: this.tempTaskDataSubtasks.length + 1,
+        title: titleValue,
+        task_id: 0,
+        author: this.authService.currentUserId,
+        status: false,
+      };
+      this.tempTaskDataSubtasks.push(bodySubtask);
+      this.subtaskInputValue = '';
+    }
   }
 
   changeCheckboxSubtask(subtaskId: number, event: Event) {

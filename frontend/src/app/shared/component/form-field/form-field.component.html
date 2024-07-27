@@ -10,7 +10,26 @@
     (blur)="onTouched()"
     (input)="onInput($event)"
     [disabled]="disabled"
+    [ngStyle]="{
+      '--bgColor': colorBg,
+      '--borderColor': colorBorder
+    }"
   />
+  } @if (field === 'textarea') {
+  <textarea
+    [id]="id"
+    placeholder=""
+    class="input-field"
+    autocomplete="new-password"
+    [value]="value"
+    (blur)="onTouched()"
+    (input)="onInput($event)"
+    rows="3"
+    [ngStyle]="{
+      '--bgColor': colorBg,
+      '--borderColor': colorBorder
+    }"
+  ></textarea>
   } @if (field === 'switchBoard') {
   <select
     [id]="id"
@@ -20,7 +39,6 @@
     [value]=""
     (blur)="onTouched()"
     (input)="onInput($event)"
-    [disabled]="disabled"
   >
     @for (board of allBoards; track board) {
     <!-- Selected current board -->
@@ -51,5 +69,7 @@
     } }
   </select>
   }
-  <div class="input-label">{{ text }}</div>
+  <div class="input-label" [ngClass]="{ textarea: field === 'textarea' }">
+    {{ text }}
+  </div>
 </div>

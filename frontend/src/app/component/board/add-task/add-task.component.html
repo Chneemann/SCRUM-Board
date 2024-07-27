@@ -20,41 +20,44 @@
         onsubmit="return false"
         (keydown)="preventEnterKey($event)"
       >
-        <input
-          type="text"
-          id="title"
-          name="title"
-          class="form-field font-weight600 margin-bottom-18px"
-          #title="ngModel"
-          placeholder="Task name..."
+        <app-form-field
           [(ngModel)]="taskData.title"
-          autocomplete="off"
+          field="input"
+          name="title"
+          text="Title:"
+          id="title"
+          type="text"
+          #title="ngModel"
+          [colorBg]="findColor(taskData.color).color"
+          [colorBorder]="findColor(taskData.color).borderColor"
           required
-        />
-        <textarea
-          id="description"
-          name="description"
-          class="form-field none-outline margin-bottom-18px"
-          #description="ngModel"
-          minlength="10"
-          rows="3"
-          placeholder="Description..."
+        ></app-form-field>
+        <app-form-field
           [(ngModel)]="taskData.description"
-          autocomplete="off"
+          field="textarea"
+          name="description"
+          text="Description:"
+          id="description"
+          type="text"
+          #description="ngModel"
+          [colorBg]="findColor(taskData.color).color"
+          [colorBorder]="findColor(taskData.color).borderColor"
+          minlength="10"
           required
-        ></textarea>
+        ></app-form-field>
         <div class="subtask">
-          <input
-            type="text"
-            id="subtask"
-            name="subtask"
-            class="form-field"
-            #subtask="ngModel"
-            placeholder="Enter a subtask..."
+          <app-form-field
             [(ngModel)]="subtaskInputValue"
-            autocomplete="off"
+            field="input"
+            name="subtaskInputValue"
+            text="Enter a subtask:"
+            id="subtask"
+            type="text"
+            #subtask="ngModel"
+            [colorBg]="findColor(taskData.color).color"
+            [colorBorder]="findColor(taskData.color).borderColor"
             (keydown.enter)="addSubtask(subtaskInputValue)"
-          />
+          ></app-form-field>
           <div class="subtask-details">
             <!-- Server subtask -->
             @for (subtask of allSubtasks; track subtask) {
