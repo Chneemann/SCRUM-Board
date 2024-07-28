@@ -30,7 +30,8 @@
       '--borderColor': colorBorder
     }"
   ></textarea>
-  } @if (field === 'switchBoard') {
+  <!-- Selected fields -->
+  } @if (field === 'switchBoard' || field === 'addMember') {
   <select
     [id]="id"
     placeholder=""
@@ -40,25 +41,13 @@
     (blur)="onTouched()"
     (input)="onInput($event)"
   >
-    @for (board of allBoards; track board) {
+    @if (field === 'switchBoard') { @for (board of allBoards; track board) {
     <!-- Selected current board -->
     @if (board.id == dbService.getCurrentBoard()) {
     <option value="{{ board.id }}" selected>{{ board.title }}</option>
     } @else {
     <option value="{{ board.id }}">{{ board.title }}</option>
-    } }
-  </select>
-  } @if (field === 'addMember') {
-  <select
-    [id]="id"
-    placeholder=""
-    class="input-field"
-    autocomplete="new-password"
-    [value]=""
-    (blur)="onTouched()"
-    (input)="onInput($event)"
-    [disabled]="disabled"
-  >
+    } } } @if (field === 'addMember') {
     <option value="0" selected>add member</option>
     @for (user of allUsers; track user) {
     <!-- User is not a board member -->
@@ -66,7 +55,7 @@
     <option value="{{ user.id }}">
       {{ user.first_name }} {{ user.last_name }}
     </option>
-    } }
+    } } }
   </select>
   }
   <div class="input-label" [ngClass]="{ textarea: field === 'textarea' }">
