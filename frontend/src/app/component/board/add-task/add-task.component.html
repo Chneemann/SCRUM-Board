@@ -101,37 +101,33 @@
         </div>
         <div class="color">
           <div class="color-circle"></div>
-          <select
-            id="color"
+          <app-form-field
+            [(ngModel)]="taskData.color"
+            field="addTaskColor"
             name="color"
+            text="Switch Color:"
+            id="color"
+            type="text"
             class="color-form-field"
             #color="ngModel"
-            [(ngModel)]="taskData.color"
-          >
-            <option value="yellow" selected>Yellow</option>
-            <option value="green">Green</option>
-            <option value="blue">Blue</option>
-            <option value="red">Red</option>
-            <option value="orange">Orange</option>
-            <option value="purple">Purple</option>
-            <option value="magenta">Magenta</option>
-            <option value="cyan">Cyan</option>
-          </select>
+            [colorBg]="findColor(taskData.color).color"
+            [colorBorder]="findColor(taskData.color).borderColor"
+          ></app-form-field>
         </div>
         <div class="date-priority-assigned">
           <div class="date-priority">
             <div class="priority">
-              <select
-                id="priority"
-                name="priority"
-                class="form-field margin-bottom-18px"
-                #color="ngModel"
+              <app-form-field
                 [(ngModel)]="taskData.priority"
-              >
-                <option value="low">Low</option>
-                <option value="medium" selected>Medium</option>
-                <option value="high">High</option>
-              </select>
+                field="addTaskPriority"
+                name="priority"
+                text="Priority:"
+                id="priority"
+                type="text"
+                #priority="ngModel"
+                [colorBg]="findColor(taskData.color).color"
+                [colorBorder]="findColor(taskData.color).borderColor"
+              ></app-form-field>
             </div>
             <div class="date">
               <input
@@ -146,24 +142,20 @@
             </div>
           </div>
           <div class="assigned">
-            <select
-              id="assigned"
+            <app-form-field
+              [(ngModel)]="startAssignedValue"
+              field="addTaskAssigned"
               name="assigned"
-              class="form-field"
+              text="Assign someone:"
+              id="assigned"
+              type="text"
               #assigned="ngModel"
               (change)="addAssigned($event)"
-              [(ngModel)]="startAssignedValue"
-            >
-              <option value="null">assign someone</option>
-              @for (assigned of getAllBoardMembers(); track assigned) {
-              <!-- No display if the member has already been assigned -->
-              @if (!checkAssigned(assigned)) {
-              <option value="{{ assigned }}">
-                {{ displayMemberData(assigned, "first_name") }}
-                {{ displayMemberData(assigned, "last_name") }}
-              </option>
-              } }
-            </select>
+              [allUsers]="allUsers"
+              [getAllBoardMembers]="getAllBoardMembers()"
+              [colorBg]="findColor(taskData.color).color"
+              [colorBorder]="findColor(taskData.color).borderColor"
+            ></app-form-field>
             <div class="assigned-details">
               @for (user of allUsers; track user) {
               <!-- -->

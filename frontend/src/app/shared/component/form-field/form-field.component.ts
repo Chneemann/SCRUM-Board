@@ -33,6 +33,7 @@ export class FormFieldComponent implements ControlValueAccessor {
   @Input() allBoards: any[] = [];
   @Input() allUsers: any[] = [];
   @Input() currentBoardMembers: any[] = [];
+  @Input() getAllBoardMembers: any[] = [];
 
   constructor(public dbService: DatabaseService) {}
 
@@ -63,5 +64,12 @@ export class FormFieldComponent implements ControlValueAccessor {
 
   isNotBoardMember(userId: number): boolean {
     return !this.currentBoardMembers.includes(userId);
+  }
+
+  displayMemberData(memberId: string, query: string) {
+    let index = this.allUsers.findIndex((member) => member.id === memberId);
+    if (index != -1) {
+      return this.allUsers[index][query];
+    }
   }
 }

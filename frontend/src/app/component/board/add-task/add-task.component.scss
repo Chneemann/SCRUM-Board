@@ -153,18 +153,7 @@ form {
 }
 
 .color-form-field {
-  border: none;
-  border-bottom: 2px solid $medium-gray;
-  padding: 8px 0;
-  font-size: 18px;
-  font-weight: 400;
-  width: 65%;
-  background-color: var(--taskColor);
-  outline: none;
-  margin-bottom: 6px;
-  &:focus {
-    border-bottom-color: var(--taskBorderColor);
-  }
+  width: 70%;
 }
 
 // Buttons

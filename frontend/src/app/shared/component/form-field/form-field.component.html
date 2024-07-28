@@ -31,7 +31,9 @@
     }"
   ></textarea>
   <!-- Selected fields -->
-  } @if (field === 'switchBoard' || field === 'addMember') {
+  } @if (field === 'switchBoard' || field === 'addMember' || field ===
+  'addTaskPriority' || field === 'addTaskAssigned' || field === 'addTaskColor')
+  {
   <select
     [id]="id"
     placeholder=""
@@ -40,6 +42,10 @@
     [value]=""
     (blur)="onTouched()"
     (input)="onInput($event)"
+    [ngStyle]="{
+      '--bgColor': colorBg,
+      '--borderColor': colorBorder
+    }"
   >
     @if (field === 'switchBoard') { @for (board of allBoards; track board) {
     <!-- Selected current board -->
@@ -55,7 +61,28 @@
     <option value="{{ user.id }}">
       {{ user.first_name }} {{ user.last_name }}
     </option>
-    } } }
+    } } } @if (field === 'addTaskPriority') {
+    <option value="low" [selected]="value === 'low'">Low</option>
+    <option value="medium" [selected]="value === 'medium'">Medium</option>
+    <option value="high" [selected]="value === 'high'">High</option>
+    } @if (field === 'addTaskAssigned') {
+    <option value="null">assign someone</option>
+    @for (assigned of getAllBoardMembers; track assigned) {
+    <!-- No display if the member has already been assigned -->
+    <option value="{{ assigned }}">
+      {{ displayMemberData(assigned, "first_name") }}
+      {{ displayMemberData(assigned, "last_name") }}
+    </option>
+    } } @if (field === 'addTaskColor') {
+    <option value="yellow" [selected]="value === 'yellow'">Yellow</option>
+    <option value="green" [selected]="value === 'green'">Green</option>
+    <option value="blue" [selected]="value === 'blue'">Blue</option>
+    <option value="red" [selected]="value === 'red'">Red</option>
+    <option value="orange" [selected]="value === 'orange'">Orange</option>
+    <option value="purple" [selected]="value === 'purple'">Purple</option>
+    <option value="magenta" [selected]="value === 'magenta'">Magenta</option>
+    <option value="cyan" [selected]="value === 'cyan'">Cyan</option>
+    }
   </select>
   }
   <div class="input-label" [ngClass]="{ textarea: field === 'textarea' }">
