@@ -56,6 +56,13 @@ export class EditBoardComponent {
     return;
   }
 
+  hasUserMoreThanOneBoard() {
+    if (this.allBoards.length <= 1) {
+      return false;
+    }
+    return true;
+  }
+
   boardIndex() {
     return this.allBoards.findIndex(
       (board) => board.id == this.dbService.getCurrentBoard()

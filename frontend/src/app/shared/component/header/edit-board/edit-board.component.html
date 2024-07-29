@@ -39,12 +39,14 @@
               }
             </div>
             <div class="buttons">
+              @if (hasUserMoreThanOneBoard()) {
               <app-form-btn
                 [class]="'btn-submit'"
                 [type]="'button'"
                 (click)="deleteBoard()"
                 [value]="'Delete'"
               ></app-form-btn>
+              }
               <app-form-btn
                 [class]="'btn-submit'"
                 [type]="'submit'"
