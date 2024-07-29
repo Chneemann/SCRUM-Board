@@ -6,112 +6,116 @@
   (openUserOverview)="toggleUserOverview($event)"
 ></app-header>
 <section>
-  <div class="status">
-    <div class="header">
-      <p>To-do</p>
-      <div class="img">
-        <img
-          src="./../../../assets/img/add.svg"
-          alt="+"
-          (click)="addTask('todo')"
-        />
+  <div class="upper">
+    <div class="status">
+      <div class="header">
+        <p>To-do</p>
+        <div class="img">
+          <img
+            src="./../../../assets/img/add.svg"
+            alt="+"
+            (click)="addTask('todo')"
+          />
+        </div>
+      </div>
+      <div
+        class="content"
+        (dragover)="dragDropService.allowDrop($event, 'todo')"
+        (drop)="dragDropService.drop($event, 'todo')"
+      >
+        <app-view-task
+          [content]="'todo'"
+          [allTasks]="allTasks"
+          [allSubtasks]="allSubtasks"
+          [allUsers]="allUsers"
+          [allBoards]="allBoards"
+          (openTaskOverview)="toggleTaskOverview($event)"
+          (startDraggingStatus)="startDraggingStatus = $event"
+        ></app-view-task>
       </div>
     </div>
-    <div
-      class="content"
-      (dragover)="dragDropService.allowDrop($event, 'todo')"
-      (drop)="dragDropService.drop($event, 'todo')"
-    >
-      <app-view-task
-        [content]="'todo'"
-        [allTasks]="allTasks"
-        [allSubtasks]="allSubtasks"
-        [allUsers]="allUsers"
-        [allBoards]="allBoards"
-        (openTaskOverview)="toggleTaskOverview($event)"
-        (startDraggingStatus)="startDraggingStatus = $event"
-      ></app-view-task>
+    <div class="status">
+      <div class="header">
+        <p>Do today</p>
+        <div class="img">
+          <img
+            src="./../../../assets/img/add.svg"
+            alt="+"
+            (click)="addTask('dotoday')"
+          />
+        </div>
+      </div>
+      <div
+        class="content"
+        (dragover)="dragDropService.allowDrop($event, 'dotoday')"
+        (drop)="dragDropService.drop($event, 'dotoday')"
+      >
+        <app-view-task
+          [content]="'dotoday'"
+          [allTasks]="allTasks"
+          [allSubtasks]="allSubtasks"
+          [allUsers]="allUsers"
+          [allBoards]="allBoards"
+          (openTaskOverview)="toggleTaskOverview($event)"
+          (startDraggingStatus)="startDraggingStatus = $event"
+        ></app-view-task>
+      </div>
     </div>
   </div>
-  <div class="status">
-    <div class="header">
-      <p>Do today</p>
-      <div class="img">
-        <img
-          src="./../../../assets/img/add.svg"
-          alt="+"
-          (click)="addTask('dotoday')"
-        />
+  <div class="lower">
+    <div class="status">
+      <div class="header">
+        <p>In progress</p>
+        <div class="img">
+          <img
+            src="./../../../assets/img/add.svg"
+            alt="+"
+            (click)="addTask('inprogress')"
+          />
+        </div>
+      </div>
+      <div
+        class="content"
+        (dragover)="dragDropService.allowDrop($event, 'inprogress')"
+        (drop)="dragDropService.drop($event, 'inprogress')"
+      >
+        <app-view-task
+          [content]="'inprogress'"
+          [allTasks]="allTasks"
+          [allSubtasks]="allSubtasks"
+          [allUsers]="allUsers"
+          [allBoards]="allBoards"
+          (openTaskOverview)="toggleTaskOverview($event)"
+          (startDraggingStatus)="startDraggingStatus = $event"
+        ></app-view-task>
       </div>
     </div>
-    <div
-      class="content"
-      (dragover)="dragDropService.allowDrop($event, 'dotoday')"
-      (drop)="dragDropService.drop($event, 'dotoday')"
-    >
-      <app-view-task
-        [content]="'dotoday'"
-        [allTasks]="allTasks"
-        [allSubtasks]="allSubtasks"
-        [allUsers]="allUsers"
-        [allBoards]="allBoards"
-        (openTaskOverview)="toggleTaskOverview($event)"
-        (startDraggingStatus)="startDraggingStatus = $event"
-      ></app-view-task>
-    </div>
-  </div>
-  <div class="status">
-    <div class="header">
-      <p>In progress</p>
-      <div class="img">
-        <img
-          src="./../../../assets/img/add.svg"
-          alt="+"
-          (click)="addTask('inprogress')"
-        />
+    <div class="status">
+      <div class="header">
+        <p>Done</p>
+        <div class="img">
+          <img
+            src="./../../../assets/img/add.svg"
+            alt="+"
+            (click)="addTask('done')"
+          />
+        </div>
       </div>
-    </div>
-    <div
-      class="content"
-      (dragover)="dragDropService.allowDrop($event, 'inprogress')"
-      (drop)="dragDropService.drop($event, 'inprogress')"
-    >
-      <app-view-task
-        [content]="'inprogress'"
-        [allTasks]="allTasks"
-        [allSubtasks]="allSubtasks"
-        [allUsers]="allUsers"
-        [allBoards]="allBoards"
-        (openTaskOverview)="toggleTaskOverview($event)"
-        (startDraggingStatus)="startDraggingStatus = $event"
-      ></app-view-task>
-    </div>
-  </div>
-  <div class="status">
-    <div class="header">
-      <p>Done</p>
-      <div class="img">
-        <img
-          src="./../../../assets/img/add.svg"
-          alt="+"
-          (click)="addTask('done')"
-        />
+      <div
+        class="content"
+        (dragover)="dragDropService.allowDrop($event, 'done')"
+        (drop)="dragDropService.drop($event, 'done')"
+      >
+        <app-view-task
+          [content]="'done'"
+          [allTasks]="allTasks"
+          [allSubtasks]="allSubtasks"
+          [allUsers]="allUsers"
+          [allBoards]="allBoards"
+          (openTaskOverview)="toggleTaskOverview($event)"
+          (startDraggingStatus)="startDraggingStatus = $event"
+        ></app-view-task>
       </div>
-    </div>
-    <div
-      class="content"
-      (dragover)="dragDropService.allowDrop($event, 'done')"
-      (drop)="dragDropService.drop($event, 'done')"
-    >
-      <app-view-task
-        [content]="'done'"
-        [allTasks]="allTasks"
-        [allSubtasks]="allSubtasks"
-        [allUsers]="allUsers"
-        [allBoards]="allBoards"
-        (openTaskOverview)="toggleTaskOverview($event)"
-        (startDraggingStatus)="startDraggingStatus = $event"
-      ></app-view-task>
     </div>
   </div>
 </section>
