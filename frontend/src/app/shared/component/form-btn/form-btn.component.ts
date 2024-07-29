@@ -13,6 +13,7 @@ export class FormBtnComponent {
   @Input() type: string = '';
   @Input() value: string = '';
   @Input() img: string = '';
+  @Input() onClick: string = '';
   @Input() disabled: boolean = false;
   @Input() imgFilter: string =
     'brightness(0) saturate(100%) invert(57%) sepia(44%) saturate(848%) hue-rotate(155deg) brightness(95%) contrast(86%)';

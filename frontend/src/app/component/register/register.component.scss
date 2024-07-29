@@ -35,15 +35,6 @@ section {
   margin-bottom: 24px;
 }
 
-.buttons {
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-}
-
 .input-fields {
   display: flex;
   flex-direction: column;
@@ -142,4 +133,19 @@ section {
       font-weight: 600;
     }
   }
+}
+
+// Buttons
+
+app-form-btn {
+  margin: 24px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
 }

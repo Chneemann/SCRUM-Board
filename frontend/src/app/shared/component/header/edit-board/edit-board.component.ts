@@ -103,30 +103,44 @@ export class EditBoardComponent {
 
   leaveCurrentBoard() {
     const confirmed = confirm('Do you really want to leave the current board?');
-    if (confirmed) {
-      let indexBoard = this.allBoards.findIndex(
-        (board) => board.id === +this.dbService.getCurrentBoard()
+    // if (confirmed) {
+    //   const body = {
+    //     assigned: this.newAssignedArray(),
+    //   };
+    //   this.dbService
+    //     .updateDB(body, this.dbService.getCurrentBoard(), 'boards')
+    //     .then((updatedBoard) => {
+    //       this.replaceBoard(updatedBoard);
+    //       if (this.dbService.dataUploaded) {
+    //         this.closeEditBoard.emit(false);
+    //         window.location.reload();
+    //       }
+    //     });
+    // }
+  }
+
+  newAssignedArray() {
+    let indexBoard = this.allBoards.findIndex(
+      (board) => board.id === +this.dbService.getCurrentBoard()
+    );
+    if (indexBoard !== -1) {
+      let board = this.allBoards[indexBoard];
+      let assigned = [...board.assigned];
+      let indexAssigned = assigned.findIndex(
+        (assignedUserId) => assignedUserId === +this.authService.currentUserId
       );
-      if (indexBoard !== -1) {
-        let assigned = this.allBoards[indexBoard].assigned;
-        let indexAssigned = assigned.indexOf(
-          (assigned: number) => assigned === this.authService.currentUserId
-        );
-        let newAssignedArray = assigned.splice(indexAssigned, 1);
-        const body = {
-          assigned: newAssignedArray,
-        };
-        this.dbService
-          .updateDB(body, this.dbService.getCurrentBoard(), 'boards')
-          .then((updatedBoard) => {
-            this.replaceBoard(updatedBoard);
-            if (this.dbService.dataUploaded) {
-              this.closeEditBoard.emit(false);
-              window.location.reload();
-            }
-          });
+      if (indexAssigned !== -1) {
+        assigned.splice(indexAssigned, 1);
       }
+      let indexAuthor = assigned.findIndex(
+        (assignedUserId) => assignedUserId === board.author
+      );
+      if (indexAuthor !== -1) {
+        assigned.splice(indexAuthor, 1);
+      }
+      return assigned;
     }
+    return;
   }
 
   deleteBoard() {
