@@ -172,29 +172,81 @@ export class BoardComponent implements OnInit {
       if (this.dbService.dataUploaded) {
         this.allBoards.push(updatedBoard);
         this.dbService.setCurrentBoard(updatedBoard.id);
-        this.addNewTask(updatedBoard.id);
+        this.createNewTasks(updatedBoard.id);
       }
     });
   }
 
-  addNewTask(boardId: number) {
-    const body = {
-      title: 'To edit a task simply click on it',
-      board_id: boardId,
-      description:
-        'Descriptions can be useful to explain a task in more detail.',
-      status: 'todo',
-      priority: 'medium',
-      author: this.authService.currentUserId,
-      created_at: this.sharedService.todaysDate(),
-      due_date: this.sharedService.todaysDate(),
-      color: 'red',
-      assigned: [],
-    };
-    this.dbService.createDB(body, 'tasks').then((updatedTask) => {
-      if (this.dbService.dataUploaded) {
-        this.allTasks.push(updatedTask);
-      }
+  createNewTasks(boardId: number) {
+    const currentUserId = this.authService.currentUserId;
+    const currentDate = this.sharedService.todaysDate();
+    // Define task details in an array
+    const tasks = [
+      {
+        title: 'This is a task. Drag it to the "In progress"',
+        description: 'Feel free to update this task as needed.',
+        priority: 'high',
+        color: 'green',
+        createSubtasks: true,
+      },
+      {
+        title: 'To edit a task simply click on it',
+        description:
+          'Descriptions can be useful to explain a task in more detail.',
+        priority: 'medium',
+        color: 'red',
+        createSubtasks: false,
+      },
+    ];
+    // Define subtasks for the first task
+    const subtasks = [
+      'This is a subtask',
+      'Finish a subtask by clicking the checkbox next to it',
+      'This is another subtask',
+    ];
+    // Create tasks
+    tasks.forEach((taskDetails, index) => {
+      const task = {
+        ...taskDetails,
+        board_id: boardId,
+        status: 'todo',
+        author: currentUserId,
+        created_at: currentDate,
+        due_date: currentDate,
+        assigned: [],
+      };
+      // Create the task in the database
+      this.dbService.createDB(task, 'tasks').then((updatedTask) => {
+        if (this.dbService.dataUploaded) {
+          this.allTasks.push(updatedTask);
+          // Create subtasks for the first task if needed
+          if (taskDetails.createSubtasks) {
+            this.createSubtasksInOrder(updatedTask.id, currentUserId, subtasks);
+          }
+        }
+      });
     });
+  }
+
+  createSubtasksInOrder(taskId: number, author: number, subtasks: string[]) {
+    const createSubtask = (index: number) => {
+      if (index >= subtasks.length) return;
+      const subtaskTitle = subtasks[index];
+      const bodySubtask = {
+        title: subtaskTitle,
+        task_id: taskId,
+        author: author,
+        status: false,
+      };
+      this.dbService
+        .createDB(bodySubtask, 'subtasks')
+        .then((updatedSubtask) => {
+          if (this.dbService.dataUploaded) {
+            this.allSubtasks.push(updatedSubtask);
+            createSubtask(index + 1);
+          }
+        });
+    };
+    createSubtask(0);
   }
 }

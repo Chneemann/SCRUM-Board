@@ -131,6 +131,8 @@
 } @if(openCurrentUserOverview) {
 <app-edit-user
   [allUsers]="allUsers"
+  [allBoards]="allBoards"
+  [allTasks]="allTasks"
   (closeUserOverview)="toggleUserOverview($event)"
   (userUpdated)="handleUserUpdate($event)"
 ></app-edit-user>

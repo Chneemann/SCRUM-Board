@@ -15,6 +15,8 @@ import { FormFieldComponent } from '../../form-field/form-field.component';
 })
 export class EditUserComponent implements OnInit {
   @Input() allUsers: any[] = [];
+  @Input() allBoards: any[] = [];
+  @Input() allTasks: any[] = [];
   @Output() closeUserOverview = new EventEmitter<string>();
   @Output() userUpdated = new EventEmitter<any>();
 
@@ -118,6 +120,20 @@ export class EditUserComponent implements OnInit {
     if (confirmed) {
       this.authService.logout();
       this.dbService.deleteDB(this.authService.currentUserId, 'users');
+      this.clearAssignedFromTasks;
     }
+  }
+
+  clearAssignedFromTasks() {
+    this.allTasks.forEach((task) => {
+      let indexAssigned = task.assigned.findIndex(
+        (assignedUserId: number) =>
+          assignedUserId === +this.authService.currentUserId
+      );
+      if (indexAssigned !== -1) {
+        task.assigned.splice(indexAssigned, 1);
+        this.dbService.updateDB({ assigned: task.assigned }, task.id, 'tasks');
+      }
+    });
   }
 }
