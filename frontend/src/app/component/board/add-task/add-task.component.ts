@@ -8,6 +8,7 @@ import { AuthService } from '../../../services/auth.service';
 import { FormFieldComponent } from '../../../shared/component/form-field/form-field.component';
 import { FormBtnComponent } from '../../../shared/component/form-btn/form-btn.component';
 import { empty } from 'rxjs';
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'app-add-task',
@@ -35,6 +36,7 @@ export class AddTaskComponent implements OnInit {
   isCurrentTaskIdNumber: boolean = false;
 
   constructor(
+    public sharedService: SharedService,
     private taskColorService: TaskColorsService,
     public dbService: DatabaseService,
     public authService: AuthService
@@ -55,7 +57,7 @@ export class AddTaskComponent implements OnInit {
     priority: 'medium',
     author: this.authService.currentUserId,
     created_at: '',
-    due_date: this.todaysDate(),
+    due_date: this.sharedService.todaysDate(),
     color: 'yellow',
     assigned: [],
   };
@@ -160,15 +162,6 @@ export class AddTaskComponent implements OnInit {
     if (event.key === 'Enter') {
       event.preventDefault();
     }
-  }
-
-  todaysDate() {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
   }
 
   // Post, Put & Delete on Server

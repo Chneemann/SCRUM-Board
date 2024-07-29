@@ -137,7 +137,7 @@
                 class="form-field margin-bottom-18px"
                 #date="ngModel"
                 [(ngModel)]="taskData.due_date"
-                [attr.min]="todaysDate()"
+                [attr.min]="sharedService.todaysDate()"
               />
             </div>
           </div>

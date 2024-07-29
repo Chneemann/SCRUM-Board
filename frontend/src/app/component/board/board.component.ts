@@ -6,6 +6,7 @@ import { DragDropService } from '../../services/drag-drop.service';
 import { HeaderComponent } from '../../shared/component/header/header.component';
 import { AuthService } from '../../services/auth.service';
 import { EditUserComponent } from '../../shared/component/header/edit-user/edit-user.component';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-board',
@@ -30,6 +31,7 @@ export class BoardComponent implements OnInit {
   currentBoard: number = 0;
 
   constructor(
+    private sharedService: SharedService,
     public dbService: DatabaseService,
     public dragDropService: DragDropService,
     public authService: AuthService
@@ -159,7 +161,7 @@ export class BoardComponent implements OnInit {
     this.openCurrentUserOverview = value;
   }
 
-  // Board
+  // New board and Task
 
   addNewBoard() {
     const body = {
@@ -170,6 +172,28 @@ export class BoardComponent implements OnInit {
       if (this.dbService.dataUploaded) {
         this.allBoards.push(updatedBoard);
         this.dbService.setCurrentBoard(updatedBoard.id);
+        this.addNewTask(updatedBoard.id);
+      }
+    });
+  }
+
+  addNewTask(boardId: number) {
+    const body = {
+      title: 'To edit a task simply click on it',
+      board_id: boardId,
+      description:
+        'Descriptions can be useful to explain a task in more detail.',
+      status: 'todo',
+      priority: 'medium',
+      author: this.authService.currentUserId,
+      created_at: this.sharedService.todaysDate(),
+      due_date: this.sharedService.todaysDate(),
+      color: 'red',
+      assigned: [],
+    };
+    this.dbService.createDB(body, 'tasks').then((updatedTask) => {
+      if (this.dbService.dataUploaded) {
+        this.allTasks.push(updatedTask);
       }
     });
   }
