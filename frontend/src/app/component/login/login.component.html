@@ -27,6 +27,8 @@
         <div class="error-msg">
           @if (!mail.valid && mail.touched) {
           <p>Please enter your email</p>
+          } @if (authService.errorMsg.detail) {
+          <p>{{ authService.errorMsg.detail }}</p>
           }
         </div>
         <input

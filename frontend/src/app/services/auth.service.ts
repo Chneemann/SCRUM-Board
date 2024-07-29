@@ -69,6 +69,7 @@ export class AuthService {
           this.router.navigate(['/board/']);
         },
         (error) => {
+          this.errorMsg = error.error;
           reject(error);
         }
       );
