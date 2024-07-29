@@ -36,7 +36,7 @@ export class HeaderComponent {
 
   boardName: string = '';
   assignedUsers: any[] = [];
-  openNavbar: boolean = true;
+  openNavbar: boolean = false;
   openEditBoard: boolean = false;
   openAddBoard: boolean = false;
   openSwitchBoard: boolean = false;
