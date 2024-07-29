@@ -19,6 +19,7 @@ import { AuthService } from '../../../../services/auth.service';
   styleUrl: './edit-board.component.scss',
 })
 export class EditBoardComponent {
+  @Input() allTasks: any[] = [];
   @Input() allBoards: any[] = [];
   @Input() boardOpen: string = '';
   @Output() closeEditBoard = new EventEmitter<boolean>();
@@ -103,20 +104,21 @@ export class EditBoardComponent {
 
   leaveCurrentBoard() {
     const confirmed = confirm('Do you really want to leave the current board?');
-    // if (confirmed) {
-    //   const body = {
-    //     assigned: this.newAssignedArray(),
-    //   };
-    //   this.dbService
-    //     .updateDB(body, this.dbService.getCurrentBoard(), 'boards')
-    //     .then((updatedBoard) => {
-    //       this.replaceBoard(updatedBoard);
-    //       if (this.dbService.dataUploaded) {
-    //         this.closeEditBoard.emit(false);
-    //         window.location.reload();
-    //       }
-    //     });
-    // }
+    if (confirmed) {
+      const body = {
+        assigned: this.newAssignedArray(),
+      };
+      this.dbService
+        .updateDB(body, this.dbService.getCurrentBoard(), 'boards')
+        .then((updatedBoard) => {
+          this.replaceBoard(updatedBoard);
+          if (this.dbService.dataUploaded) {
+            this.clearAssignedFromTasks();
+            this.closeEditBoard.emit(false);
+            window.location.reload();
+          }
+        });
+    }
   }
 
   newAssignedArray() {
@@ -141,6 +143,19 @@ export class EditBoardComponent {
       return assigned;
     }
     return;
+  }
+
+  clearAssignedFromTasks() {
+    this.allTasks.forEach((task) => {
+      let indexAssigned = task.assigned.findIndex(
+        (assignedUserId: number) =>
+          assignedUserId === +this.authService.currentUserId
+      );
+      if (indexAssigned !== -1) {
+        task.assigned.splice(indexAssigned, 1);
+        this.dbService.updateDB({ assigned: task.assigned }, task.id, 'tasks');
+      }
+    });
   }
 
   deleteBoard() {

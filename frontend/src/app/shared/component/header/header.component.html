@@ -33,6 +33,7 @@
 
 @if (openEditBoard) {
 <app-edit-board
+  [allTasks]="allTasks"
   [allBoards]="allBoards"
   [boardOpen]="'openEditBoard'"
   (closeEditBoard)="toggleEditBoard($event)"
