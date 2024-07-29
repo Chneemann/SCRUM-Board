@@ -14,7 +14,7 @@
       [allBoards]="allBoards"
       [allUsers]="allUsers"
       [circles]="'members'"
-      [showAddMember]="true"
+      [showAddMember]="isUserBoardAuthor() ? true : false"
       (openAddMemberOverview)="toggleAddMember($event)"
     ></app-user-initials>
   </div>

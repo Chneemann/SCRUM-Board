@@ -82,6 +82,16 @@ export class HeaderComponent {
     return word.charAt(0).toUpperCase();
   }
 
+  isUserBoardAuthor() {
+    if (this.allBoards.length > 0) {
+      let index = this.allBoards.findIndex(
+        (board) => board.id === +this.dbService.getCurrentBoard()
+      );
+      return this.allBoards[index].author === this.authService.currentUserId;
+    }
+    return;
+  }
+
   logout() {
     this.authService.logout();
   }

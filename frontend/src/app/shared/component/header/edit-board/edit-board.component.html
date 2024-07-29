@@ -1,7 +1,9 @@
 <div class="overlay" (click)="boardOverviewClose()">
   <div class="overlay-content" (click)="stopPropagation($event)">
     <div class="content">
-      @if(boardOpen === "openEditBoard") {
+      @if(boardOpen === "openEditBoard") {
+      <!-- -->
+      @if (isUserBoardAuthor()) {
       <div class="header">
         <div class="headline">Edit Board Name</div>
         <div class="btn-close">
@@ -37,14 +39,12 @@
               }
             </div>
             <div class="buttons">
-              @if (isUserBoardAuthor() && allBoards.length > 1) {
               <app-form-btn
                 [class]="'btn-submit'"
                 [type]="'button'"
                 (click)="deleteBoard()"
                 [value]="'Delete'"
               ></app-form-btn>
-              }
               <app-form-btn
                 [class]="'btn-submit'"
                 [type]="'submit'"
@@ -55,6 +55,29 @@
           </div>
         </form>
       </div>
+      } @else {
+      <div class="header">
+        <div class="headline">Leave Board</div>
+        <div class="btn-close">
+          <img
+            id="edit-board-close-img"
+            src="./../../../../assets/img/close.svg"
+            alt=""
+            (click)="boardOverviewClose()"
+          />
+        </div>
+      </div>
+      <div class="edit-board-empty">
+        <div class="buttons">
+          <app-form-btn
+            [class]="'btn-submit'"
+            [type]="'button'"
+            (click)="leaveCurrentBoard()"
+            [value]="'Leave'"
+          ></app-form-btn>
+        </div>
+      </div>
+      }
       <div class="header">
         <div class="headline">Add New Board</div>
       </div>
