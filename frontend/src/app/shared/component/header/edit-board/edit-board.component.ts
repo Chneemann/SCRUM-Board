@@ -22,6 +22,7 @@ export class EditBoardComponent {
   @Input() allTasks: any[] = [];
   @Input() allBoards: any[] = [];
   @Input() boardOpen: string = '';
+  @Output() closeAddBoard = new EventEmitter<boolean>();
   @Output() closeEditBoard = new EventEmitter<boolean>();
   @Output() closeSwitchBoard = new EventEmitter<boolean>();
 
@@ -93,6 +94,7 @@ export class EditBoardComponent {
   }
 
   boardOverviewClose() {
+    this.closeAddBoard.emit(false);
     this.closeEditBoard.emit(false);
     this.closeSwitchBoard.emit(false);
   }

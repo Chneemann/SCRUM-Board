@@ -1,0 +1,90 @@
+@import "./../../../../../assets/style/colors.scss";
+
+nav {
+  position: fixed;
+  top: 48px;
+  left: 24px;
+  width: 180px;
+  height: fit-content;
+  border-radius: 6px;
+  border: 1px solid $gray;
+  background-color: $white;
+  padding: 24px;
+  z-index: 999;
+}
+
+.test {
+  background-color: aqua;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.headline {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  width: 80%;
+  padding-left: 20%;
+}
+
+// Nav
+
+ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+  li {
+    padding: 12px;
+    a {
+      display: flex;
+      justify-content: center;
+      color: $black;
+      text-decoration: none;
+      cursor: pointer;
+      &:hover {
+        color: $gray;
+      }
+    }
+  }
+}
+
+// Buttons
+
+.btn-close {
+  text-align: end;
+  width: 20%;
+  height: 48px;
+  img {
+    width: 36px;
+    height: auto;
+    margin: 6px;
+    cursor: pointer;
+    filter: brightness(0) saturate(100%) invert(63%) sepia(0%) saturate(1%)
+      hue-rotate(153deg) brightness(93%) contrast(85%);
+    &:hover {
+      filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(16%)
+        hue-rotate(338deg) brightness(93%) contrast(107%);
+    }
+  }
+}
+
+// Overlay
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 998;
+}

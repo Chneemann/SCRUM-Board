@@ -13,6 +13,7 @@ import { InitialsPipe } from '../../../pipes/initials.pipe';
 import { AddMemberComponent } from './add-member/add-member.component';
 import { SharedService } from '../../../services/shared.service';
 import { UserInitialsComponent } from '../user-initials/user-initials.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +22,7 @@ import { UserInitialsComponent } from '../user-initials/user-initials.component'
     EditBoardComponent,
     AddMemberComponent,
     UserInitialsComponent,
+    NavbarComponent,
     InitialsPipe,
   ],
   templateUrl: './header.component.html',
@@ -34,7 +36,9 @@ export class HeaderComponent {
 
   boardName: string = '';
   assignedUsers: any[] = [];
+  openNavbar: boolean = true;
   openEditBoard: boolean = false;
+  openAddBoard: boolean = false;
   openSwitchBoard: boolean = false;
   openAddMember: boolean = false;
 
@@ -53,8 +57,31 @@ export class HeaderComponent {
     }
   }
 
-  userOverviewOpen(value: number) {
-    this.openUserOverview.emit(value);
+  openLink(link: string) {
+    if (link === 'profile') {
+      this.userOverviewOpen();
+    }
+    if (link === 'addBoard') {
+      this.toggleAddBoard(true);
+    }
+    if (link === 'editBoard') {
+      this.toggleEditBoard(true);
+    }
+    if (link === 'switchBoard') {
+      this.toggleSwitchBoard(true);
+    }
+  }
+
+  userOverviewOpen() {
+    this.openUserOverview.emit(this.authService.currentUserId);
+  }
+
+  toggleNavbar(value: boolean) {
+    this.openNavbar = value;
+  }
+
+  toggleAddBoard(value: boolean) {
+    this.openAddBoard = value;
   }
 
   toggleEditBoard(value: boolean) {

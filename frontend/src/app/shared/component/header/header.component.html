@@ -4,7 +4,7 @@
       <img
         src="./../../../../assets/img/menu.svg"
         alt=""
-        (click)="toggleSwitchBoard(true)"
+        (click)="toggleNavbar(true)"
       />
     </div>
     <h1 (click)="toggleEditBoard(true)">
@@ -21,24 +21,33 @@
   <div class="right-corner">
     <div class="welcome">
       Welcome,
-      <span (click)="userOverviewOpen(authService.currentUserId)">{{
-        currentUsername()
-      }}</span>
+      <span (click)="userOverviewOpen()">{{ currentUsername() }}</span>
     </div>
     <div class="logout" (click)="logout()">
       <img src="./../../../../assets/img/logout.svg" alt="" />
     </div>
   </div>
 </section>
-
-@if (openEditBoard) {
+@if (openNavbar) {
+<app-navbar
+  (closeNavbar)="toggleNavbar($event)"
+  (openLink)="openLink($event)"
+></app-navbar>
+} @if (openEditBoard) {
 <app-edit-board
   [allTasks]="allTasks"
   [allBoards]="allBoards"
   [boardOpen]="'openEditBoard'"
   (closeEditBoard)="toggleEditBoard($event)"
 ></app-edit-board>
-}@if (openSwitchBoard) {
+} @if (openAddBoard) {
+<app-edit-board
+  [allTasks]="allTasks"
+  [allBoards]="allBoards"
+  [boardOpen]="'openAddBoard'"
+  (closeAddBoard)="toggleAddBoard($event)"
+></app-edit-board>
+} @if (openSwitchBoard) {
 <app-edit-board
   [allBoards]="allBoards"
   [boardOpen]="'openSwitchBoard'"

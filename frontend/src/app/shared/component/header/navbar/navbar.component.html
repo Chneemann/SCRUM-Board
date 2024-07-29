@@ -1,0 +1,20 @@
+<div class="overlay" (click)="toggleNavbar(false)"></div>
+<nav (click)="stopPropagation($event)">
+  <div class="header">
+    <div class="headline">Navbar</div>
+    <div class="btn-close">
+      <img
+        id="edit-board-close-img"
+        src="./../../../../assets/img/close.svg"
+        alt=""
+        (click)="toggleNavbar(false)"
+      />
+    </div>
+  </div>
+  <ul>
+    <li><a (click)="open('profile')">Profile</a></li>
+    <li><a (click)="open('addBoard')">Add Board</a></li>
+    <li><a (click)="open('deleteBoard')">Delete Board</a></li>
+    <li><a (click)="open('switchBoard')">Switch Board</a></li>
+  </ul>
+</nav>
