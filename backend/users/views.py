@@ -13,7 +13,7 @@ from rest_framework.response import Response
 class LoginView(APIView):
     serializer_class = LoginSerializer
 
-    def post(self, request, format=None):
+    def post(self, request):
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
@@ -36,7 +36,7 @@ class LoginView(APIView):
 class LogoutView(APIView):
     authentication_classes = [authentication.TokenAuthentication]
   
-    def get(self, request, format=None):
+    def get(self, request):
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
       
@@ -53,7 +53,7 @@ class RegisterView(APIView):
 class AuthView(ObtainAuthToken):
     authentication_classes = [authentication.TokenAuthentication]
   
-    def get(self, request, format=None):
+    def get(self, request):
         if request.user.is_authenticated:
             return Response(request.user.id, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
@@ -65,7 +65,7 @@ class UserListView(APIView):
         try:
             return get_user_model().objects.get(pk=pk)
         except get_user_model().DoesNotExist:
-            raise Http404
+            return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, pk=None):
         if pk:

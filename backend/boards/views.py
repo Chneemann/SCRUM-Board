@@ -15,7 +15,7 @@ class BoardItemView(APIView):
         try:
             return BoardItem.objects.get(pk=pk)
         except BoardItem.DoesNotExist:
-            raise Http404
+            return Response({"error": "Board not found."}, status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, pk=None):
         user = request.user 

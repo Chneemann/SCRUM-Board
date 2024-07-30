@@ -209,7 +209,7 @@ export class EditBoardComponent {
     this.dbService.createDB(body, 'boards').then((updatedBoard) => {
       this.replaceBoard(updatedBoard);
       if (this.dbService.dataUploaded) {
-        this.closeEditBoard.emit(false);
+        this.closeAddBoard.emit(false);
         this.allBoards.push(updatedBoard);
         this.dbService.setCurrentBoard(updatedBoard.id);
       }

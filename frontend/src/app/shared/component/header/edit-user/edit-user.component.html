@@ -125,7 +125,6 @@
             (click)="deleteAccount()"
             [value]="'Delete Account'"
           ></app-form-btn>
-          }
           <app-form-btn
             [class]="'btn-submit'"
             [type]="'submit'"
@@ -139,6 +138,11 @@
               !isInputNew()
             "
           ></app-form-btn>
+          } @else {
+          <div class="guest">
+            Data from the guest account cannot be changed.
+          </div>
+          }
         </div>
       </form>
       } }
