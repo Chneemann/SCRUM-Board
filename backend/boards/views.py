@@ -5,7 +5,6 @@ from rest_framework.response import Response
 from rest_framework import authentication
 from boards.models import BoardItem
 from boards.serializers import  BoardItemSerializer
-from django.contrib.auth import get_user_model, authenticate
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -18,8 +17,7 @@ class BoardItemView(APIView):
         except BoardItem.DoesNotExist:
             raise Http404
 
-
-    def get(self, request, pk=None, format=None):
+    def get(self, request, pk=None):
         user = request.user 
 
         if pk:
@@ -38,14 +36,14 @@ class BoardItemView(APIView):
 
         return Response(serializer.data)
       
-    def post(self, request, format=None):
+    def post(self, request):
         serializer = BoardItemSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
       
-    def put(self, request, pk, format=None):
+    def put(self, request, pk):
         snippet = self.get_object(pk)
         serializer = BoardItemSerializer(snippet, data=request.data)
         if serializer.is_valid():
@@ -53,7 +51,7 @@ class BoardItemView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
+    def delete(self, pk):
         snippet = self.get_object(pk)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -4,7 +4,6 @@ from rest_framework.response import Response
 from rest_framework import authentication
 from tasks.models import TaskItem, SubtaskItem
 from tasks.serializers import  TaskItemSerializer, SubtaskItemSerializer
-from django.contrib.auth import get_user_model, authenticate
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -17,7 +16,7 @@ class TaskItemView(APIView):
         except TaskItem.DoesNotExist:
             return Response({"error": "Todo item not found."}, status=status.HTTP_404_NOT_FOUND)
 
-    def get(self, request, pk=None, format=None):
+    def get(self, request, pk=None):
         board_id = request.query_params.get('board_id', None)
         
         if pk:
@@ -34,14 +33,14 @@ class TaskItemView(APIView):
             serializer = TaskItemSerializer(tasks, many=True)
         return Response(serializer.data)
     
-    def post(self, request, format=None):
+    def post(self, request):
         serializer = TaskItemSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
       
-    def put(self, request, pk, format=None):
+    def put(self, request, pk):
         snippet = self.get_object(pk)
         serializer = TaskItemSerializer(snippet, data=request.data)
         if serializer.is_valid():
@@ -49,7 +48,7 @@ class TaskItemView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
+    def delete(self, pk):
         snippet = self.get_object(pk)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -63,7 +62,7 @@ class SubtaskItemView(APIView):
         except SubtaskItem.DoesNotExist:
             raise Http404
 
-    def get(self, request, format=None):
+    def get(self, request):
         task_id = request.query_params.get('task_id', None)
 
         if task_id is not None:
@@ -74,14 +73,14 @@ class SubtaskItemView(APIView):
         serializer = SubtaskItemSerializer(subtasks, many=True)
         return Response(serializer.data)
     
-    def post(self, request, format=None):
+    def post(self, request):
         serializer = SubtaskItemSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request, pk, format=None):
+    def put(self, request, pk):
         snippet = self.get_object(pk)
         serializer = SubtaskItemSerializer(snippet, data=request.data)
         if serializer.is_valid():
@@ -89,7 +88,7 @@ class SubtaskItemView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
+    def delete(self, pk):
         snippet = self.get_object(pk)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
