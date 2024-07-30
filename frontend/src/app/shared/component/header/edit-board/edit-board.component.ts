@@ -58,10 +58,10 @@ export class EditBoardComponent {
   }
 
   hasUserMoreThanOneBoard() {
-    if (this.allBoards.length <= 1) {
-      return false;
-    }
-    return true;
+    const userBoards = this.allBoards.filter(
+      (board) => board.author === this.authService.currentUserId
+    );
+    return userBoards.length > 1;
   }
 
   boardIndex() {
