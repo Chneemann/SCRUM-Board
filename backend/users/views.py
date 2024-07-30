@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -12,7 +13,7 @@ from rest_framework.response import Response
 class LoginView(APIView):
     serializer_class = LoginSerializer
 
-    def post(self, request):
+    def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
@@ -35,7 +36,7 @@ class LoginView(APIView):
 class LogoutView(APIView):
     authentication_classes = [authentication.TokenAuthentication]
   
-    def get(self, request):
+    def get(self, request, format=None):
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
       
@@ -52,7 +53,7 @@ class RegisterView(APIView):
 class AuthView(ObtainAuthToken):
     authentication_classes = [authentication.TokenAuthentication]
   
-    def get(self, request):
+    def get(self, request, format=None):
         if request.user.is_authenticated:
             return Response(request.user.id, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
@@ -66,7 +67,7 @@ class UserListView(APIView):
         except get_user_model().DoesNotExist:
             raise Http404
 
-    def get(self, pk=None):
+    def get(self, request, pk=None):
         if pk:
             try:
               user = UserSerializer.objects.get(pk=pk)
@@ -78,15 +79,10 @@ class UserListView(APIView):
             serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
     
-    def put(self, request, pk):
+    def put(self, request, pk ):
         snippet = self.get_object(pk)
         serializer = UserSerializer(snippet, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, pk):
-        snippet = self.get_object(pk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
