@@ -9,7 +9,7 @@ section {
   padding: 0 12px 12px 12px;
   background-color: $light-gray;
   width: calc(100% - 24px);
-  height: calc(100vh - 84px);
+  height: calc(100vh - 82px);
 }
 
 .upper,
@@ -22,7 +22,7 @@ section {
   display: flex;
   flex-direction: column;
   width: 50%;
-  height: calc(100vh - 74px);
+  height: calc(100vh - 82px);
   .header {
     display: flex;
     justify-content: center;
