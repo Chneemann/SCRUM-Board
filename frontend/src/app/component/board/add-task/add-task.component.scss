@@ -2,7 +2,7 @@
 
 .content {
   position: relative;
-  width: 600px;
+  width: 560px;
   height: 650px;
   border-radius: 6px;
   border: 1px solid $gray;
@@ -227,4 +227,36 @@ form {
   width: 100vw;
   height: 100vh;
   z-index: 999;
+}
+
+// Media
+
+@media screen and (max-width: 600px) {
+  .content {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .color {
+    position: relative;
+    width: 100%;
+    margin: 0px;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    left: 0;
+  }
+
+  form {
+    text-align: center;
+    padding: 0 12px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .date-priority-assigned {
+    flex-direction: column;
+  }
 }
