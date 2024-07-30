@@ -1,5 +1,5 @@
 <section>
-  <div class="headline">
+  <div class="header">
     <div class="burger-menu">
       <img
         src="./../../../../assets/img/menu.svg"
@@ -7,16 +7,18 @@
         (click)="toggleNavbar(true)"
       />
     </div>
-    <h1 (click)="toggleEditBoard(true)">
-      {{ displayBoardData("title") }}
-    </h1>
-    <app-user-initials
-      [allBoards]="allBoards"
-      [allUsers]="allUsers"
-      [circles]="'members'"
-      [showAddMember]="isUserBoardAuthor() ? true : false"
-      (openAddMemberOverview)="toggleAddMember($event)"
-    ></app-user-initials>
+    <div class="headline">
+      <h1 (click)="toggleEditBoard(true)">
+        {{ displayBoardData("title") }}
+      </h1>
+      <app-user-initials
+        [allBoards]="allBoards"
+        [allUsers]="allUsers"
+        [circles]="'members'"
+        [showAddMember]="isUserBoardAuthor() ? true : false"
+        (openAddMemberOverview)="toggleAddMember($event)"
+      ></app-user-initials>
+    </div>
   </div>
   <div class="right-corner">
     <div class="welcome">

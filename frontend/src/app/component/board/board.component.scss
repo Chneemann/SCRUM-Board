@@ -71,7 +71,7 @@ section {
 
 @media screen and (max-width: 1024px) {
   section {
-    height: calc(100vh - 90px);
+    height: auto;
     flex-direction: column;
   }
 
@@ -85,6 +85,7 @@ section {
     overflow-x: hidden;
   }
 }
+// Media
 
 @media screen and (max-width: 600px) {
   .status {
@@ -94,5 +95,11 @@ section {
   .upper,
   .lower {
     flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  section {
+    top: 80px;
   }
 }
