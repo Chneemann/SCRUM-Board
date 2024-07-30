@@ -21,5 +21,6 @@ export class NavbarComponent {
 
   open(link: string) {
     this.openLink.emit(link);
+    this.toggleNavbar(false);
   }
 }
