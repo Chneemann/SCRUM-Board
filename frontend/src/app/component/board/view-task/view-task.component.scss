@@ -42,6 +42,7 @@ section {
   height: 34px;
   top: 0;
   right: 0;
+  z-index: 1;
   cursor: pointer;
   img {
     width: 24px;
@@ -57,11 +58,12 @@ section {
 
 .priority {
   position: absolute;
-  width: 24px;
-  height: 24px;
-  bottom: 1px;
+  width: 36px;
+  height: 36px;
+  top: 1px;
   right: -1px;
-  border-top-left-radius: 100%;
+  border-bottom-left-radius: 100%;
+  z-index: 0;
 }
 
 .priority-low {
