@@ -69,7 +69,10 @@
         <div class="error-msg">
           @if (!mail.valid && mail.touched) {
           <p>Please enter your email</p>
-          } @if (authService.errorMsg.email) {
+          } @else { @if (mail.touched &&
+          !ifUserEmailIsValid(loginData.mail.toLowerCase())) {
+          <p>This is not a valid email format</p>
+          } } @if (authService.errorMsg.email) {
           <p>{{ authService.errorMsg.email }}</p>
           }
         </div>
