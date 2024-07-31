@@ -15,12 +15,10 @@ class LoginView(APIView):
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
-
         if serializer.is_valid():
             email = serializer.data['email']
             password = serializer.data['password']
             user = authenticate(email=email, password=password)
-
             if user:
                 token, created = Token.objects.get_or_create(user=user)
                 return Response(token.key, status=status.HTTP_200_OK)
@@ -28,10 +26,8 @@ class LoginView(APIView):
                 content = {'detail':
                            ('Unable to login with provided credentials.')}
                 return Response(content, status=status.HTTP_401_UNAUTHORIZED)
-
         else:
-            return Response(serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 class LogoutView(APIView):
     authentication_classes = [authentication.TokenAuthentication]
