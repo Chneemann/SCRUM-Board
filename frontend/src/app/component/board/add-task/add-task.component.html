@@ -62,6 +62,7 @@
               [colorBg]="findColor(taskData.color).color"
               [colorBorder]="findColor(taskData.color).borderColor"
               (keydown.enter)="addSubtask(subtaskInputValue)"
+              (focusout)="addSubtask(subtaskInputValue)"
             ></app-form-field>
             <div class="subtask-btn">
               <img
