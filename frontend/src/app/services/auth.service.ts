@@ -40,7 +40,6 @@ export class AuthService {
         },
         (error) => {
           this.isUserLogin = false;
-          this.router.navigate(['/login']);
           resolve(false);
         }
       );

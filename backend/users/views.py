@@ -56,7 +56,7 @@ class AuthView(ObtainAuthToken):
     def get(self, request):
         if request.user.is_authenticated:
             return Response(request.user.id, status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_401_UNAUTHORIZED)
+        return Response({"error": "User is not logged in"}, status=status.HTTP_401_UNAUTHORIZED)
       
 class UserListView(APIView):
     authentication_classes = [authentication.TokenAuthentication]

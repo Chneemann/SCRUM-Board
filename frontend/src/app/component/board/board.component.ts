@@ -7,6 +7,7 @@ import { HeaderComponent } from '../../shared/component/header/header.component'
 import { AuthService } from '../../services/auth.service';
 import { EditUserComponent } from '../../shared/component/header/edit-user/edit-user.component';
 import { SharedService } from '../../services/shared.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-board',
@@ -34,21 +35,32 @@ export class BoardComponent implements OnInit {
     private sharedService: SharedService,
     public dbService: DatabaseService,
     public dragDropService: DragDropService,
-    public authService: AuthService
+    public authService: AuthService,
+    private router: Router
   ) {}
 
   async ngOnInit() {
     try {
-      const loginSuccessful = await this.authService.checkAuthUser();
-      if (loginSuccessful) {
-        this.loadDatabaseBoards();
-        this.loadDatabaseUsers();
-        this.handleDragAndDrop();
+      if (!this.checkLocalStorageAuthToken()) {
+        return this.navigateToLogin();
       }
+      if (!(await this.authService.checkAuthUser())) {
+        return this.navigateToLogin();
+      }
+      await Promise.all([
+        this.loadDatabaseBoards(),
+        this.loadDatabaseUsers(),
+        this.getCurrentBoard(),
+      ]);
+      this.handleDragAndDrop();
+      this.navigateToBoard();
     } catch (error) {
-      console.error('Error during login check:', error);
+      console.error('An error occurred during initialization:', error);
+      this.navigateToLogin();
     }
+  }
 
+  getCurrentBoard() {
     this.dbService.currentBoard$.subscribe((newBoard) => {
       if (this.currentBoard !== newBoard) {
         this.currentBoard = newBoard;
@@ -60,6 +72,19 @@ export class BoardComponent implements OnInit {
   async onBoardChange() {
     await this.loadDatabaseTasks();
     await this.loadDatabaseSubtasks();
+  }
+
+  private checkLocalStorageAuthToken(): boolean {
+    const authToken = localStorage.getItem('authToken');
+    return !!authToken;
+  }
+
+  private navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  private navigateToBoard() {
+    this.router.navigate(['/board']);
   }
 
   //  Database
