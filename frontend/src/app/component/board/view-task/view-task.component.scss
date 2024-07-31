@@ -33,12 +33,17 @@ section {
   }
 }
 
-.more {
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  top: 5px;
-  right: 5px;
+  width: 29px;
+  height: 34px;
+  top: 0;
+  right: 0;
+  cursor: pointer;
   img {
-    cursor: pointer;
     width: 24px;
     height: 24px;
     filter: brightness(0) saturate(100%) invert(63%) sepia(0%) saturate(1%)
@@ -48,6 +53,27 @@ section {
         hue-rotate(338deg) brightness(93%) contrast(107%);
     }
   }
+}
+
+.priority {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  bottom: 1px;
+  right: -1px;
+  border-top-left-radius: 100%;
+}
+
+.priority-low {
+  background-color: $green;
+}
+
+.priority-medium {
+  background-color: $orange;
+}
+
+.priority-high {
+  background-color: $red;
 }
 
 .footer {

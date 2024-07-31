@@ -48,8 +48,9 @@ export class ViewTaskComponent {
     return this.allSubtasks.some((subtask) => subtask.task_id == +taskId);
   }
 
-  startDragging(status: string) {
+  startDragging(taskId: string, status: string) {
     this.startDraggingStatus.emit(status);
+    this.closeTaskMenu(taskId);
     this.openDescriptions = {};
     this.openSubtasks = {};
     this.openDates = {};
@@ -73,6 +74,10 @@ export class ViewTaskComponent {
   toggleTaskMenu(taskId: string, event: MouseEvent) {
     event.stopPropagation();
     this.openTaskMenu[taskId] = !this.openTaskMenu[taskId];
+  }
+
+  closeTaskMenu(taskId: string) {
+    this.openTaskMenu[taskId] = false;
   }
 
   isDescriptionOpen(taskId: string): boolean {

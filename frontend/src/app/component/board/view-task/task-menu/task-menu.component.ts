@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Task } from '../../../../interfaces/task.interface';
 import { DatabaseService } from '../../../../services/database.service';
 
@@ -13,6 +13,7 @@ export class TaskMenuComponent {
   @Input() currentTaskId: string = '';
   @Input() boardTaskStatus: string = '';
   @Input() allTasks: Task[] = [];
+  @Output() closeTaskMenu = new EventEmitter();
 
   constructor(private dbService: DatabaseService) {}
 
@@ -26,6 +27,7 @@ export class TaskMenuComponent {
       };
       this.dbService.updateDB(body, this.currentTaskId, 'tasks').then(() => {
         this.allTasks[index].status = moveTo;
+        this.closeTaskMenu.emit();
       });
     }
   }

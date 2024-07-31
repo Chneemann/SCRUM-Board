@@ -12,18 +12,22 @@
     draggable="true"
     (dragstart)="
       dragDropService.startDragging($event, task.id, task.status);
-      startDragging(task.status)
+      startDragging(task.id, task.status)
     "
   >
     <div class="title">{{ task.title }}</div>
-    <div class="more">
-      <img
-        src="./../../../../assets/img/more.svg"
-        alt=""
-        (click)="toggleTaskMenu(task.id, $event)"
-      />
+    <div class="menu" (click)="toggleTaskMenu(task.id, $event)">
+      <img src="./../../../../assets/img/more.svg" alt="" />
     </div>
-    <!-- <div class="priority-img">
+    <div
+      class="priority"
+      [ngClass]="{
+        'priority-low': task.priority === 'low',
+        'priority-medium': task.priority === 'medium',
+        'priority-high': task.priority === 'high'
+      }"
+    ></div>
+    <!-- <div class="priority">
     <img
       src="./../../../../assets/img/priority/{{ task.priority }}.svg"
       alt=""
@@ -94,6 +98,7 @@
     [allTasks]="allTasks"
     [currentTaskId]="task.id"
     [boardTaskStatus]="content"
+    (closeTaskMenu)="closeTaskMenu(task.id)"
   ></app-task-menu>
   } }
 </section>
