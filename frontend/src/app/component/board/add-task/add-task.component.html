@@ -20,44 +20,57 @@
         onsubmit="return false"
         (keydown)="preventEnterKey($event)"
       >
-        <app-form-field
-          [(ngModel)]="taskData.title"
-          field="input"
-          name="title"
-          text="Title:"
-          id="title"
-          type="text"
-          #title="ngModel"
-          [colorBg]="findColor(taskData.color).color"
-          [colorBorder]="findColor(taskData.color).borderColor"
-          required
-        ></app-form-field>
-        <app-form-field
-          [(ngModel)]="taskData.description"
-          field="textarea"
-          name="description"
-          text="Description:"
-          id="description"
-          type="text"
-          #description="ngModel"
-          [colorBg]="findColor(taskData.color).color"
-          [colorBorder]="findColor(taskData.color).borderColor"
-          minlength="10"
-          required
-        ></app-form-field>
-        <div class="subtask">
+        <div class="input-field">
           <app-form-field
-            [(ngModel)]="subtaskInputValue"
+            [(ngModel)]="taskData.title"
             field="input"
-            name="subtaskInputValue"
-            text="Enter a subtask:"
-            id="subtask"
+            name="title"
+            text="Title:"
+            id="title"
             type="text"
-            #subtask="ngModel"
+            #title="ngModel"
             [colorBg]="findColor(taskData.color).color"
             [colorBorder]="findColor(taskData.color).borderColor"
-            (keydown.enter)="addSubtask(subtaskInputValue)"
+            required
           ></app-form-field>
+        </div>
+        <div class="input-field">
+          <app-form-field
+            [(ngModel)]="taskData.description"
+            field="textarea"
+            name="description"
+            text="Description:"
+            id="description"
+            type="text"
+            #description="ngModel"
+            [colorBg]="findColor(taskData.color).color"
+            [colorBorder]="findColor(taskData.color).borderColor"
+            minlength="10"
+            required
+          ></app-form-field>
+        </div>
+        <div class="subtask">
+          <div class="subtask-input">
+            <app-form-field
+              [(ngModel)]="subtaskInputValue"
+              field="input"
+              name="subtaskInputValue"
+              text="Enter a subtask:"
+              id="subtask"
+              type="text"
+              #subtask="ngModel"
+              [colorBg]="findColor(taskData.color).color"
+              [colorBorder]="findColor(taskData.color).borderColor"
+              (keydown.enter)="addSubtask(subtaskInputValue)"
+            ></app-form-field>
+            <div class="subtask-btn">
+              <img
+                src="./../../../../assets/img/check.svg"
+                alt=""
+                (click)="addSubtask(subtaskInputValue)"
+              />
+            </div>
+          </div>
           <div class="subtask-details">
             <!-- Server subtask -->
             @for (subtask of allSubtasks; track subtask) {
@@ -185,6 +198,12 @@
           </button>
         </div>
       </form>
+      <div class="error-msg">
+        @if (!description.valid && description.touched &&
+        taskData.description.length > 0) {
+        <p>The description must contain more than 10 characters</p>
+        }
+      </div>
     </div>
   </div>
 </div>

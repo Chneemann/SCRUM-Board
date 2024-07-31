@@ -3,7 +3,7 @@
 .content {
   position: relative;
   width: 560px;
-  height: 650px;
+  height: 666px;
   border-radius: 6px;
   border: 1px solid $gray;
   background-color: var(--taskColor);
@@ -42,6 +42,12 @@ form {
   resize: none;
 }
 
+// Input
+
+.input-field {
+  width: 98%;
+}
+
 // Date & Priority
 
 .date-priority-assigned {
@@ -66,6 +72,31 @@ form {
 .subtask {
   width: 100%;
   margin-bottom: 12px;
+}
+
+.subtask-input {
+  display: flex;
+  app-form-field {
+    width: 90%;
+  }
+  .subtask-btn {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    width: 10%;
+    padding: 0px 0px 6px 24px;
+    img {
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      filter: brightness(0) saturate(100%) invert(63%) sepia(0%) saturate(1%)
+        hue-rotate(153deg) brightness(93%) contrast(85%);
+      &:hover {
+        filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(16%)
+          hue-rotate(338deg) brightness(93%) contrast(107%);
+      }
+    }
+  }
 }
 
 .assigned {
@@ -138,7 +169,7 @@ form {
   justify-content: space-between;
   position: absolute;
   width: 30%;
-  bottom: 0;
+  bottom: 16px;
   left: 0;
   margin: 20px;
 }
@@ -161,7 +192,7 @@ form {
 .buttons {
   display: flex;
   position: absolute;
-  bottom: 0;
+  bottom: 16px;
   right: 0;
 }
 
@@ -200,6 +231,26 @@ form {
   }
 }
 
+// Error Msg
+
+.error-msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  padding: 6px;
+  width: 100%;
+  p {
+    color: $red;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+  }
+}
+
 // Overlay
 
 .overlay {
@@ -235,6 +286,8 @@ form {
   .content {
     width: 100vw;
     height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .color {
@@ -258,5 +311,32 @@ form {
 @media screen and (max-width: 500px) {
   .date-priority-assigned {
     flex-direction: column;
+  }
+
+  .date-priority,
+  .assigned {
+    width: 100%;
+  }
+
+  .date {
+    width: 98%;
+  }
+
+  .btn-close {
+    text-align: end;
+    width: 100%;
+    height: 36px;
+    img {
+      width: 24px;
+      height: auto;
+      margin: 6px;
+      cursor: pointer;
+      filter: brightness(0) saturate(100%) invert(63%) sepia(0%) saturate(1%)
+        hue-rotate(153deg) brightness(93%) contrast(85%);
+      &:hover {
+        filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(16%)
+          hue-rotate(338deg) brightness(93%) contrast(107%);
+      }
+    }
   }
 }
