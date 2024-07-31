@@ -6,6 +6,7 @@ import { DragDropService } from '../../../services/drag-drop.service';
 import { Subtask, Task } from '../../../interfaces/task.interface';
 import { InitialsPipe } from '../../../pipes/initials.pipe';
 import { UserInitialsComponent } from '../../../shared/component/user-initials/user-initials.component';
+import { TaskMenuComponent } from './task-menu/task-menu.component';
 
 @Component({
   selector: 'app-view-task',
@@ -14,6 +15,7 @@ import { UserInitialsComponent } from '../../../shared/component/user-initials/u
     CommonModule,
     HttpClientModule,
     UserInitialsComponent,
+    TaskMenuComponent,
     InitialsPipe,
   ],
   templateUrl: './view-task.component.html',
@@ -31,6 +33,7 @@ export class ViewTaskComponent {
   openDescriptions: { [taskId: string]: boolean } = {};
   openSubtasks: { [taskId: string]: boolean } = {};
   openDates: { [taskId: string]: boolean } = {};
+  openTaskMenu: { [taskId: string]: boolean } = {};
 
   constructor(
     private taskColorService: TaskColorsService,
@@ -67,6 +70,11 @@ export class ViewTaskComponent {
     this.openDates[taskId] = !this.openDates[taskId];
   }
 
+  toggleTaskMenu(taskId: string, event: MouseEvent) {
+    event.stopPropagation();
+    this.openTaskMenu[taskId] = !this.openTaskMenu[taskId];
+  }
+
   isDescriptionOpen(taskId: string): boolean {
     return !!this.openDescriptions[taskId];
   }
@@ -77,6 +85,10 @@ export class ViewTaskComponent {
 
   isDateOpen(taskId: string): boolean {
     return !!this.openDates[taskId];
+  }
+
+  isTaskMenuOpen(taskId: string): boolean {
+    return !!this.openTaskMenu[taskId];
   }
 
   firstLetter(word: string) {

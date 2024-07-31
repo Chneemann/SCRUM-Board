@@ -2,6 +2,9 @@
 
 section {
   position: relative;
+}
+
+.view-task {
   padding: 12px;
   background-color: var(--taskColor);
   border: 1px solid var(--taskBorderColor);
@@ -30,10 +33,21 @@ section {
   }
 }
 
-.priority-img {
+.more {
   position: absolute;
   top: 5px;
   right: 5px;
+  img {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) saturate(100%) invert(63%) sepia(0%) saturate(1%)
+      hue-rotate(153deg) brightness(93%) contrast(85%);
+    &:hover {
+      filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(16%)
+        hue-rotate(338deg) brightness(93%) contrast(107%);
+    }
+  }
 }
 
 .footer {

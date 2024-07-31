@@ -1,0 +1,11 @@
+<section>
+  @if (boardTaskStatus !== 'todo') {
+  <div class="link" (click)="moveTask('todo')">To do</div>
+  } @if (boardTaskStatus !== 'dotoday') {
+  <div class="link" (click)="moveTask('dotoday')">Do today</div>
+  } @if (boardTaskStatus !== 'inprogress') {
+  <div class="link" (click)="moveTask('inprogress')">In progress</div>
+  } @if (boardTaskStatus !== 'done') {
+  <div class="link" (click)="moveTask('done')">Done</div>
+  }
+</section>

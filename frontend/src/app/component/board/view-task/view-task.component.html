@@ -1,80 +1,100 @@
 @for (task of allTasks; track task) {
 <!-- -->
-@if (task.status === content && task.id) {
-<section
-  [ngStyle]="{
-    '--taskColor': findColor(task.color).color,
-    '--taskBorderColor': findColor(task.color).borderColor
-  }"
-  (click)="openTask(task.id)"
-  draggable="true"
-  (dragstart)="
-    dragDropService.startDragging($event, task.id, task.status);
-    startDragging(task.status)
-  "
->
-  <div class="title">{{ task.title }}</div>
-  <div class="priority-img">
+<section>
+  @if (task.status === content && task.id) {
+  <div
+    class="view-task"
+    [ngStyle]="{
+      '--taskColor': findColor(task.color).color,
+      '--taskBorderColor': findColor(task.color).borderColor
+    }"
+    (click)="openTask(task.id)"
+    draggable="true"
+    (dragstart)="
+      dragDropService.startDragging($event, task.id, task.status);
+      startDragging(task.status)
+    "
+  >
+    <div class="title">{{ task.title }}</div>
+    <div class="more">
+      <img
+        src="./../../../../assets/img/more.svg"
+        alt=""
+        (click)="toggleTaskMenu(task.id, $event)"
+      />
+    </div>
+    <!-- <div class="priority-img">
     <img
       src="./../../../../assets/img/priority/{{ task.priority }}.svg"
       alt=""
     />
-  </div>
-  <div class="footer">
-    <div class="images">
-      @if (task.description) {
-      <div class="description-svg" (click)="toggleDescription(task.id, $event)">
-        <img src="./../../../../assets/img/description.svg" alt="" />
+  </div> -->
+    <div class="footer">
+      <div class="images">
+        @if (task.description) {
+        <div
+          class="description-svg"
+          (click)="toggleDescription(task.id, $event)"
+        >
+          <img src="./../../../../assets/img/description.svg" alt="" />
+        </div>
+        } @if (hasTaskASubtask(task.id)) {
+        <div class="subtasks-svg" (click)="toggleSubtasks(task.id, $event)">
+          <img src="./../../../../assets/img/checklist.svg" alt="" />
+        </div>
+        }
+        <div class="calendar-svg" (click)="toggleDate(task.id, $event)">
+          <img src="./../../../../assets/img/calendar.svg" alt="" />
+        </div>
       </div>
-      } @if (hasTaskASubtask(task.id)) {
-      <div class="subtasks-svg" (click)="toggleSubtasks(task.id, $event)">
-        <img src="./../../../../assets/img/checklist.svg" alt="" />
-      </div>
-      }
-      <div class="calendar-svg" (click)="toggleDate(task.id, $event)">
-        <img src="./../../../../assets/img/calendar.svg" alt="" />
-      </div>
+      <app-user-initials
+        [allBoards]="allBoards"
+        [allUsers]="allUsers"
+        [allTasks]="allTasks"
+        [currentTaskId]="task.id"
+        [circles]="'assigned'"
+        [showAddMember]="false"
+      ></app-user-initials>
     </div>
-    <app-user-initials
-      [allBoards]="allBoards"
-      [allUsers]="allUsers"
-      [allTasks]="allTasks"
-      [currentTaskId]="task.id"
-      [circles]="'assigned'"
-      [showAddMember]="false"
-    ></app-user-initials>
-  </div>
-  @if (isDescriptionOpen(task.id)) {
-  <div class="dotted-line"></div>
-  <div class="description">
-    <p>{{ task.description }}</p>
-  </div>
-  } @if (isSubtasksOpen(task.id) && hasTaskASubtask(task.id)) {
-  <div class="dotted-line"></div>
-  <div class="subtasks">
-    @for (subtask of allSubtasks; track subtask) {
-    <!-- -->
-    @if (+task.id == subtask.task_id) {
-    <div class="subtask-title">
-      @if(subtask.status) {
-      <img src="./../../../../assets/img/checked.svg" alt="checked" />
-      } @else {
-      <img src="./../../../../assets/img/unchecked.svg" alt="unchecked" />
-      }
-      <p>{{ subtask.title }}</p>
+    @if (isDescriptionOpen(task.id)) {
+    <div class="dotted-line"></div>
+    <div class="description">
+      <p>{{ task.description }}</p>
     </div>
-    } }
+    } @if (isSubtasksOpen(task.id) && hasTaskASubtask(task.id)) {
+    <div class="dotted-line"></div>
+    <div class="subtasks">
+      @for (subtask of allSubtasks; track subtask) {
+      <!-- -->
+      @if (+task.id == subtask.task_id) {
+      <div class="subtask-title">
+        @if(subtask.status) {
+        <img src="./../../../../assets/img/checked.svg" alt="checked" />
+        } @else {
+        <img src="./../../../../assets/img/unchecked.svg" alt="unchecked" />
+        }
+        <p>{{ subtask.title }}</p>
+      </div>
+      } }
+    </div>
+    } @if (isDateOpen(task.id)) {
+    <div class="dotted-line"></div>
+    <div class="date">
+      <span>Due Date:</span>
+      <p>{{ formatDate(task.due_date, false) }}</p>
+    </div>
+    <div class="date">
+      <span>Created:</span>
+      <p>{{ formatDate(task.created_at, true) }}</p>
+    </div>
+    }
   </div>
-  } @if (isDateOpen(task.id)) {
-  <div class="dotted-line"></div>
-  <div class="date">
-    <span>Due Date:</span>
-    <p>{{ formatDate(task.due_date, false) }}</p>
-  </div>
-  <div class="date">
-    <span>Created:</span>
-    <p>{{ formatDate(task.created_at, true) }}</p>
-  </div>
-  }
+  @if (isTaskMenuOpen(task.id)) {
+  <app-task-menu
+    [allTasks]="allTasks"
+    [currentTaskId]="task.id"
+    [boardTaskStatus]="content"
+  ></app-task-menu>
+  } }
 </section>
-} }
+}
