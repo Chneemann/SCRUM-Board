@@ -15,19 +15,25 @@ class LoginView(APIView):
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            email = serializer.data['email']
-            password = serializer.data['password']
-            user = authenticate(email=email, password=password)
-            if user:
-                token, created = Token.objects.get_or_create(user=user)
-                return Response(token.key, status=status.HTTP_200_OK)
-            else:
-                content = {'detail':
-                           ('Unable to login with provided credentials.')}
-                return Response(content, status=status.HTTP_401_UNAUTHORIZED)
-        else:
+        if not self.is_serializer_valid(serializer):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        user = self.authenticate_user(serializer.data['email'], serializer.data['password'])
+        if user:
+            return self.create_token_response(user)
+        
+        return Response({'detail': 'Unable to login with provided credentials.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+    def is_serializer_valid(self, serializer):
+        return serializer.is_valid()
+
+    def authenticate_user(self, email, password):
+        return authenticate(email=email, password=password)
+
+    def create_token_response(self, user):
+        token, created = Token.objects.get_or_create(user=user)
+        return Response(token.key, status=status.HTTP_200_OK)
+
         
 class LogoutView(APIView):
     authentication_classes = [authentication.TokenAuthentication]
